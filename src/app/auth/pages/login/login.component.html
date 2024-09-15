@@ -1,0 +1,23 @@
+<div class="login-container">
+    <div class="login-box">
+      <div class="">
+        <h3>Log In</h3>
+        <p>No account? <a [routerLink]="['/sign-up']">Sign Up</a></p>
+      </div>
+
+      <div class="form">
+        <div class="input-container">
+          <label>Username</label>
+          <input type="text" class="input-text" id="login-username" />
+        </div>
+
+        <div class="input-container">
+          <label>Password</label>
+          <input type="password" class="input-text" id="login-password" />
+        </div>
+      </div>
+
+      <button class="first-button" onclick="login()">Log In</button>
+      <p class="error" id="login-error"></p>
+    </div>
+  </div>

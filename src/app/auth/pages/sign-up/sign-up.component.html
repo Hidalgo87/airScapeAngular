@@ -1,0 +1,28 @@
+<div class="sign-up-container">
+    <div class="sign-up-box">
+      <div class="">
+        <h3>Sign Up</h3>
+        <p>Already registered? <a [routerLink]="['/login']">Log In</a></p>
+      </div>
+
+        <div class="form">
+          <div class="username">
+            <label>Username</label>
+            <input type="text" class="input-text" id="register-username"/>
+          </div>
+
+          <div class="password">
+            <label>Password</label>
+            <input type="password" class="input-text" id="register-password"/>
+          </div>  
+
+          <div class="password">
+            <label>Confirm password</label>
+            <input type="password" class="input-text" id="register-confirm-password"/>
+          </div>
+        </div>
+        <button class="first-button" onclick="register()">Sign Up</button>
+        <p class="error" id="register-error"></p>
+    </div>
+</div>
+

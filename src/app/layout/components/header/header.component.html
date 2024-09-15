@@ -1,0 +1,25 @@
+<header>
+@if (false) {
+    <div class="flex-header">
+      <a class="logo" [routerLink]="['/home']">
+        <img src="/assets/airScapeLogo3.png" alt="airScape" />
+      </a>
+    </div>
+} @else {
+    <div class="flex-header">
+        <a class="logo" [routerLink]="['/home']">
+          <img src="/assets/airScapeLogo3.png" alt="airScape" />
+        </a>
+  
+        <nav>
+          <a href="./properties.html">Properties</a>
+          <a href="./profile.html">My Profile</a>
+          <a href="./messages.html">Messages</a>
+        </nav>
+  
+        <a class="exit" [routerLink]="['/login']">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </a>
+      </div>
+}
+  </header>
