@@ -5,7 +5,7 @@ import { HomeComponent } from './features/pages/home/home.component';
 import { AuthLayoutComponent } from './layout/components/auth-layout/auth-layout.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   {
     path: '',
     component: AuthLayoutComponent,

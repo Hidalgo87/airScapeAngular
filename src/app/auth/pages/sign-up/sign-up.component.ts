@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { User } from '../../interfaces/user.interfaces';
 
 @Component({
   selector: 'app-sign-up',
@@ -10,5 +11,80 @@ import { RouterLink } from '@angular/router';
   styleUrl: './sign-up.component.css'
 })
 export class SignUpComponent {
+  user:User = {
+    userName:'',
+    email:'',
+    password:''
+  };
 
+  registerForm = this.fb.group({
+    userName:[''],
+    email:[''],
+    password:[''],
+    repassword:['']
+  });
+
+  registerErrorMessage: string = '';
+
+  constructor(private fb:FormBuilder, private router:Router) {
+  } ;
+
+  setRegisterErrorMessage(message: string) {
+    this.registerErrorMessage = message;
+  }
+
+
+onSignUp(){
+    const userName = this.registerForm.value.userName
+    const email = this.registerForm.value.email
+    const password = this.registerForm.value.password
+    const repassword = this.registerForm.value.repassword
+
+    if (!userName || !password  || !repassword){
+      this.setRegisterErrorMessage("Diligenciar los campos");
+      return;
+    }
+
+
+    if (userName.length < 8 || userName.length > 15) {
+      this.setRegisterErrorMessage('El nombre de usuario debe tener entre 8 y 15 caracteres.');
+      return; 
+  }  else if (/\s/.test(userName)) {
+      this.setRegisterErrorMessage('El nombre de usuario no puede contener espacios.');
+      return;
+  } else if (!/^[A-Za-z]/.test(userName)) {
+      this.setRegisterErrorMessage('El nombre de usuario debe comenzar con una letra.');
+      return;
+  } else if (localStorage.getItem(userName) != null) {
+      this.setRegisterErrorMessage('El nombre de usuario ingresado ya está en uso.');
+      return;
+  }
+
+  
+  if (password.length < 12 || password.length > 20) {
+      this.setRegisterErrorMessage('La contraseña debe tener entre 12 y 20 caracteres.');
+      return;
+  } else if (!/[A-Z]/.test(password)) {
+      this.setRegisterErrorMessage('La contraseña debe incluir al menos una letra en mayúsculas.');
+      return;
+  } else if (!/[a-z]/.test(password)) {
+      this.setRegisterErrorMessage('La contraseña debe incluir al menos una letra en minúsculas.');
+      return;
+  } else if (!/\d/.test(password)) {
+      this.setRegisterErrorMessage('La contraseña debe incluir al menos un número.');
+      return;
+  } else if (!/[-!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      this.setRegisterErrorMessage('La contraseña debe incluir al menos un carácter especial.');
+      return;
+  }
+  
+  if (password !== repassword) {
+      this.setRegisterErrorMessage('Las contraseñas no coinciden.');
+      return;
+  } else {
+      this.setRegisterErrorMessage(' ');
+      localStorage.setItem(userName,password);
+      this.router.navigateByUrl("/login");
+  }
+  }
 }
