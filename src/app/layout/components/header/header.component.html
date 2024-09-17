@@ -1,18 +1,27 @@
 <header
-  class="fixed top-0 left-0 z-50 w-full border-b bg-n-8/90 border-stroke-1 backdrop-blur-lg"
+  class="fixed top-0 left-0 z-50 w-full h-20 border-b bg-n-8/90 border-stroke-1 backdrop-blur-lg"
 >
-  <div class="flex items-center px-20">
+  <div class="flex items-center h-full px-20">
     <a class="flex min-w-[12rem] max-w-[12rem] h-20" href="./home.html">
       <img src="./assets/airScapeLogo3.png" alt="airScape" class="m-auto" />
     </a>
 
     @if (true) {
-    <nav class="hidden gap-20 ml-20 grow lg:flex">
-      <a
+    <div class="relative h-full py-5 text-n-2 w-[28rem] mx-auto">
+      <input
+        type="text"
+        class="w-full h-full pl-10 border rounded-full border-stroke-1 bg-n-6"
+      />
+      <div class="absolute flex w-4 h-4 m-auto -translate-y-1/2 top-1/2 left-4">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+    </div>
+    <nav class="hidden gap-20 ml-auto lg:flex">
+      <!-- <a
         href="./properties.html"
         class="text-white no-underline transition duration-300 opacity-50 hover:opacity-100"
         >Properties</a
-      >
+      > -->
       <a
         href="./profile.html"
         class="text-white no-underline transition duration-300 opacity-50 hover:opacity-100"
@@ -23,14 +32,14 @@
         class="text-white no-underline transition duration-300 opacity-50 hover:opacity-100"
         >Messages</a
       >
+      <a
+        class="text-2xl transition duration-300 text-n-3 hover:text-color-1"
+        href="./login.html"
+      >
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </a>
     </nav>
 
-    <a
-      class="ml-auto text-2xl transition duration-300 text-n-3 hover:text-color-1"
-      href="./login.html"
-    >
-      <i class="fa-solid fa-right-from-bracket"></i>
-    </a>
     }
   </div>
 </header>
