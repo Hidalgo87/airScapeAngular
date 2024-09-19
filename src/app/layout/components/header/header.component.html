@@ -1,8 +1,8 @@
 <header
   class="fixed top-0 left-0 z-50 w-full h-20 border-b bg-n-8/90 border-stroke-1 backdrop-blur-lg"
 >
-  <div class="flex items-center h-full px-20">
-    <a class="flex min-w-[12rem] max-w-[12rem] h-20" href="./home.html">
+  <div class="flex items-center px-20">
+    <a class="flex min-w-[12rem] max-w-[12rem] h-20" [routerLink]="['/home']">
       <img src="./assets/airScapeLogo3.png" alt="airScape" class="m-auto" />
     </a>
 
@@ -34,8 +34,8 @@
         ><i class="fa-solid fa-message"></i
       ></a>
       <a
-        class="self-center text-lg transition duration-300 text-n-3 hover:text-color-1"
-        href="./login.html"
+        class="ml-auto text-2xl transition duration-300 text-n-3 hover:text-color-1"
+        [routerLink]="['/login']"
       >
         <i class="fa-solid fa-right-from-bracket"></i>
       </a>

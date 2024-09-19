@@ -2,17 +2,18 @@
   <h3 class="text-2xl font-semibold">Log In</h3>
   <p class="mt-2 text-sm text-n-2">
     No account?
-    <a href="./register.html" class="underline text-color-3">Sign Up</a>
+    <a [routerLink]="['/signup']" class="underline text-color-3">Sign Up</a>
   </p>
 </div>
 
-<div class="flex flex-col w-full gap-4 my-8">
+<form [formGroup]="loginForm" class="flex flex-col w-full gap-4 my-8">
   <div class="flex flex-col">
     <label class="mb-1">Username</label>
     <input
       type="text"
       class="w-full pl-4 text-lg border rounded-md border-n-4 text-n-3 h-11"
       id="login-username"
+      formControlName="userName"
     />
   </div>
 
@@ -22,14 +23,14 @@
       type="password"
       class="w-full pl-4 text-lg border rounded-md border-n-4 text-n-3 h-11"
       id="login-password"
+      formControlName="password"
     />
   </div>
-</div>
+</form>
 
 <button
   class="w-full px-8 text-lg font-semibold rounded-md cursor-pointer h-11 bg-color-1"
-  onclick="login()"
->
+  (click)="onLogin()">
   Log In
 </button>
-<p class="mt-4 text-color-5" id="login-error"></p>
+<p class="mt-4 text-color-5" id="login-error">{{ loginErrorMessage }}</p>
