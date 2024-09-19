@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +29,6 @@ export class ListingsService {
     // Obtener url de la imagen
     const resp = await this.supabase.storage
       .from('listing_photos')
-      .getPublicUrl(`${userName}/${fileName});
+      .getPublicUrl(`${userName}/${fileName}`);
   }
 }
