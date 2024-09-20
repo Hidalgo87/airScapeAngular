@@ -1,12 +1,31 @@
 import { Component } from '@angular/core';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { RouterLink } from '@angular/router';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {
+  heroArrowLeftEndOnRectangle,
+  heroUser,
+  heroHome,
+} from '@ng-icons/heroicons/outline';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, NgIconComponent, NgClass],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
+  providers: [
+    provideIcons({ heroArrowLeftEndOnRectangle, heroUser, heroHome }),
+  ],
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  isDropdownOpen = false;
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  closeDropdown() {
+    this.isDropdownOpen = false;
+  }
+}

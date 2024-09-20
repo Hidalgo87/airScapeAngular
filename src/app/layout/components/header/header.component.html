@@ -7,38 +7,80 @@
     </a>
 
     @if (true) {
-    <div class="relative h-full py-5 text-n-2 w-[28rem] ml-12">
+    <div
+      class="h-10 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-n-2 w-[28rem]"
+    >
       <input
         type="text"
-        class="w-full h-full text-sm border rounded-full pl-11 border-stroke-1 bg-n-6"
+        class="box-border w-full h-full text-sm border rounded-full pl-11 border-stroke-1 bg-n-6"
         placeholder="Buscar propiedad"
       />
       <div class="absolute flex w-4 h-4 m-auto -translate-y-1/2 top-1/2 left-4">
         <i class="fa-solid fa-magnifying-glass"></i>
       </div>
     </div>
-    <nav class="hidden ml-auto gap-14 lg:flex">
-      <!-- <a
-        href="./properties.html"
-        class="text-white no-underline transition duration-300 opacity-50 hover:opacity-100"
-        >Properties</a
-      > -->
-      <a
-        href="./profile.html"
-        class="text-white no-underline transition duration-300 opacity-50 hover:opacity-100"
-        >My Profile</a
-      >
+    <nav class="hidden gap-10 ml-auto lg:flex">
+      <!-- Botón de mensajes -->
       <a
         href="./messages.html"
-        class="self-center text-lg transition duration-300 text-n-3 hover:text-color-1"
+        class="self-center text-lg transition text-n-3 hover:text-color-1"
         ><i class="fa-solid fa-message"></i
       ></a>
-      <a
-        class="ml-auto text-2xl transition duration-300 text-n-3 hover:text-color-1"
-        [routerLink]="['/login']"
+
+      <!-- Foto de usuario -->
+      <div
+        (click)="toggleDropdown()"
+        class="relative flex items-center gap-3 py-1 pl-4 pr-1 border rounded-full cursor-pointer border-stroke-1"
       >
-        <i class="fa-solid fa-right-from-bracket"></i>
-      </a>
+        <div class="text-xl w-fit h-fit">
+          <i class="fa-solid fa-caret-down"></i>
+        </div>
+        <div class="w-10 h-10 overflow-hidden rounded-full">
+          <img
+            src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/e40b6ea6361a1abe28f32e7910f63b66/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg"
+            class="object-cover w-full h-full"
+          />
+        </div>
+
+        <!-- Dropdown menu -->
+        <div
+          [ngClass]="
+            isDropdownOpen ? 'visible opacity-100' : 'invisible opacity-0'
+          "
+          class="absolute right-0 z-10 mt-2 transition-opacity duration-100 rounded-lg top-full bg-n-6/90 w-44 backdrop-blur-lg"
+        >
+          <ul class="py-2 text-sm text-n-2">
+            <!-- Opción para ver perfil -->
+            <li
+              class="flex items-center px-4 py-3 cursor-pointer hover:bg-n-5 hover:text-white"
+            >
+              <ng-icon class="mr-3 text-lg" name="heroUser"></ng-icon>
+              <a [routerLink]="['/login']">Profile</a>
+            </li>
+
+            <!-- Opción para ver propiedades en caso de propietario -->
+            @if (true) {
+            <li
+              class="flex items-center px-4 py-3 cursor-pointer hover:bg-n-5 hover:text-white"
+            >
+              <ng-icon class="mr-3 text-lg" name="heroHome"></ng-icon>
+              <a [routerLink]="['/login']">My listings</a>
+            </li>
+            }
+
+            <!-- Opción para cerrar sesión -->
+            <li
+              class="flex items-center px-4 py-3 cursor-pointer hover:bg-n-5 hover:text-white"
+            >
+              <ng-icon
+                class="mr-3 text-lg"
+                name="heroArrowLeftEndOnRectangle"
+              ></ng-icon>
+              <a [routerLink]="['/login']">Sign out</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </nav>
 
     }

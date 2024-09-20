@@ -35,6 +35,12 @@ module.exports = {
       fontFamily: {
         sans: "var(--font-sans)",
       },
+      transitionDuration: {
+        DEFAULT: "200ms",
+      },
+      transitionTimingFunction: {
+        DEFAULT: "linear",
+      },
     },
   },
   plugins: [],
