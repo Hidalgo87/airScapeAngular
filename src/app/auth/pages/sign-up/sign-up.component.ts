@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { User } from '../../interfaces/user.interfaces';
+import { UserAuth } from '../../interfaces/userAuth.interfaces';
 
 @Component({
   selector: 'app-sign-up',
@@ -11,7 +11,7 @@ import { User } from '../../interfaces/user.interfaces';
   styleUrl: './sign-up.component.css'
 })
 export class SignUpComponent {
-  user:User = {
+  user:UserAuth = {
     userName:'',
     email:'',
     password:''

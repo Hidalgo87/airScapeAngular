@@ -3,8 +3,8 @@ export interface User {
   userName: string;
   email: string;
   password: string;
-  profilePicture: string;
-  bio: string;
+  profilePicture?: string;
+  bio?: string;
   isOwner: boolean;
   createdAt: Date;
   updatedAt: Date;

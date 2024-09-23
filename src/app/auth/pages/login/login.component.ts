@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { User } from '../../interfaces/user.interfaces';
+import { UserAuth } from '../../interfaces/userAuth.interfaces';
 
 
 
@@ -13,7 +13,7 @@ import { User } from '../../interfaces/user.interfaces';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  user:User = {
+  user:UserAuth = {
     userName:'',
     password:''
   };
