@@ -3,13 +3,13 @@ import { ListingsService } from '../../services/listings.service';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
-  selector: 'app-posts',
+  selector: 'app-listings',
   standalone: true,
   imports: [],
-  templateUrl: './posts.component.html',
-  styleUrl: './posts.component.css',
+  templateUrl: './listings.component.html',
+  styleUrl: './listings.component.css',
 })
-export class PostsComponent {
+export class ListingsComponent {
   // TODO: Crear User service
 
   constructor(private listingServices: ListingsService) {}
