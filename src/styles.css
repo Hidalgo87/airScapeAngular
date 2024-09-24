@@ -13,7 +13,7 @@
 
 @layer base {
   body {
-    @apply font-sans text-base bg-n-8 text-n-1;
+    @apply font-sans text-base bg-n-8 text-n-2;
   }
 }
 
@@ -36,28 +36,3 @@
   transform: translate(-40%, 0) scale(1.2);
   opacity: 0.6;
 }
-
-/* @media (max-width: 768px) {
-  .hero {
-    padding: 0;
-  }
-
-  .hero h1 {
-    font-size: 2rem;
-    line-height: 2.5rem;
-  }
-
-  .flex-header {
-    padding: 0 2rem;
-  }
-}
-
-@media (max-width: 1024px) {
-  .container {
-    padding: 5rem 1rem;
-  }
-  nav,
-  .exit {
-    display: none;
-  }
-} */

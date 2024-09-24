@@ -1,1 +1,57 @@
-<p>profile works!</p>
+<div class="relative">
+  <div
+    class="border border-stroke-1 py-8 mt-28 mx-8 lg:mx-auto max-w-[60rem] rounded-2xl"
+  >
+    <div
+      class="flex flex-col justify-center px-4 md:px-12 lg:px-20 md:flex-row"
+    >
+      <div class="flex flex-col items-center shrink-0">
+        <div class="relative w-fit h-fit">
+          <div class="w-[16rem] h-[16rem] overflow-hidden rounded-full">
+            <img
+              src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/e40b6ea6361a1abe28f32e7910f63b66/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg"
+              alt="profile_photo"
+              class="object-cover w-full h-full"
+            />
+          </div>
+          <div
+            class="absolute flex w-12 h-12 transition rounded-full cursor-pointer bottom-2 left-2 bg-n-2 hover:opacity-90"
+          >
+            <ng-icon name="octPencil" class="m-auto text-xl text-n-8" />
+          </div>
+        </div>
+        <h4 class="mt-4 text-center h4 text-n-3">Sam Smith</h4>
+      </div>
+      <div class="flex-grow md:ml-12">
+        <div class="divide-y divide-stroke-1">
+          <div class="flex py-8">
+            <label class="block w-24 h-fit body-2">Bio</label>
+            <textarea
+              class="flex-grow h-40 py-2 pl-4 overflow-auto text-sm bg-transparent border rounded-md resize-none border-n-4 text-n-3"
+            ></textarea>
+          </div>
+          <div class="flex items-center py-8">
+            <label class="block w-24 h-fit body-2">Email</label>
+            <input
+              type="text"
+              class="flex-grow pl-4 text-lg bg-transparent border rounded-md border-n-4 text-n-3 h-11"
+            />
+          </div>
+          <div class="flex items-center py-8">
+            <label class="block w-24 h-fit body-2">Password</label>
+            <input
+              type="text"
+              class="flex-grow pl-4 text-lg bg-transparent border rounded-md border-n-4 text-n-3 h-11"
+            />
+          </div>
+        </div>
+
+        <button
+          class="block px-4 py-2 mx-auto my-6 transition rounded-md hover:opacity-80 md:mx-0 md:ml-auto text-n-1 bg-color-1"
+        >
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
