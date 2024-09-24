@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { UserAuth } from '../interfaces/userAuth.interfaces';
 import { LoginResponse, SignUpResponse } from '../interfaces/login-response.interface';
+import UUID from 'uuid-int';
 @Injectable({
   providedIn: 'root'
 })
@@ -40,6 +41,7 @@ export class UserService {
         message:'Already exists a user with that username'
       }
     }
+    const idNumber = UUID(0).uuid();
     const userSrt = JSON.stringify(user);
     localStorage.setItem(user.userName.toLowerCase().trim(), userSrt);
     this.setUser(user);
