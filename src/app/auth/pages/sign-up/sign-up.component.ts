@@ -82,7 +82,14 @@ onSignUp(){
       return;
   } else {
       this.setRegisterErrorMessage(' ');
-      const response = this.userService.register({userName,password})
+      const response = this.userService.register({// TODO: CHANGE BURNED DATA
+        userName:userName,// TODO: CHANGE BURNED DATA
+        password:password, // TODO: CHANGE BURNED DATA
+        email:'genericEmail@gmail.com',// TODO: CHANGE BURNED DATA
+        isOwner:true,// TODO: CHANGE BURNED DATA
+        createdAt:new Date(),// TODO: CHANGE BURNED DATA
+        updatedAt:new Date() // TODO: CHANGE BURNED DATA
+        }) // TODO: CHANGE BURNED DATA
       if (response.success){
         this.router.navigateByUrl('/home');
       }else{

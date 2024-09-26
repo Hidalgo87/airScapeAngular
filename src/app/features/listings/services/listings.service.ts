@@ -10,8 +10,8 @@ export class ListingsService {
 
   constructor() {
     this.supabase = createClient(
-      environment.supabaseConfig.url,
-      environment.supabaseConfig.apikey
+      environment.supabaseConfig.apiUrl,
+      environment.supabaseConfig.apiKey
     );
   }
 

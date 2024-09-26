@@ -1,28 +1,29 @@
 import { Injectable, signal } from '@angular/core';
-import { UserAuth } from '../interfaces/userAuth.interfaces';
 import { LoginResponse, SignUpResponse } from '../interfaces/login-response.interface';
 import UUID from 'uuid-int';
+import { User } from '../../features/profile/interfaces/user';
+import { UserAuth } from '../interfaces/userAuth.interfaces';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  userSignal = signal<UserAuth>({userName:'',password:'',email:''});
+  userSignal = signal<User>({userName:'',password:'',email:'', isOwner:true, createdAt:new Date(), updatedAt:new Date()});
 
   constructor() { 
 
    }
 
-  login(userName:string, password:string):LoginResponse {
-      const userSrt = localStorage.getItem(userName.toLowerCase().trim())
+  login(userAuth:UserAuth):LoginResponse {
+      const userSrt = localStorage.getItem(userAuth.userName.toLowerCase().trim())
       if(!userSrt){
         return {
           success:false,
           message:'User or password incorrects'
         }
       }
-      const user:UserAuth = JSON.parse(userSrt);
-      if (user.password !== password){
+      const user:User = JSON.parse(userSrt);
+      if (user.password !== userAuth.password){
         return {
           success: false,
           message:'User or password incorrects'
@@ -34,7 +35,7 @@ export class UserService {
       }
     }  
     
-  register(user:UserAuth): SignUpResponse{
+  register(user:User): SignUpResponse{
     if(localStorage.getItem(user.userName.toLowerCase().trim())){
       return {
         success:false,
@@ -42,6 +43,7 @@ export class UserService {
       }
     }
     const idNumber = UUID(0).uuid();
+    user.userId = idNumber;
     const userSrt = JSON.stringify(user);
     localStorage.setItem(user.userName.toLowerCase().trim(), userSrt);
     this.setUser(user);
@@ -49,8 +51,19 @@ export class UserService {
       success: true
     }
   }
+
+  logOut(){
+    this.setUser({
+      userName:'',
+      password:'', 
+      email:'',
+      isOwner:true,
+      createdAt:new Date(),
+      updatedAt:new Date() 
+      })
+  }
     
-  setUser(user:UserAuth){
+  setUser(user:User){
     localStorage.setItem('loggedUser', JSON.stringify(user))
     this.userSignal.set(user);  
   }

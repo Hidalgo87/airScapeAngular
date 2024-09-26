@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { RouterLink } from '@angular/router';
+import { Router , RouterLink} from '@angular/router';
 import {
   heroArrowLeftEndOnRectangle,
   heroUser,
   heroHome,
 } from '@ng-icons/heroicons/outline';
 import { NgClass } from '@angular/common';
+import { UserService } from '../../../auth/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,20 @@ import { NgClass } from '@angular/common';
     provideIcons({ heroArrowLeftEndOnRectangle, heroUser, heroHome }),
   ],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  user:any;
+  constructor(private router:Router, private userService:UserService){
+    this.userService = userService;
+}
+  ngOnInit(): void {
+    this.user = this.userService.getUser();
+  }
+
+  onLogOut() {
+    this.userService.logOut();
+    this.router.navigateByUrl("/login");
+  }
+  
   isDropdownOpen = false;
 
   toggleDropdown() {

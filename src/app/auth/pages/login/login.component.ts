@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { UserAuth } from '../../interfaces/userAuth.interfaces';
 import { UserService } from '../../services/user.service';
 
 
@@ -14,11 +13,6 @@ import { UserService } from '../../services/user.service';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  user:UserAuth = {
-    userName:'',
-    password:''
-  };
-
   loginForm = this.fb.group({
     userName:['', Validators.required],
     password:['', Validators.required]
@@ -41,7 +35,6 @@ export class LoginComponent {
     }
     let userName = this.loginForm.value.userName!;
     let password = this.loginForm.value.password!;
-    localStorage.setItem("juanfernando","123")
 
     if(userName.length < 8 || userName.length >15){
       this.setLoginErrorMessage("El nombre de usuario debe tener entre 8 y 15 caracteres.");
@@ -55,7 +48,7 @@ export class LoginComponent {
     } else {
       this.setLoginErrorMessage('');
     }
-    let response = this.userService.login(userName,password);
+    let response = this.userService.login({userName:userName,password:password});
     
 
     if (response.success) {
