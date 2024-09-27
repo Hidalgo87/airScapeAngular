@@ -9,6 +9,7 @@ import { Component, Input } from '@angular/core';
 })
 export class ListingCardComponent {
   @Input() title = '';
-  @Input() price = null;
-  @Input() address = '';
+  @Input() price = 0;
+  // @Input() address = '';
+  @Input() image_url = '';
 }
