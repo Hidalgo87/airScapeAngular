@@ -2,6 +2,7 @@ import plugin from "tailwindcss/plugin";
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: "class",
   content: ["./src/**/*.{html,ts}"],
   theme: {
     extend: {

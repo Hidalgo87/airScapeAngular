@@ -1,12 +1,35 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+@layer tailwind-base, primeng, tailwind-utilities;
+
+@layer tailwind-base {
+  @tailwind base;
+
+  .p-inputtext {
+    /* @apply px-3 py-2 text-sm bg-gray-800 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50; */
+    @apply pl-10 bg-transparent border rounded-lg border-n-5 text-n-2;
+  }
+
+  .p-calendar {
+    @apply w-full h-full;
+  }
+
+  .p-datepicker {
+    @apply scale-75;
+  }
+
+  .p-datepicker-icon {
+    @apply right-auto left-4 text-n-3;
+  }
+}
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
 
 :root {
-  /* --border-color: #2e2a41;
-  --first-color: #6f00ff;
-  --second-color: #2b7cff;
-  --anchor-color: #409cff; */
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   color-scheme: dark;
 }
@@ -37,5 +60,11 @@
   opacity: 0.6;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+} */
