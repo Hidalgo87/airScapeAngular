@@ -9,8 +9,7 @@ import { ImageService } from '../../../images/services/image.service';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
-  constructor(private imageService:ImageService){
-    this.imageService = imageService;
+  constructor(){
   }
   onUpload(event:Event){
 const fileName = 'file';
@@ -20,6 +19,5 @@ const fileName = 'file';
       return;
     }
     const file:File = input.files![0]
-    const response=  this.imageService.uploadImage(file);
   }
 }

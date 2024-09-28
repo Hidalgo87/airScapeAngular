@@ -20,12 +20,12 @@ import { UserService } from '../../../auth/services/user.service';
   ],
 })
 export class HeaderComponent implements OnInit {
-  user:any;
-  constructor(private router:Router, private userService:UserService){
-    this.userService = userService;
-}
+  user: any;
+
+  constructor(private router: Router, private userService: UserService) { }
+
   ngOnInit(): void {
-    this.user = this.userService.getUser();
+
   }
 
   onLogOut() {
