@@ -1,10 +1,7 @@
-import { Image } from "../../images/interfaces/image";
-
-export interface Listing {
-  listingId: string;
-  userId: string;
+export interface ListingParams {
   title: string;
-  photos:Image[];
+  userId:string
+  filePhotos:File[];
   description: string;
   address: string;
   latitude: number;
@@ -13,6 +10,4 @@ export interface Listing {
   numBedrooms: number;
   numBathrooms: number;
   maxGuests: number;
-  createdAt: Date;  
-  updatedAt: Date;
 }

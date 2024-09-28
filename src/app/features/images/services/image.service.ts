@@ -15,7 +15,7 @@ export class ImageService {
     )
    }
 
-   async upload(file:File, fileName:string, folderName:string='base'){
+   async upload(file:File, folderName:string, fileName:string){
     const { error } = await this.supabase
     .storage
     .from('airScapeBKT')
