@@ -8,9 +8,9 @@ import { ProfileComponent } from './features/profile/pages/profile/profile.compo
 import { ListingDetailsComponent } from './features/listings/pages/listing-details/listing-details.component';
 
 export const routes: Routes = [
-  { path: 'a', component: ListingsComponent },
-  { path: 'listing/details/:id', component: ListingDetailsComponent },
   { path: '', component: HomeComponent },
+  { path: 'a', component: ListingsComponent },
+  { path: 'listing/:id', component: ListingDetailsComponent },
   { path: 'profile', component: ProfileComponent },
   {
     path: '',

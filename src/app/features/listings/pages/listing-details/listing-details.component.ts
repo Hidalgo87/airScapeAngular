@@ -14,9 +14,7 @@ export class ListingDetailsComponent {
     console.log(listingId);
     // this.listing$ = this.service.getHero(listingId);
   }
-
   constructor(private route: ActivatedRoute) {}
-
   ngOnInit(): void {
     this.listingId = this.route.snapshot.paramMap.get('id')!;
   }
