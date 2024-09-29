@@ -25,6 +25,6 @@ export class ListingsComponent {
     const file: File = input.files![0];
 
     // TODO: Invocar el método UploadFile consultando el user que está logueado
-    this.listingServices.uploadFile(file, 'usernameInventado', fileName);
+    this.listingServices.uploadFile(file, 'test', file.name);
   }
 }

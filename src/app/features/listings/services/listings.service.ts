@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ImageService } from '../../images/services/image.service';
 import { Listing } from '../interfaces/listing';
 import { ListingParams } from '../interfaces/listingParams';
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
 import { Image } from '../../images/interfaces/image';
 import { ListingDetails } from '../interfaces/listingDetails';
 import { User } from '../../profile/interfaces/user';
