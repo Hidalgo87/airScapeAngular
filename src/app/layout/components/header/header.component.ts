@@ -37,7 +37,7 @@ export class HeaderComponent {
 
   onLogOut(){
     this.userService.logOut();
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/login');
   }
 
 }

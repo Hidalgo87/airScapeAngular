@@ -2,7 +2,7 @@ import { Image } from "../../images/interfaces/image.interface";
 
 export interface Listing {
   listingId: string;
-  userId: string;
+  userName: string;
   title: string;
   photos:Image[];
   description: string;

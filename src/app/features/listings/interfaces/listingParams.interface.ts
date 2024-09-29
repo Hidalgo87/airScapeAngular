@@ -1,6 +1,6 @@
 export interface ListingParams {
   title: string;
-  userId:string
+  userName:string
   filePhotos:File[];
   description: string;
   address: string;

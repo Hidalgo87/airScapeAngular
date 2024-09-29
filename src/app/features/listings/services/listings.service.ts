@@ -47,7 +47,7 @@ export class ListingsService {
     
     let listing:Listing = {
       listingId: listingId,
-      userId: listingParams.userId,
+      userName: listingParams.userName,
       title: listingParams.title,
       photos: listingImages,
       description: listingParams.description,
@@ -70,7 +70,7 @@ export class ListingsService {
     const listingSrt = localStorage.getItem(`listing-${listingId}`);
     if (listingSrt) {
       let listing:Listing = JSON.parse(listingSrt);
-      const userSrt = localStorage.getItem(`user-${listing.userId}`);
+      const userSrt = localStorage.getItem(`user-${listing.userName}`);
       if (userSrt) {
         let user:User = JSON.parse(userSrt);
         let listingDetails:ListingDetails = {

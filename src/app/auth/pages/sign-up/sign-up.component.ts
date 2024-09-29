@@ -86,11 +86,11 @@ onSignUp(){
   } else {
       this.setRegisterErrorMessage(' ');
       const response = this.userService.register({
-        userName: userName, // TODO: CHANGE BURNED DATA
-        password: password, // TODO: CHANGE BURNED DATA
-        email: email, // TODO: CHANGE BURNED DATA
-        isOwner: isOwner, // TODO: CHANGE BURNED DATA
-      }) // TODO: CHANGE BURNED DATA
+        userName: userName, 
+        password: password, 
+        email: email, 
+        isOwner: isOwner, 
+      }) 
       if (response.success){
         this.router.navigateByUrl('/home');
       }else{

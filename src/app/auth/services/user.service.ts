@@ -62,7 +62,6 @@ export class UserService {
     }
     const userSrt = JSON.stringify(completeUser);
     localStorage.setItem(user.userName.toLowerCase().trim(), userSrt);
-    localStorage.setItem(`user-${userId}`, userSrt);
     return{
       success: true
     }
