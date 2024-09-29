@@ -12,15 +12,15 @@ export const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: '', component: HomeComponent, pathMatch: 'full' },
   {
+    component: ListingDetailsComponent,
+    path: 'listing/details/:id',
+  },
+  {
     path: '',
     component: AuthLayoutComponent,
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignUpComponent },
-      {
-        component: ListingDetailsComponent,
-        path: 'listing/details/:id',
-      },
     ],
   },
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
