@@ -78,7 +78,8 @@ module.exports = {
           "@apply font-light text-[0.875rem] leading-6 md:text-base": {},
         },
         ".input": {
-          "@apply border border-n-4 rounded-md bg-n-7 text-n-3 pl-4": {},
+          "@apply border border-stroke-1 bg-transparent rounded-lg text-n-3 pl-4":
+            {},
         },
       });
       addUtilities({});

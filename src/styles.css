@@ -11,6 +11,10 @@
     @apply pl-10 bg-transparent border rounded-lg border-n-5 text-n-2;
   }
 
+  .p-inputnumber > input {
+    @apply w-full;
+  }
+
   .p-calendar {
     @apply w-full h-full;
   }
