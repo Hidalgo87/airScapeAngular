@@ -19,6 +19,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
   providers: [provideIcons({ heroMapPin, heroUser, octSearch })],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchBarComponent {}
+export class SearchBarComponent {
+  date: Date | Date[] | undefined;
+}

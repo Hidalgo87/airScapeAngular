@@ -6,14 +6,19 @@ import { AuthLayoutComponent } from './layout/components/auth-layout/auth-layout
 import { ListingsComponent } from './features/listings/pages/listings/listings.component';
 import { ProfileComponent } from './features/profile/pages/profile/profile.component';
 import { ListingDetailsComponent } from './features/listings/pages/listing-details/listing-details.component';
+import { CreateListingComponent } from './features/listings/pages/create-listing/create-listing.component';
 
 export const routes: Routes = [
   { path: 'a', component: ListingsComponent },
   { path: 'profile', component: ProfileComponent },
   { path: '', component: HomeComponent, pathMatch: 'full' },
   {
-    component: ListingDetailsComponent,
     path: 'listing/details/:id',
+    component: ListingDetailsComponent,
+  },
+  {
+    path: 'listing/create',
+    component: CreateListingComponent,
   },
   {
     path: '',
