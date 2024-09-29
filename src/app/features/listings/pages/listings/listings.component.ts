@@ -10,12 +10,14 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrl: './listings.component.css',
 })
 export class ListingsComponent {
-  // TODO: Crear User service
 
   constructor(private listingServices: ListingsService) {}
 
+  onClick(){
+    
+  }
+
   onUpload(event: Event) {
-    const fileName = uuidv4();
 
     const input = event.target as HTMLInputElement;
     if (input.files!.length <= 0) {
