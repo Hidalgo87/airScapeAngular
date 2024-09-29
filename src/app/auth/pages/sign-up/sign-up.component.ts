@@ -15,14 +15,16 @@ export class SignUpComponent {
   user:UserAuth = {
     userName:'',
     email:'',
-    password:''
+    password:'',
+    isOwner:false
   };
 
   registerForm = this.fb.group({
     userName:['', Validators.required],
-    email:[''],
+    email:['', Validators.required],
     password:['', Validators.required],
-    repassword:['', Validators.required]
+    repassword:['', Validators.required],
+    isOwner:[false, Validators.required]
   });
 
   registerErrorMessage: string = '';
@@ -43,9 +45,10 @@ onSignUp(){
     console.log('this.registerForm.valid', this.registerForm.valid)
 
     const userName = this.registerForm.value.userName!
-    const email = this.registerForm.value.email
+    const email = this.registerForm.value.email!
     const password = this.registerForm.value.password!
     const repassword = this.registerForm.value.repassword
+    const isOwner = this.registerForm.value.isOwner!
 
 
     if (userName.length < 8 || userName.length > 15) {
@@ -85,8 +88,8 @@ onSignUp(){
       const response = this.userService.register({
         userName: userName, // TODO: CHANGE BURNED DATA
         password: password, // TODO: CHANGE BURNED DATA
-        email: 'genericEmail@gmail.com', // TODO: CHANGE BURNED DATA
-        isOwner: true, // TODO: CHANGE BURNED DATA
+        email: email, // TODO: CHANGE BURNED DATA
+        isOwner: isOwner, // TODO: CHANGE BURNED DATA
       }) // TODO: CHANGE BURNED DATA
       if (response.success){
         this.router.navigateByUrl('/home');
