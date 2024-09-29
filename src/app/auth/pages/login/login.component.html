@@ -11,7 +11,7 @@
     <label class="mb-1">Username</label>
     <input
       type="text"
-      class="w-full pl-4 text-lg border rounded-md border-n-4 text-n-3 h-11"
+      class="w-full input h-11"
       id="login-username"
       formControlName="userName"
     />
@@ -21,7 +21,7 @@
     <label class="mb-1">Password</label>
     <input
       type="password"
-      class="w-full pl-4 text-lg border rounded-md border-n-4 text-n-3 h-11"
+      class="w-full input h-11"
       id="login-password"
       formControlName="password"
     />
@@ -29,8 +29,9 @@
 </form>
 
 <button
-  class="w-full px-8 text-lg font-semibold rounded-md cursor-pointer h-11 bg-color-1"
-  (click)="onLogin()">
+  class="w-full px-8 text-lg font-semibold rounded-md cursor-pointer h-11 bg-color-1 text-n-1"
+  (click)="onLogin()"
+>
   Log In
 </button>
 <p class="mt-4 text-color-5" id="login-error">{{ loginErrorMessage }}</p>
