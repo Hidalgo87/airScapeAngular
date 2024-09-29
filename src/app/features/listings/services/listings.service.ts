@@ -15,17 +15,16 @@ import { ListingBrief } from '../interfaces/listingBrief.interface';
 })
 /*
 FALTA PROBARLOS:
-CHECKED: metodo eliminar propiedad (listingId)
-CHECKED: metodo editar propiedad (JSON.listing)
-CHECKED: metodo agregar imagenes (listingId, imagenes File[])
-CHECKED: metodo busqueda (ciudad string, fecha string (ignorar param, pero pedirlo), num_huespedes num): retorno imagen, nombre, precio, calificacion
-CHECKED: metodo detalles propiedad (id_propiedad) : retorno listing , el nombre y foto del anfitrión
-CHECKED: metodo crear propiedad (puede recibir 1:* imagenes)
+CHECKED: metodo eliminar propiedad deleteListing(listingId:string)
+CHECKED: metodo editar propiedad editListing(newListing:Listing, newImages:File[])
+CHECKED: metodo busqueda searchListings(cityName: string, guestsNumber: number, startDate: string = '', endDate: string = '')
+CHECKED: metodo detalles propiedad getListingDetails(listingId:string)
+CHECKED: metodo crear propiedad createListing(listingParams:ListingParams)
 */
 export class ListingsService {
-
+  
   constructor(private imageService:ImageService, private http:HttpClient) {
-
+    
   }
 
   deleteListing(listingId:string){
@@ -33,7 +32,7 @@ export class ListingsService {
     const listingSrt = JSON.stringify(allListings);
     localStorage.setItem('listings', listingSrt);
   }
-
+  
   async editListing(newListing:Listing, newImages:File[]){
     const allListings = this.getListings().filter(listing => listing.listingId != newListing.listingId);
     const oldListing = this.getListingById(newListing.listingId);
@@ -58,7 +57,7 @@ export class ListingsService {
     const listingSrt = JSON.stringify(allListings);
     localStorage.setItem('listings', listingSrt);
   }
-
+  
   searchListings(cityName: string, guestsNumber: number, startDate: string = '', endDate: string = ''):ListingBrief[] {
     let nearbyListings: Listing[] = [];
     let nearbyBriefListings: ListingBrief[] = [];
@@ -80,37 +79,54 @@ export class ListingsService {
     
     let guestsNumberListings:Listing[] = [];
     let guestsNumberBriefListings: ListingBrief[] = [];
-
+    
     if (guestsNumber > 0){
-    guestsNumberListings = this.getListings().filter(listing => listing.maxGuests <= guestsNumber);
-    guestsNumberBriefListings = guestsNumberListings.map(listing => {
-      return {
-        listingId:listing.listingId,
-        userName:listing.userName,
-        title:listing.title,
-        pricePerNight:listing.pricePerNight,
-        photo: listing.photos[0],
-        calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2))
-      };
-    });
+      guestsNumberListings = this.getListings().filter(listing => listing.maxGuests <= guestsNumber);
+      guestsNumberBriefListings = guestsNumberListings.map(listing => {
+        return {
+          listingId:listing.listingId,
+          userName:listing.userName,
+          title:listing.title,
+          pricePerNight:listing.pricePerNight,
+          photo: listing.photos[0],
+          calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2))
+        };
+      });
     }
     
-  
+    
     if (guestsNumberBriefListings.length === 0) {
       return nearbyBriefListings; 
     }
     if (nearbyBriefListings.length === 0) {
       return guestsNumberBriefListings; 
     }
-
+    
     return nearbyBriefListings.filter(nearbyListing => 
       guestsNumberBriefListings.some(guestsNumberListing => guestsNumberListing.listingId === nearbyListing.listingId)
     );
   }
-
-
+  
+  
   async uploadFile(file: File, folderName: string, fileName: string) {
     return await this.imageService.upload(file,folderName, fileName);
+  }
+  getListingDetails(listingId:string):ListingDetails|null{
+    const listingSrt = localStorage.getItem(`listing-${listingId}`);
+    if (listingSrt) {
+      let listing:Listing = JSON.parse(listingSrt);
+      const userSrt = localStorage.getItem(listing.userName);
+      if (userSrt) {
+        let user:User = JSON.parse(userSrt);
+        let listingDetails:ListingDetails = {
+          ...listing,
+          ownerName: user.userName,
+          ownerPicture: user.profilePicture
+        }
+        return listingDetails;
+      }
+    }
+    return null;
   }
 
   async createListing(listingParams:ListingParams):Promise<Listing> {
@@ -154,23 +170,6 @@ export class ListingsService {
     return listing;
   }
 
-  getListingDetails(listingId:string):ListingDetails|null{
-    const listingSrt = localStorage.getItem(`listing-${listingId}`);
-    if (listingSrt) {
-      let listing:Listing = JSON.parse(listingSrt);
-      const userSrt = localStorage.getItem(listing.userName);
-      if (userSrt) {
-        let user:User = JSON.parse(userSrt);
-        let listingDetails:ListingDetails = {
-          ...listing,
-          ownerName: user.userName,
-          ownerPicture: user.profilePicture
-        }
-        return listingDetails;
-      }
-    }
-    return null;
-  }
 
   private getListingsNearby(cityName:string, rate:number=50){
     let coordinates: { lat: string, lon: string }[] = [];
