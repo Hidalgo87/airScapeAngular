@@ -14,9 +14,10 @@ import { ListingBrief } from '../interfaces/listingBrief.interface';
   providedIn: 'root',
 })
 /*
-metodo eliminar propiedad (listingId)
-metodo editar propiedad (JSON.listing)
 FALTA PROBARLOS:
+CHECKED: metodo eliminar propiedad (listingId)
+CHECKED: metodo editar propiedad (JSON.listing)
+CHECKED: metodo agregar imagenes (listingId, imagenes File[])
 CHECKED: metodo busqueda (ciudad string, fecha string (ignorar param, pero pedirlo), num_huespedes num): retorno imagen, nombre, precio, calificacion
 CHECKED: metodo detalles propiedad (id_propiedad) : retorno listing , el nombre y foto del anfitrión
 CHECKED: metodo crear propiedad (puede recibir 1:* imagenes)
@@ -25,6 +26,49 @@ export class ListingsService {
 
   constructor(private imageService:ImageService, private http:HttpClient) {
 
+  }
+
+  deleteListing(listingId:string){
+    const allListings = this.getListings().filter(listing => listing.listingId != listingId);
+    const listingSrt = JSON.stringify(allListings);
+    localStorage.setItem('listings', listingSrt);
+  }
+
+  editListing(newListing:Listing){
+    const allListings = this.getListings().filter(listing => listing.listingId != newListing.listingId);
+    const oldListing = this.getListingById(newListing.listingId);
+    newListing.createdAt = oldListing?.createdAt;
+    newListing.updatedAt = new Date;
+    // Si toca unir addImages: Sólo es añadir param: images:File[]
+    // Y acá poner el for que recorre images
+    allListings.push(newListing);
+    const listingSrt = JSON.stringify(allListings);
+    localStorage.setItem('listings', listingSrt);
+  }
+
+  async addImages(listingId:string, images:File[]){
+    const allListings = this.getListings().filter(listing => listing.listingId != listingId);
+    const oldListing = this.getListingById(listingId);
+    for (let file of images){
+      const imageId = uuid();
+      const imageUrl = await this.uploadFile(file,listingId,imageId);
+      if (imageUrl){
+        const image:Image = {
+          listingId: listingId,
+          imageId: imageId,
+          imageUrl: imageUrl
+        }
+        oldListing?.photos.push(image);
+      }
+      else{
+        console.error('No se pudo subir la imagen')
+      }
+    }
+    if (oldListing){
+      allListings.push(oldListing);
+      const listingSrt = JSON.stringify(allListings);
+      localStorage.setItem('listings', listingSrt);
+    }
   }
 
   searchListings(cityName: string, guestsNumber: number, startDate: string = '', endDate: string = ''):ListingBrief[] {
@@ -118,7 +162,7 @@ export class ListingsService {
     }
     let currentListings = this.getListings();
     currentListings=[...currentListings, listing];
-    localStorage.setItem(`listings`,JSON.stringify(currentListings));
+    localStorage.setItem('listings',JSON.stringify(currentListings));
     return listing;
   }
 
@@ -212,7 +256,7 @@ export class ListingsService {
   }
 
   private getListings():Listing[]{
-    let listingSrt = localStorage.getItem(`listings`);
+    let listingSrt = localStorage.getItem('listings');
     if(listingSrt){
       return JSON.parse(listingSrt);
     }
@@ -220,7 +264,7 @@ export class ListingsService {
   }
 
   getListingById(listingId:string):Listing|null{
-    let listingSrt = localStorage.getItem(`listings`);
+    let listingSrt = localStorage.getItem('listings');
     if(listingSrt){
       const listings:Listing[] = JSON.parse(listingSrt);
       const listingFound = listings.find(element => {

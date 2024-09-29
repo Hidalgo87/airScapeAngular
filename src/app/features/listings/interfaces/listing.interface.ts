@@ -8,11 +8,11 @@ export interface Listing {
   description: string;
   address: string;
   latitude: number;
-  longitude: number;
+  longitude: number;                            
   pricePerNight: number;
   numBedrooms: number;
   numBathrooms: number;
   maxGuests: number;
-  createdAt: Date;  
-  updatedAt: Date;
+  createdAt?: Date;  
+  updatedAt?: Date;
 }
