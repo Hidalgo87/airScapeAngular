@@ -34,27 +34,17 @@ export class ListingsService {
     localStorage.setItem('listings', listingSrt);
   }
 
-  editListing(newListing:Listing){
+  async editListing(newListing:Listing, newImages:File[]){
     const allListings = this.getListings().filter(listing => listing.listingId != newListing.listingId);
     const oldListing = this.getListingById(newListing.listingId);
     newListing.createdAt = oldListing?.createdAt;
     newListing.updatedAt = new Date;
-    // Si toca unir addImages: Sólo es añadir param: images:File[]
-    // Y acá poner el for que recorre images
-    allListings.push(newListing);
-    const listingSrt = JSON.stringify(allListings);
-    localStorage.setItem('listings', listingSrt);
-  }
-
-  async addImages(listingId:string, images:File[]){
-    const allListings = this.getListings().filter(listing => listing.listingId != listingId);
-    const oldListing = this.getListingById(listingId);
-    for (let file of images){
+    for (let file of newImages){
       const imageId = uuid();
-      const imageUrl = await this.uploadFile(file,listingId,imageId);
+      const imageUrl = await this.uploadFile(file,newListing.listingId,imageId);
       if (imageUrl){
         const image:Image = {
-          listingId: listingId,
+          listingId: newListing.listingId,
           imageId: imageId,
           imageUrl: imageUrl
         }
@@ -64,11 +54,9 @@ export class ListingsService {
         console.error('No se pudo subir la imagen')
       }
     }
-    if (oldListing){
-      allListings.push(oldListing);
-      const listingSrt = JSON.stringify(allListings);
-      localStorage.setItem('listings', listingSrt);
-    }
+    allListings.push(newListing);
+    const listingSrt = JSON.stringify(allListings);
+    localStorage.setItem('listings', listingSrt);
   }
 
   searchListings(cityName: string, guestsNumber: number, startDate: string = '', endDate: string = ''):ListingBrief[] {
