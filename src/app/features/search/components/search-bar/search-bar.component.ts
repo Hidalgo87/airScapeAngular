@@ -5,6 +5,7 @@ import { octSearch } from '@ng-icons/octicons';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-search-bar',
@@ -15,11 +16,14 @@ import { FloatLabelModule } from 'primeng/floatlabel';
     ReactiveFormsModule,
     CalendarModule,
     FloatLabelModule,
+    InputTextModule,
   ],
   providers: [provideIcons({ heroMapPin, heroUser, octSearch })],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.css',
 })
 export class SearchBarComponent {
+  city: string | undefined;
   date: Date | Date[] | undefined;
+  guests: number | undefined;
 }

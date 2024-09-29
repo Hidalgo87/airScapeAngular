@@ -1,7 +1,7 @@
 <div
-  class="box-content relative pb-10 flex bg-n-6/80 w-[60rem] h-[3.5rem] rounded-xl mx-auto py-4 justify-center gap-4 px-4"
+  class="box-content relative pb-10 flex bg-n-6/80 w-[60rem] h-[3.5rem] rounded-xl mx-auto pt-9 justify-center gap-4 px-4"
 >
-  <div class="relative flex-grow">
+  <!-- <div class="relative flex-grow">
     <input
       type="text"
       class="w-full h-full pl-10 bg-transparent border rounded-lg border-n-5"
@@ -10,7 +10,18 @@
       name="heroMapPin"
       class="absolute text-xl -translate-y-1/2 text-n-3 left-3 top-1/2"
     />
-  </div>
+  </div> -->
+
+  <p-floatLabel>
+    <input
+      id="city"
+      class="h-14 border-n-5 input"
+      type="text"
+      pInputText
+      [(ngModel)]="city"
+    />
+    <label for="city">Search destinations</label>
+  </p-floatLabel>
 
   <!-- <p-floatLabel> -->
   <p-calendar

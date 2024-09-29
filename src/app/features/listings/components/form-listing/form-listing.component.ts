@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { UploadFileComponent } from '../upload-file/upload-file.component';
 
 @Component({
   selector: 'app-form-listing',
@@ -14,6 +15,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     InputTextModule,
     InputNumberModule,
     InputTextareaModule,
+    UploadFileComponent,
   ],
   templateUrl: './form-listing.component.html',
   styleUrl: './form-listing.component.css',

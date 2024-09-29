@@ -1,24 +1,42 @@
-<div class="relative px-12 py-16 mt-20">
-  <div class="text-center max-w-[70%] mx-auto py-4">
-    <h1 class="text-5xl leading-[3.5rem] tracking-wider font-bold">
-      Find Your Home<br />
-      Away from Home
+<div class="relative px-12">
+  <div class="absolute inset-x-0 top-0 h-fit -z-10">
+    <img
+      src="./assets/Back-lights.png"
+      alt="background"
+      class="w-full h-auto"
+    />
+  </div>
+
+  <div class="text-center max-w-[70%] mx-auto py-4 pt-20">
+    <h1 class="font-bold h1">
+      <h1 class="inline font-extrabold h1 text-color-1">Find</h1>
+      Your Home
+      <br />
+      <p class="inline font-normal h1">Away</p>
+      from Home
     </h1>
     <p class="text-[#ada8c3] mt-4">
       Stay in unique homes and discover new adventures
     </p>
   </div>
 
-  <app-search-bar />
+  <div class="my-16">
+    <app-search-bar />
+  </div>
 
-  <div
-    class="grid grid-cols-4 p-4 mt-20 border gap-x-12 gap-y-6 border-stroke-1 rounded-2xl"
-  >
-    <app-listing-card
-      [id]="1"
-      [image_url]="'./assets/houses/house1.jpg'"
-      [price]="400000"
-      [title]="'Guatavita - Stunning cabins - La Leopolda'"
-    />
+  <div class="px-4 py-8 mt-20 border border-stroke-1 rounded-2xl">
+    <div class="flex items-center justify-center gap-4">
+      <ng-icon name="octNorthStar" class="text-color-4" />
+      <h4 class="font-semibold text-center h4">Popular stays</h4>
+      <ng-icon name="octNorthStar" class="text-color-4" />
+    </div>
+    <div class="grid grid-cols-4 mt-4 gap-x-12 gap-y-6">
+      <app-listing-card
+        [id]="1"
+        [image_url]="'./assets/houses/house1.jpg'"
+        [price]="400000"
+        [title]="'Guatavita - Stunning cabins - La Leopolda'"
+      />
+    </div>
   </div>
 </div>
