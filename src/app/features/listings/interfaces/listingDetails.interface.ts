@@ -1,4 +1,4 @@
-import { Listing } from "./listing";
+import { Listing } from "./listing.interface";
 
 export interface ListingDetails extends Listing{
     ownerName:string,

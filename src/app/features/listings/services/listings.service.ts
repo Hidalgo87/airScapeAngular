@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { ImageService } from '../../images/services/image.service';
-import { Listing } from '../interfaces/listing';
-import { ListingParams } from '../interfaces/listingParams';
+import { Listing } from '../interfaces/listing.interface';
+import { ListingParams } from '../interfaces/listingParams.interface';
 import { v4 as uuid } from 'uuid';
-import { Image } from '../../images/interfaces/image';
-import { ListingDetails } from '../interfaces/listingDetails';
-import { User } from '../../profile/interfaces/user';
+import { Image } from '../../images/interfaces/image.interface';
+import { ListingDetails } from '../interfaces/listingDetails.interface';
+import { User } from '../../profile/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 /*
-metodo busqueda (ciudad string, fecha string (ignorar param, pero pedirlo), num_huespedes num): retorno array propiedades
+metodo busqueda (ciudad string, fecha string (ignorar param, pero pedirlo), num_huespedes num): retorno imagen, nombre, precio, calificacion
 CHECKED: metodo detalles propiedad (id_propiedad) : retorno listing , el nombre y foto del anfitrión
 CHECKED: metodo crear propiedad (puede recibir 1:* imagenes)
 metodo editar propiedad ()

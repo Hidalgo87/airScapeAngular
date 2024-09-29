@@ -1,4 +1,4 @@
-import { Image } from "../../images/interfaces/image";
+import { Image } from "../../images/interfaces/image.interface";
 
 export interface Listing {
   listingId: string;
