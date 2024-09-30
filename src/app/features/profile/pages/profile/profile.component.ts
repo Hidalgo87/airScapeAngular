@@ -33,17 +33,13 @@ export class ProfileComponent implements OnInit{
   ngOnInit(): void {
     this.user = this.profileService.getCurrentProfile();
     this.updateProfileForm.setValue({
-      email: this.user.email,
-      bio: this.user.bio,
-      password: this.user.password
+      email: this.user().email,
+      bio: this.user().bio,
+      password: this.user().password
     });
-    console.log('this.user.password', this.user.password)
   }
 
   onSaveChanges(){
-    console.log('this.updateProfileForm.value.email', this.updateProfileForm.value.email)
-    console.log('this.updateProfileForm.value.password', this.updateProfileForm.value.password)
-    console.log('this.updateProfileForm.value.bio', this.updateProfileForm.value.bio)
     if (!this.updateProfileForm.valid){
       alert('Porfavor diligencia todos los campos');
       //TODO: Poner mensaje de alerta llenar formulario
