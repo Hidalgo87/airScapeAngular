@@ -8,6 +8,7 @@ import { ProfileComponent } from './features/profile/pages/profile/profile.compo
 import { ListingDetailsComponent } from './features/listings/pages/listing-details/listing-details.component';
 import { CreateListingComponent } from './features/listings/pages/create-listing/create-listing.component';
 import { UserListingsComponent } from './features/listings/pages/user-listings/user-listings.component';
+import { SearchComponent } from './features/search/pages/search/search.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -16,6 +17,7 @@ export const routes: Routes = [
   { path: 'listing/details/:id', component: ListingDetailsComponent },
   { path: 'listing/create', component: CreateListingComponent },
   { path: 'my-listings', component: UserListingsComponent },
+  { path: 'search', component: SearchComponent },
   {
     path: '',
     component: AuthLayoutComponent,

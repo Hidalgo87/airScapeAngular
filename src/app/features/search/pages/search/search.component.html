@@ -1,1 +1,40 @@
-<p>search works!</p>
+<div class="mx-16 mt-12">
+  <div class="">
+    <div class="">
+      <app-search-bar />
+      <div
+        class="flex px-10 py-4 mx-auto border rounded-lg mt-14 border-stroke-1 w-fit"
+      >
+        <div class="flex">
+          <p class="body-2">Filter by price</p>
+          <div>
+            <p-inputNumber
+              inputId="price"
+              mode="currency"
+              currency="COL"
+              [(ngModel)]="price"
+              styleClass="w-full h-10 mb-3"
+            />
+            <p-slider
+              [(ngModel)]="price"
+              class="w-full"
+              [min]="0"
+              [max]="2000000"
+              [step]="10000"
+            />
+          </div>
+        </div>
+        <div class="flex">
+          <p-dropdown
+            [options]="sortOptions"
+            [(ngModel)]="sort"
+            optionLabel="name"
+            placeholder="Sort by"
+            styleClass="bg-transparent border-stroke-1 border w-[13rem] text-sm"
+            panelStyleClass="border-stroke-1 border bg-n-7"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
