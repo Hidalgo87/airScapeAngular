@@ -8,6 +8,7 @@ import {
 } from '@ng-icons/heroicons/outline';
 import { NgClass } from '@angular/common';
 import { UserService } from '../../../auth/services/user.service';
+import { octSearch } from '@ng-icons/octicons';
 
 @Component({
   selector: 'app-header',
@@ -16,12 +17,17 @@ import { UserService } from '../../../auth/services/user.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
   providers: [
-    provideIcons({ heroArrowLeftEndOnRectangle, heroUser, heroHome }),
+    provideIcons({
+      heroArrowLeftEndOnRectangle,
+      heroUser,
+      heroHome,
+      octSearch,
+    }),
   ],
 })
 export class HeaderComponent {
   user;
-  constructor (private userService:UserService, private router:Router){
+  constructor(private userService: UserService, private router: Router) {
     this.user = userService.getUser();
   }
 
@@ -35,9 +41,8 @@ export class HeaderComponent {
     this.isDropdownOpen = false;
   }
 
-  onLogOut(){
+  onLogOut() {
     this.userService.logOut();
     this.router.navigateByUrl('/login');
   }
-
 }

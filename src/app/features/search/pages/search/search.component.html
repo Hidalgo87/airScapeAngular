@@ -1,27 +1,25 @@
 <div class="mt-12">
   <app-search-bar />
-  <div class="flex flex-col my-20 ml-8 mr-4 lg:flex-row">
+  <div class="flex flex-col gap-4 my-20 ml-8 mr-4 lg:flex-row">
     <div
-      class="flex flex-row items-center px-6 pt-6 pb-10 border rounded-lg lg:flex-col w-fit border-stroke-1 h-fit"
+      class="flex flex-col gap-12 px-6 pt-6 pb-10 mx-auto border rounded-lg md:max-lg:flex-row lg:mx-0 w-fit border-stroke-1 h-fit"
     >
       <!-- <div class="mb-6">
         <h5 class="h5">Filtering and Sorting</h5>
       </div> -->
-      <div class="mb-10">
-        <div class="mb-2">
-          <div class="flex mb-2 text-color-1">
-            <ng-icon name="octFilter" />
-            <h6 class="ml-2 h6">Filter</h6>
-          </div>
-          <p class="mb-1 body-2">Price up to</p>
+      <div class="flex flex-row items-start gap-4 lg:flex-col">
+        <div class="flex items-center text-color-1">
+          <ng-icon name="octFilter" />
+          <h6 class="ml-2 h6">Filter</h6>
         </div>
         <div class="mx-auto w-fit">
+          <p class="font-extralight body-2">Price up to</p>
           <p-inputNumber
             inputId="price"
             mode="currency"
             currency="COL"
             [(ngModel)]="price"
-            styleClass="w-full h-11 mb-4"
+            styleClass="w-full h-11 mb-4 border-stroke-1"
           />
           <p-slider
             [(ngModel)]="price"
@@ -32,8 +30,8 @@
           />
         </div>
       </div>
-      <div class="">
-        <div class="flex items-center mb-2 text-color-1">
+      <div class="flex flex-row items-start gap-4 lg:flex-col">
+        <div class="flex items-center mb-1 text-color-1">
           <ng-icon name="octSortDesc" />
           <h6 class="ml-2 h6">Sort</h6>
         </div>
@@ -47,7 +45,7 @@
         />
       </div>
     </div>
-    <div class="flex-grow pl-4">
+    <div class="flex-grow">
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-8">
         <app-listing-card />
         <app-listing-card />

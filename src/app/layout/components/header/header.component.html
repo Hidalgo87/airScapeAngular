@@ -8,15 +8,22 @@
 
     @if (user().userName.length > 0) {
     <div
-      class="hidden lg:block h-10 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-n-2 w-[28rem]"
+      class="hidden lg:block h-9 cursor-pointer absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[28rem] hover:opacity-85"
+      [routerLink]="['/search']"
     >
-      <input
+      <!-- <input
         type="text"
         class="box-border w-full h-full text-sm border rounded-full pl-11 border-stroke-1 bg-n-6"
         placeholder="Buscar propiedad"
-      />
-      <div class="absolute flex w-4 h-4 m-auto -translate-y-1/2 top-1/2 left-4">
+      /> -->
+      <!-- <div class="absolute flex w-4 h-4 m-auto -translate-y-1/2 top-1/2 left-4">
         <i class="fa-solid fa-magnifying-glass"></i>
+      </div> -->
+      <div
+        class="flex items-center justify-center w-full h-full border rounded-full text-n-2 border-stroke-1 bg-n-6"
+      >
+        <ng-icon name="octSearch" class="text-n-2" />
+        <p class="ml-2 text-sm body-2">Search a stay</p>
       </div>
     </div>
     <nav class="hidden gap-10 ml-auto lg:flex">
