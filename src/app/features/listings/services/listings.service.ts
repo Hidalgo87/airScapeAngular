@@ -19,6 +19,7 @@ CHECKED: metodo eliminar propiedad deleteListing(listingId:string)
 CHECKED: metodo detalles propiedad getListingDetails(listingId:string)
 CHECKED: metodo busqueda searchListings(cityName: string, guestsNumber: number, startDate: string = '', endDate: string = '')
 CHECKED: metodo editar propiedad editListing(newListing:Listing, newImages:File[])
+CHECKED: metodo obtener home getPopularListings(amountListings:number=8)
 */
 export class ListingsService {
   
@@ -108,10 +109,10 @@ export class ListingsService {
     );
   }
   
-  
   async uploadFile(file: File, folderName: string, fileName: string) {
     return await this.imageService.upload(file,folderName, fileName);
   }
+
   getListingDetails(listingId:string):ListingDetails|null{
     const listing = this.getListingById(listingId);
     if (listing) {
@@ -170,6 +171,33 @@ export class ListingsService {
     return listing;
   }
 
+  getPopularListings(amountListings:number=8):Listing[]{
+    let listingSrt = localStorage.getItem('listings');
+    if(listingSrt){
+      const listings:Listing[] = JSON.parse(listingSrt);
+      const shuffledListings = listings.sort(()=>0.5- Math.random());
+      if (amountListings >= listings.length){
+        return shuffledListings
+      } else {
+        return shuffledListings.slice(0,amountListings)
+      }
+    }
+    return [];
+  }
+
+  getListingById(listingId:string):Listing|null{
+    let listingSrt = localStorage.getItem('listings');
+    if(listingSrt){
+      const listings:Listing[] = JSON.parse(listingSrt);
+      const listingFound = listings.find(element => {
+        return element.listingId === listingId
+      });
+      if (!!listingFound){
+        return listingFound
+      };
+    }
+    return null;
+  }
 
   private async getListingsNearby(cityName:string){
   
@@ -183,7 +211,6 @@ export class ListingsService {
     const response = this.findNearbyListings(this.getListings(), latitude, longitude);
     return response;
   }
-
 
   private findNearbyListings(
     listings: Listing[],
@@ -229,19 +256,5 @@ export class ListingsService {
       return JSON.parse(listingSrt);
     }
     return [];
-  }
-
-  getListingById(listingId:string):Listing|null{
-    let listingSrt = localStorage.getItem('listings');
-    if(listingSrt){
-      const listings:Listing[] = JSON.parse(listingSrt);
-      const listingFound = listings.find(element => {
-        return element.listingId === listingId
-      });
-      if (!!listingFound){
-        return listingFound
-      };
-    }
-    return null;
   }
 }

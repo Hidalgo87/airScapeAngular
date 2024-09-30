@@ -36,27 +36,14 @@ export class LoginComponent {
     let userName = this.loginForm.value.userName!;
     let password = this.loginForm.value.password!;
 
-    if(userName.length < 8 || userName.length >15){
-      this.setLoginErrorMessage("El nombre de usuario debe tener entre 8 y 15 caracteres.");
-      return;
-    } else if (/\s/.test(userName)) {
-      this.setLoginErrorMessage('El nombre de usuario no puede contener espacios.');
-      return;
-    } else if (!/^[A-Za-z]/.test(userName)) {
-      this.setLoginErrorMessage('El nombre de usuario debe comenzar con una letra.');
-      return;
-    } else {
-      this.setLoginErrorMessage('');
-    }
     let response = this.userService.login({userName:userName,password:password});
     
-
     if (response.success) {
       this.setLoginErrorMessage("Exitoso");
       let user = this.userService.getUser();
       this.router.navigateByUrl("/")
     } else {
-      this.setLoginErrorMessage("Usuario no registrado")
+      this.setLoginErrorMessage(response.message!)
     }
   };
 }
