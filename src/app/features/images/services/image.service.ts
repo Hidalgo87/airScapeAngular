@@ -30,4 +30,41 @@ export class ImageService {
     .getPublicUrl(`${folderName}/${fileName}`)
     return data.publicUrl;
    }
+
+   async updateProfilePhoto(file:File, userId:string):Promise<string>{
+    const folder = 'profile';
+    const { data: existingImage, error: checkError } = await this.supabase
+    .storage
+    .from('airScapeBKT')  // Reemplaza con el nombre de tu bucket
+    .list(folder, { search: userId });
+
+    if (checkError) {
+      console.error('Error checking for existing image:', checkError.message);
+    }
+
+    if (existingImage && existingImage.length > 0) {
+      const { error: deleteError } = await this.supabase
+        .storage
+        .from('airScapeBKT')
+        .remove([`${folder}/${existingImage[0].name}`]);
+
+        if (deleteError) {
+          console.error('Error checking for existing image:', deleteError.message);
+        }
+    }
+
+    const { error } = await this.supabase
+    .storage
+    .from('airScapeBKT')
+    .upload(`${folder}/${userId}`, file);
+    if (error){
+      alert(error.message);
+    }
+    const { data } = await this.supabase
+    .storage
+    .from('airScapeBKT')
+    .getPublicUrl(`${folder}/${userId}`);
+
+    return `${data.publicUrl}?t=${new Date().getTime()}`;
+  }
 }

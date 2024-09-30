@@ -50,7 +50,6 @@ onSignUp(){
     const repassword = this.registerForm.value.repassword
     const isOwner = this.registerForm.value.isOwner!
 
-
     if (userName.length < 8 || userName.length > 15) {
       this.setRegisterErrorMessage('El nombre de usuario debe tener entre 8 y 15 caracteres.');
       return; 
@@ -61,7 +60,6 @@ onSignUp(){
       this.setRegisterErrorMessage('El nombre de usuario debe comenzar con una letra.');
       return;
   } 
-
   
   if (password.length < 12 || password.length > 20) {
       this.setRegisterErrorMessage('La contraseña debe tener entre 12 y 20 caracteres.');
