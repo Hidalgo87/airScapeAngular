@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { User } from '../../interfaces/user.interfaces';
+import { UserAuth } from '../../interfaces/userAuth.interfaces';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -11,22 +12,24 @@ import { User } from '../../interfaces/user.interfaces';
   styleUrl: './sign-up.component.css'
 })
 export class SignUpComponent {
-  user:User = {
+  user:UserAuth = {
     userName:'',
     email:'',
-    password:''
+    password:'',
+    isOwner:false
   };
 
   registerForm = this.fb.group({
-    userName:[''],
-    email:[''],
-    password:[''],
-    repassword:['']
+    userName:['', Validators.required],
+    email:['', Validators.required],
+    password:['', Validators.required],
+    repassword:['', Validators.required],
+    isOwner:[false, Validators.required]
   });
 
   registerErrorMessage: string = '';
 
-  constructor(private fb:FormBuilder, private router:Router) {
+  constructor(private fb:FormBuilder, private router:Router, private userService:UserService) {
   } ;
 
   setRegisterErrorMessage(message: string) {
@@ -35,15 +38,17 @@ export class SignUpComponent {
 
 
 onSignUp(){
-    const userName = this.registerForm.value.userName
-    const email = this.registerForm.value.email
-    const password = this.registerForm.value.password
-    const repassword = this.registerForm.value.repassword
-
-    if (!userName || !password  || !repassword){
+    if(!this.registerForm.valid){
       this.setRegisterErrorMessage("Diligenciar los campos");
       return;
     }
+    console.log('this.registerForm.valid', this.registerForm.valid)
+
+    const userName = this.registerForm.value.userName!
+    const email = this.registerForm.value.email!
+    const password = this.registerForm.value.password!
+    const repassword = this.registerForm.value.repassword
+    const isOwner = this.registerForm.value.isOwner!
 
 
     if (userName.length < 8 || userName.length > 15) {
@@ -55,10 +60,7 @@ onSignUp(){
   } else if (!/^[A-Za-z]/.test(userName)) {
       this.setRegisterErrorMessage('El nombre de usuario debe comenzar con una letra.');
       return;
-  } else if (localStorage.getItem(userName) != null) {
-      this.setRegisterErrorMessage('El nombre de usuario ingresado ya está en uso.');
-      return;
-  }
+  } 
 
   
   if (password.length < 12 || password.length > 20) {
@@ -83,8 +85,18 @@ onSignUp(){
       return;
   } else {
       this.setRegisterErrorMessage(' ');
-      localStorage.setItem(userName,password);
-      this.router.navigateByUrl("/login");
+      const response = this.userService.register({
+        userName: userName, 
+        password: password, 
+        email: email, 
+        isOwner: isOwner, 
+      }) 
+      if (response.success){
+        this.router.navigateByUrl('/home');
+      }else{
+        this.setRegisterErrorMessage('El usuario ya existe.');
+        return;
+      }
   }
   }
 }

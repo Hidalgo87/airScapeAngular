@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { ListingsService } from '../../services/listings.service';
 import { v4 as uuidv4 } from 'uuid';
+import { ListingParams } from '../../interfaces/listingParams.interface';
+import { UserService } from '../../../../auth/services/user.service';
+import { Listing } from '../../interfaces/listing.interface';
 
 @Component({
   selector: 'app-listings',
@@ -10,21 +13,21 @@ import { v4 as uuidv4 } from 'uuid';
   styleUrl: './listings.component.css',
 })
 export class ListingsComponent {
-  // TODO: Crear User service
 
-  constructor(private listingServices: ListingsService) {}
+  selectedsFile:File[] = [];
+  constructor() {}
 
-  onUpload(event: Event) {
-    const fileName = uuidv4();
-
-    const input = event.target as HTMLInputElement;
-    if (input.files!.length <= 0) {
-      return;
+  async onClick(){
+    if (this.selectedsFile) {
+    } else {
+      console.log('No se ha seleccionado ningún archivo.');
     }
-
-    const file: File = input.files![0];
-
-    // TODO: Invocar el método UploadFile consultando el user que está logueado
-    this.listingServices.uploadFile(file, 'usernameInventado', fileName);
+  }
+  onUpload(event: Event) {
+    const input = event.target as HTMLInputElement; // Obtener el input
+    if (input.files && input.files.length > 0) {
+      this.selectedsFile.push(input.files[0]); // Almacenar el primer archivo seleccionado
+      console.log('Archivos seleccionados:', this.selectedsFile);
+    }
   }
 }

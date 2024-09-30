@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { User } from '../../interfaces/user.interfaces';
+import { UserService } from '../../services/user.service';
 
 
 
@@ -13,19 +13,14 @@ import { User } from '../../interfaces/user.interfaces';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  user:User = {
-    userName:'',
-    password:''
-  };
-
   loginForm = this.fb.group({
-    userName:[''],
-    password:['']
+    userName:['', Validators.required],
+    password:['', Validators.required]
   });
 
   loginErrorMessage: string = '';
 
-  constructor(private fb:FormBuilder, private router:Router){
+  constructor(private fb:FormBuilder, private router:Router, private userService:UserService){
     
   };
 
@@ -34,13 +29,12 @@ export class LoginComponent {
   }
 
   onLogin() {
-    let userName = this.loginForm.value.userName;
-    let password = this.loginForm.value.password;
-    localStorage.setItem("juanfernando","123")
-    if (!userName || !password){
+    if (!this.loginForm.valid){
       this.setLoginErrorMessage("Diligenciar los campos");
       return;
     }
+    let userName = this.loginForm.value.userName!;
+    let password = this.loginForm.value.password!;
 
     if(userName.length < 8 || userName.length >15){
       this.setLoginErrorMessage("El nombre de usuario debe tener entre 8 y 15 caracteres.");
@@ -54,16 +48,15 @@ export class LoginComponent {
     } else {
       this.setLoginErrorMessage('');
     }
+    let response = this.userService.login({userName:userName,password:password});
+    
 
-    const storedPassword = localStorage.getItem(userName.toLowerCase());
-
-    if (storedPassword ===null) {
-      this.setLoginErrorMessage("Usuario no registrado")
-    }else if (storedPassword === password) {
+    if (response.success) {
       this.setLoginErrorMessage("Exitoso");
-      this.router.navigateByUrl("/home")
+      let user = this.userService.getUser();
+      this.router.navigateByUrl("/")
     } else {
-      this.setLoginErrorMessage("Contraseña Incorrecta");
+      this.setLoginErrorMessage("Usuario no registrado")
     }
   };
 }

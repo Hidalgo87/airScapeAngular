@@ -1,7 +1,7 @@
-export interface Listing {
-  listingId: number;
-  userId: number;
+export interface ListingParams {
   title: string;
+  userName:string
+  filePhotos:File[];
   description: string;
   address: string;
   latitude: number;
@@ -10,6 +10,4 @@ export interface Listing {
   numBedrooms: number;
   numBathrooms: number;
   maxGuests: number;
-  createdAt: Date;
-  updatedAt: Date;
 }
