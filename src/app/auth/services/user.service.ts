@@ -54,7 +54,7 @@ export class UserService {
       userName: user.userName,
       email: user.email!,
       password: user.password,
-      profilePicture: '',
+      profilePicture: 'https://img.freepik.com/premium-vector/stylish-default-user-profile-photo-avatar-vector-illustration_664995-352.jpg?semt=ais_hybrid',
       bio: '',
       isOwner: user.isOwner!,
       createdAt: new Date,

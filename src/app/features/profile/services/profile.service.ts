@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, WritableSignal } from '@angular/core';
 import { UserService } from '../../../auth/services/user.service';
 import { ProfileEditParams } from '../interfaces/profileEditParams.interface';
 import { User } from '../interfaces/user.interface';
@@ -13,15 +13,8 @@ export class ProfileService {
     this.user = this.userService.getUser();
    }
 
-  getCurrentProfile():User|null{
-    const userName = this.user().userName;
-    const userSrt = localStorage.getItem(userName.toLowerCase().trim());
-    if (userSrt){
-      const user:User = JSON.parse(userSrt);
-      return user;
-    }else{
-      return null;
-    }
+  getCurrentProfile():WritableSignal<User>{
+    return this.user;
   }
 
   editProfile(profileEditParams:ProfileEditParams){
@@ -35,6 +28,7 @@ export class ProfileService {
       user.updatedAt = new Date();
       const newUserStr = JSON.stringify(user);
       localStorage.setItem(userName.toLowerCase().trim(), newUserStr);
+      this.userService.setUser(user);
     } else {
       console.error('No se encontró un usuario en la sesión actual', )
     }
@@ -50,6 +44,7 @@ export class ProfileService {
         user.profilePicture = imageUrl;
         const newUserStr = JSON.stringify(user);
         localStorage.setItem(userName.toLowerCase().trim(), newUserStr);
+        this.userService.setUser(user);
         return imageUrl;
       } else {
         console.error('No se pudo subir la foto de perfil', );
