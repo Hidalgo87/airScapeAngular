@@ -7,19 +7,18 @@ import { Image } from '../../images/interfaces/image.interface';
 import { ListingDetails } from '../interfaces/listingDetails.interface';
 import { User } from '../../profile/interfaces/user.interface';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { firstValueFrom, map, Observable } from 'rxjs';
 import { ListingBrief } from '../interfaces/listingBrief.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 /*
-FALTA PROBARLOS:
-CHECKED: metodo eliminar propiedad deleteListing(listingId:string)
-CHECKED: metodo editar propiedad editListing(newListing:Listing, newImages:File[])
-CHECKED: metodo busqueda searchListings(cityName: string, guestsNumber: number, startDate: string = '', endDate: string = '')
-CHECKED: metodo detalles propiedad getListingDetails(listingId:string)
 CHECKED: metodo crear propiedad createListing(listingParams:ListingParams)
+CHECKED: metodo eliminar propiedad deleteListing(listingId:string)
+CHECKED: metodo detalles propiedad getListingDetails(listingId:string)
+CHECKED: metodo busqueda searchListings(cityName: string, guestsNumber: number, startDate: string = '', endDate: string = '')
+CHECKED: metodo editar propiedad editListing(newListing:Listing, newImages:File[])
 */
 export class ListingsService {
   
@@ -33,21 +32,21 @@ export class ListingsService {
     localStorage.setItem('listings', listingSrt);
   }
   
-  async editListing(newListing:Listing, newImages:File[]){
+  async editListing(newListing:Listing, newImages:File[]=[]){
     const allListings = this.getListings().filter(listing => listing.listingId != newListing.listingId);
     const oldListing = this.getListingById(newListing.listingId);
     newListing.createdAt = oldListing?.createdAt;
     newListing.updatedAt = new Date;
     for (let file of newImages){
       const imageId = uuid();
-      const imageUrl = await this.uploadFile(file,newListing.listingId,imageId);
+      const imageUrl = await this.uploadFile(file,`listings/${newListing.listingId}`,imageId);
       if (imageUrl){
         const image:Image = {
           listingId: newListing.listingId,
           imageId: imageId,
           imageUrl: imageUrl
         }
-        oldListing?.photos.push(image);
+        newListing?.photos.push(image);
       }
       else{
         console.error('No se pudo subir la imagen')
@@ -58,12 +57,12 @@ export class ListingsService {
     localStorage.setItem('listings', listingSrt);
   }
   
-  searchListings(cityName: string, guestsNumber: number, startDate: string = '', endDate: string = ''):ListingBrief[] {
+  async searchListings(cityName: string, guestsNumber: number, startDate: string = '', endDate: string = ''):Promise<ListingBrief[]> {
     let nearbyListings: Listing[] = [];
     let nearbyBriefListings: ListingBrief[] = [];
     
     if (cityName.length > 0) {
-      nearbyListings = this.getListingsNearby(cityName);
+      nearbyListings = await this.getListingsNearby(cityName);
       
       nearbyBriefListings = nearbyListings.map(listing => {
         return {
@@ -72,7 +71,8 @@ export class ListingsService {
           title:listing.title,
           pricePerNight:listing.pricePerNight,
           photo: listing.photos[0],
-          calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2))
+          calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2)),
+          maxGuests:listing.maxGuests
         };
       });
     }
@@ -81,7 +81,7 @@ export class ListingsService {
     let guestsNumberBriefListings: ListingBrief[] = [];
     
     if (guestsNumber > 0){
-      guestsNumberListings = this.getListings().filter(listing => listing.maxGuests <= guestsNumber);
+      guestsNumberListings = this.getListings().filter(listing => listing.maxGuests >= guestsNumber);
       guestsNumberBriefListings = guestsNumberListings.map(listing => {
         return {
           listingId:listing.listingId,
@@ -89,16 +89,17 @@ export class ListingsService {
           title:listing.title,
           pricePerNight:listing.pricePerNight,
           photo: listing.photos[0],
-          calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2))
+          calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2)),
+          maxGuests:listing.maxGuests
         };
       });
     }
     
     
-    if (guestsNumberBriefListings.length === 0) {
+    if (guestsNumber === 0) {
       return nearbyBriefListings; 
     }
-    if (nearbyBriefListings.length === 0) {
+    if (cityName.length === 0) {
       return guestsNumberBriefListings; 
     }
     
@@ -112,9 +113,8 @@ export class ListingsService {
     return await this.imageService.upload(file,folderName, fileName);
   }
   getListingDetails(listingId:string):ListingDetails|null{
-    const listingSrt = localStorage.getItem(`listing-${listingId}`);
-    if (listingSrt) {
-      let listing:Listing = JSON.parse(listingSrt);
+    const listing = this.getListingById(listingId);
+    if (listing) {
       const userSrt = localStorage.getItem(listing.userName);
       if (userSrt) {
         let user:User = JSON.parse(userSrt);
@@ -132,10 +132,10 @@ export class ListingsService {
   async createListing(listingParams:ListingParams):Promise<Listing> {
     const listingId = uuid();
     let listingImages:Image[] = [];
-    listingParams.filePhotos.forEach(async (file) => {
+    for (let file of listingParams.filePhotos){
       let imageId = uuid();
       let imageUrl = await this.uploadFile(file, 'listings', `${listingId}/${imageId}`)
-
+      console.log('imageUrl', imageUrl);
       if (imageUrl){
         let image:Image = {
           listingId: listingId,
@@ -146,7 +146,7 @@ export class ListingsService {
       }else {
           console.log('Error subiendo el archivo a la base de datos', file.name);
       }
-    });
+    }
     
     let listing:Listing = {
       listingId: listingId,
@@ -171,57 +171,38 @@ export class ListingsService {
   }
 
 
-  private getListingsNearby(cityName:string, rate:number=50){
-    let coordinates: { lat: string, lon: string }[] = [];
+  private async getListingsNearby(cityName:string){
   
-    this.getLatitudeLongitude(cityName).subscribe({
-      next: (data) => {
-        coordinates = data;
-        console.log('Coordinates:', coordinates);
-      },
-      error: (error) => {
-        console.error('Error fetching location data:', error);
-      },
-      complete: () => {
-        console.log('Location data fetch complete');
-      }
-    });
+    const data = await firstValueFrom(this.getLatitudeLongitude(cityName));
     let latitude = 0;
     let longitude = 0;
-    coordinates.forEach(coordinate =>{
+    data.forEach(coordinate =>{
       latitude = Number.parseFloat(coordinate.lat);
       longitude = Number.parseFloat(coordinate.lon);
     });
-
-    return this.findNearbyListings(this.getListings(), latitude, longitude, rate);
-
+    const response = this.findNearbyListings(this.getListings(), latitude, longitude);
+    return response;
   }
 
-  private haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
-    const toRad = (value: number) => (value * Math.PI) / 180; // Convierte grados a radianes
-  
-    const R = 6371; // Radio de la Tierra en kilómetros
-    const dLat = toRad(lat2 - lat1);
-    const dLon = toRad(lon2 - lon1);
-  
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  
-    return R * c; 
-  }
 
   private findNearbyListings(
     listings: Listing[],
     targetLat: number,
-    targetLon: number,
-    range: number 
+    targetLon: number
   ): Listing[] {
+    const latRange = 0.01; // Aproximadamente 0.4505 grados
+    const lonRange = 0.01; // Ajusta según la latitud
     return listings.filter(listing => {
-      const distance = this.haversineDistance(targetLat, targetLon, listing.latitude, listing.longitude);
-      return distance <= range; // Filtrar propiedades dentro del rango
+      // Asegúrate de que la propiedad tenga coordenadas válidas
+      if (listing.latitude == null || listing.longitude == null) {
+        return false;
+      }
+      return (
+        listing.latitude >= (targetLat - latRange) &&
+        listing.latitude <= (targetLat + latRange) &&
+        listing.longitude >= (targetLon - lonRange) &&
+        listing.longitude <= (targetLon + lonRange)
+      );
     });
   }
   
@@ -255,7 +236,7 @@ export class ListingsService {
     if(listingSrt){
       const listings:Listing[] = JSON.parse(listingSrt);
       const listingFound = listings.find(element => {
-        element.listingId === listingId
+        return element.listingId === listingId
       });
       if (!!listingFound){
         return listingFound

@@ -7,4 +7,5 @@ export interface ListingBrief {
   photo:Image;
   pricePerNight: number;
   calification:number;
+  maxGuests: number;
 }
