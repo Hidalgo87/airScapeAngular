@@ -51,18 +51,20 @@
             <!-- Opción para ver perfil -->
             <li
               class="flex items-center px-4 py-3 cursor-pointer hover:bg-n-5 hover:text-white"
+              [routerLink]="['/profile']"
             >
               <ng-icon class="mr-3 text-lg" name="heroUser"></ng-icon>
-              <a [routerLink]="['/profile']">Profile</a>
+              <p>Profile</p>
             </li>
 
             <!-- Opción para ver propiedades en caso de propietario -->
             @if (user().isOwner) {
             <li
               class="flex items-center px-4 py-3 cursor-pointer hover:bg-n-5 hover:text-white"
+              [routerLink]="['/login']"
             >
               <ng-icon class="mr-3 text-lg" name="heroHome"></ng-icon>
-              <a [routerLink]="['/login']">My listings</a>
+              <p>My listings</p>
             </li>
             }
 
