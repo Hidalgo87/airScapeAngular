@@ -1,39 +1,58 @@
-<div class="mx-16 mt-12">
-  <div class="">
-    <div class="">
-      <app-search-bar />
-      <div
-        class="flex px-10 py-4 mx-auto border rounded-lg mt-14 border-stroke-1 w-fit"
-      >
-        <div class="flex">
-          <p class="body-2">Filter by price</p>
-          <div>
-            <p-inputNumber
-              inputId="price"
-              mode="currency"
-              currency="COL"
-              [(ngModel)]="price"
-              styleClass="w-full h-10 mb-3"
-            />
-            <p-slider
-              [(ngModel)]="price"
-              class="w-full"
-              [min]="0"
-              [max]="2000000"
-              [step]="10000"
-            />
+<div class="mt-12">
+  <app-search-bar />
+  <div class="flex flex-col my-20 ml-8 mr-4 lg:flex-row">
+    <div
+      class="flex flex-row items-center px-6 pt-6 pb-10 border rounded-lg lg:flex-col w-fit border-stroke-1 h-fit"
+    >
+      <!-- <div class="mb-6">
+        <h5 class="h5">Filtering and Sorting</h5>
+      </div> -->
+      <div class="mb-10">
+        <div class="mb-2">
+          <div class="flex mb-2 text-color-1">
+            <ng-icon name="octFilter" />
+            <h6 class="ml-2 h6">Filter</h6>
           </div>
+          <p class="mb-1 body-2">Price up to</p>
         </div>
-        <div class="flex">
-          <p-dropdown
-            [options]="sortOptions"
-            [(ngModel)]="sort"
-            optionLabel="name"
-            placeholder="Sort by"
-            styleClass="bg-transparent border-stroke-1 border w-[13rem] text-sm"
-            panelStyleClass="border-stroke-1 border bg-n-7"
+        <div class="mx-auto w-fit">
+          <p-inputNumber
+            inputId="price"
+            mode="currency"
+            currency="COL"
+            [(ngModel)]="price"
+            styleClass="w-full h-11 mb-4"
+          />
+          <p-slider
+            [(ngModel)]="price"
+            class="w-full"
+            [min]="0"
+            [max]="2000000"
+            [step]="10000"
           />
         </div>
+      </div>
+      <div class="">
+        <div class="flex items-center mb-2 text-color-1">
+          <ng-icon name="octSortDesc" />
+          <h6 class="ml-2 h6">Sort</h6>
+        </div>
+        <p-dropdown
+          [options]="sortOptions"
+          [(ngModel)]="sort"
+          optionLabel="name"
+          placeholder="Sort by"
+          styleClass="bg-transparent border-stroke-1 border w-[15rem] text-sm"
+          panelStyleClass="border-stroke-1 border bg-n-7"
+        />
+      </div>
+    </div>
+    <div class="flex-grow pl-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-8">
+        <app-listing-card />
+        <app-listing-card />
+        <app-listing-card />
+        <app-listing-card />
       </div>
     </div>
   </div>

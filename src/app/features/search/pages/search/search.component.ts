@@ -4,6 +4,9 @@ import { SliderModule } from 'primeng/slider';
 import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { octFilter, octSortDesc } from '@ng-icons/octicons';
+import { ListingCardComponent } from '../../../listings/components/listing-card/listing-card.component';
 
 @Component({
   selector: 'app-search',
@@ -14,7 +17,10 @@ import { DropdownModule } from 'primeng/dropdown';
     FormsModule,
     InputNumberModule,
     DropdownModule,
+    NgIconComponent,
+    ListingCardComponent,
   ],
+  providers: [provideIcons({ octFilter, octSortDesc })],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
 })
