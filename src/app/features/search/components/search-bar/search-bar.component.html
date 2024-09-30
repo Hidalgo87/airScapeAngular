@@ -34,13 +34,12 @@
       class="absolute text-xl -translate-y-1/2 text-n-3 left-3 top-1/2"
     />
     <p-floatLabel>
-      <input
-        id="guests"
-        pKeyFilter="alpha"
-        class="w-full pl-10 h-14 border-n-5 input"
-        type="text"
-        pInputText
-        pKeyFilter="num"
+      <p-inputNumber
+        inputId="guests"
+        styleClass="h-14"
+        [(ngModel)]="guests"
+        [min]="0"
+        [max]="100"
       />
       <label for="guests" class="pl-7">Guests</label>
     </p-floatLabel>

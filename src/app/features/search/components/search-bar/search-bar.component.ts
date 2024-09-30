@@ -7,6 +7,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @Component({
   selector: 'app-search-bar',
@@ -19,6 +20,7 @@ import { KeyFilterModule } from 'primeng/keyfilter';
     FloatLabelModule,
     InputTextModule,
     KeyFilterModule,
+    InputNumberModule,
   ],
   providers: [provideIcons({ heroMapPin, heroUser, octSearch })],
   templateUrl: './search-bar.component.html',

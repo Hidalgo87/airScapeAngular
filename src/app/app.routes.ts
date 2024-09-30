@@ -7,19 +7,15 @@ import { ListingsComponent } from './features/listings/pages/listings/listings.c
 import { ProfileComponent } from './features/profile/pages/profile/profile.component';
 import { ListingDetailsComponent } from './features/listings/pages/listing-details/listing-details.component';
 import { CreateListingComponent } from './features/listings/pages/create-listing/create-listing.component';
+import { UserListingsComponent } from './features/listings/pages/user-listings/user-listings.component';
 
 export const routes: Routes = [
+  { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'a', component: ListingsComponent },
   { path: 'profile', component: ProfileComponent },
-  { path: '', component: HomeComponent, pathMatch: 'full' },
-  {
-    path: 'listing/details/:id',
-    component: ListingDetailsComponent,
-  },
-  {
-    path: 'listing/create',
-    component: CreateListingComponent,
-  },
+  { path: 'listing/details/:id', component: ListingDetailsComponent },
+  { path: 'listing/create', component: CreateListingComponent },
+  { path: 'my-listings', component: UserListingsComponent },
   {
     path: '',
     component: AuthLayoutComponent,
