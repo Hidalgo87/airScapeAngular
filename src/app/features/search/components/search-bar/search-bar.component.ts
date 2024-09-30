@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroMapPin, heroUser } from '@ng-icons/heroicons/outline';
 import { octSearch } from '@ng-icons/octicons';
@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
+import { KeyFilterModule } from 'primeng/keyfilter';
 
 @Component({
   selector: 'app-search-bar',
@@ -17,6 +18,7 @@ import { InputTextModule } from 'primeng/inputtext';
     CalendarModule,
     FloatLabelModule,
     InputTextModule,
+    KeyFilterModule,
   ],
   providers: [provideIcons({ heroMapPin, heroUser, octSearch })],
   templateUrl: './search-bar.component.html',
@@ -26,4 +28,6 @@ export class SearchBarComponent {
   city: string | undefined;
   date: Date | Date[] | undefined;
   guests: number | undefined;
+
+  // blockChars: RegExp = /^[^<>*!+$]+$/;
 }

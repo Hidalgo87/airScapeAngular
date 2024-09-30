@@ -15,6 +15,10 @@
     @apply w-full;
   }
 
+  /* .p-float-label {
+    @apply static flex w-full;
+  } */
+
   .p-calendar {
     @apply w-full h-full;
   }
