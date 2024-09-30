@@ -32,6 +32,7 @@ export class ProfileService {
       user.bio = profileEditParams.bio;
       user.email = profileEditParams.email;
       user.password = profileEditParams.password;
+      user.updatedAt = new Date();
       const newUserStr = JSON.stringify(user);
       localStorage.setItem(userName.toLowerCase().trim(), newUserStr);
     } else {
