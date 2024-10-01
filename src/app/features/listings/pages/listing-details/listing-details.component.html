@@ -10,11 +10,11 @@
       class="w-auto"
     >
       <ng-template pTemplate="item" let-item>
-        <img [src]="item.photoUrl" style="width: 100%" />
+        <img [src]="item.imageUrl" style="width: 100%" />
       </ng-template>
       <ng-template pTemplate="thumbnail" let-item>
         <div class="flex items-center gap-6 h-14">
-          <img [src]="item.photoUrl" class="h-full" />
+          <img [src]="item.imageUrl" class="h-full" />
         </div>
       </ng-template>
     </p-galleria>

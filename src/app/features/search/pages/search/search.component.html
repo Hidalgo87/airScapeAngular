@@ -14,13 +14,21 @@
         </div>
         <div class="mx-auto w-fit">
           <p class="font-extralight body-2">Price up to</p>
-          <p-inputNumber
-            inputId="price"
-            mode="currency"
-            currency="COL"
-            [(ngModel)]="price"
-            styleClass="w-full h-11 mb-4 border-stroke-1"
-          />
+          <div class="relative mb-4">
+            <p-inputNumber
+              inputId="price"
+              mode="currency"
+              currency="COL"
+              [(ngModel)]="price"
+              styleClass="w-full h-11  border-stroke-1"
+            />
+            <button
+              class="absolute right-0 flex w-6 h-6 transition translate-x-1/2 -translate-y-1/2 rounded-full hover:bg-color-2 text-n-7 bg-n-3 top-1/2"
+              (click)="onFilterChange()"
+            >
+              <ng-icon name="octCheck" class="m-auto" />
+            </button>
+          </div>
           <p-slider
             [(ngModel)]="price"
             class="w-full"
@@ -36,6 +44,8 @@
           <h6 class="ml-2 h6">Sort</h6>
         </div>
         <p-dropdown
+          (onChange)="onSortChange()"
+          [showClear]="true"
           [options]="sortOptions"
           [(ngModel)]="sort"
           optionLabel="name"
