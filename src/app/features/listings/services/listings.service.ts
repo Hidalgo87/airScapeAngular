@@ -9,6 +9,7 @@ import { User } from '../../profile/interfaces/user.interface';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import { ListingBrief } from '../interfaces/listingBrief.interface';
+import { UserService } from '../../../auth/services/user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,9 +23,9 @@ CHECKED: metodo editar propiedad editListing(newListing:Listing, newImages:File[
 CHECKED: metodo obtener home getPopularListings(amountListings:number=8)
 */
 export class ListingsService {
-  
-  constructor(private imageService:ImageService, private http:HttpClient) {
-    
+  user;
+  constructor(private imageService:ImageService, private http:HttpClient, private userService:UserService) {
+    this.user = userService.getUser();
   }
 
   deleteListing(listingId:string){
@@ -151,7 +152,7 @@ export class ListingsService {
     
     let listing:Listing = {
       listingId: listingId,
-      userName: listingParams.userName,
+      userName: this.user().userName,
       title: listingParams.title,
       photos: listingImages,
       description: listingParams.description,

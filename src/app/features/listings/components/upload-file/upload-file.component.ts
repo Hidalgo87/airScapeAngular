@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
@@ -9,6 +9,8 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
 import { heroArrowDownTray, heroTrash } from '@ng-icons/heroicons/outline';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { EventEmitter } from 'stream';
+import { ListingParams } from '../../interfaces/listingParams.interface';
 
 @Component({
   selector: 'app-upload-file',
