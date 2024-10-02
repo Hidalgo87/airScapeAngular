@@ -241,7 +241,6 @@ export class ListingsService {
     const latRange = 0.01; // Aproximadamente 0.4505 grados
     const lonRange = 0.01; // Ajusta según la latitud
     return listings.filter((listing) => {
-      // Asegúrate de que la propiedad tenga coordenadas válidas
       if (listing.latitude == null || listing.longitude == null) {
         return false;
       }

@@ -68,13 +68,8 @@ export class SearchComponent implements OnInit {
       this.city = params['city'] || null;
       this.guests = params['guests'] || null;
 
-      this.displayResults();
+      this.callResults();
     });
-  }
-
-  displayResults() {
-    this.callResults();
-    this.applyFiltersAndSort();
   }
 
   async callResults() {
@@ -82,6 +77,7 @@ export class SearchComponent implements OnInit {
       this.city ?? '',
       this.guests ?? 0
     );
+    this.applyFiltersAndSort();
   }
 
   applyFiltersAndSort(): void {
@@ -99,18 +95,17 @@ export class SearchComponent implements OnInit {
       this.displayedListings = this.displayedListings.sort(
         (listing1, listing2) => listing1.pricePerNight - listing2.pricePerNight
       );
+    } else if (this.sortOption === 'Latest') {
+      this.displayedListings = this.displayedListings.sort(
+        (listing1, listing2) =>
+          listing1.createdAt.getTime() > listing2.createdAt.getTime() ? 1 : -1
+      );
+    } else if (this.sortOption === 'Latest') {
+      this.displayedListings = this.displayedListings.sort(
+        (listing1, listing2) =>
+          listing2.createdAt.getTime() > listing1.createdAt.getTime() ? 1 : -1
+      );
     }
-    // else if (this.sortOption === 'Latest') {
-    //   this.displayedListings = this.displayedListings.sort(
-    //     (listing1, listing2) =>
-    //       listing1.createdAt.getTime() > listing2.createdAt.getTime() ? 1 : -1
-    //   );
-    // } else if (this.sortOption === 'Latest') {
-    //   this.displayedListings = this.displayedListings.sort(
-    //     (listing1, listing2) =>
-    //       listing1.createdAt.getTime() > listing2.createdAt.getTime() ? 1 : -1
-    //   );
-    // }
   }
 
   onFilterChange(): void {
