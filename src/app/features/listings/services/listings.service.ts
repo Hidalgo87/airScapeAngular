@@ -14,15 +14,7 @@ import { UserService } from '../../../auth/services/user.service';
 @Injectable({
   providedIn: 'root',
 })
-/*
-CHECKED: metodo crear propiedad createListing(listingParams:ListingParams)
-CHECKED: metodo eliminar propiedad deleteListing(listingId:string)
-CHECKED: metodo detalles propiedad getListingDetails(listingId:string)
-CHECKED: metodo busqueda searchListings(cityName: string, guestsNumber: number, startDate: string = '', endDate: string = '')
-CHECKED: metodo editar propiedad editListing(newListing:Listing, newImages:File[])
-CHECKED: metodo obtener home getPopularListings(amountListings:number=8)
-*/
-export class ListingsService{
+export class ListingsService {
   user;
   constructor(
     private imageService: ImageService,
@@ -91,6 +83,7 @@ export class ListingsService{
           photo: listing.photos[0],
           calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2)),
           maxGuests: listing.maxGuests,
+          createdAt: listing.createdAt!,
         };
       });
     }
@@ -111,6 +104,7 @@ export class ListingsService{
           photo: listing.photos[0],
           calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2)),
           maxGuests: listing.maxGuests,
+          createdAt: listing.createdAt!,
         };
       });
     }
