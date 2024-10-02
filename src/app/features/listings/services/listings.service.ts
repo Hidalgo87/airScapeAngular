@@ -193,11 +193,27 @@ export class ListingsService {
     return listing;
   }
 
-  getPopularListings(amountListings: number = 8): Listing[] {
+  getPopularListings(amountListings: number = 8): ListingBrief[] {
     let listingSrt = localStorage.getItem('listings');
+    let listingsBriefs:ListingBrief[]= [];
     if (listingSrt) {
       const listings: Listing[] = JSON.parse(listingSrt);
-      const shuffledListings = listings.sort(() => 0.5 - Math.random());
+      for (let listing of listings){
+        let listingBrief:ListingBrief = {
+          listingId: listing.listingId,
+          userName: listing.userName,
+          title: listing.title,
+          photo: listing.photos[0],
+          pricePerNight: listing.pricePerNight,
+          calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2)),
+          maxGuests: listing.maxGuests,
+          createdAt: listing.createdAt!
+        }
+        listingsBriefs.push(listingBrief);
+      }
+
+
+      const shuffledListings = listingsBriefs.sort(() => 0.5 - Math.random());
       if (amountListings >= listings.length) {
         return shuffledListings;
       } else {
