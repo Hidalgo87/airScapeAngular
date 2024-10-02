@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ListingParams } from '../../interfaces/listingParams.interface';
 import { FormListingComponent } from '../../components/form-listing/form-listing.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ListingsService } from '../../services/listings.service';
 import { Listing } from '../../interfaces/listing.interface';
 
@@ -42,7 +42,8 @@ export class EditListingComponent implements OnInit {
   };
   constructor(
     private route: ActivatedRoute,
-    private listingsService: ListingsService
+    private listingsService: ListingsService,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -76,6 +77,7 @@ export class EditListingComponent implements OnInit {
         },
         listingParams.filePhotos
       );
+      this.router.navigateByUrl("/my-listings");
     }
   }
 }
