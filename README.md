@@ -1,27 +1,42 @@
-# AirScapeAngular
+# airScape Deliver Branch: segunda_entrega
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.9.
+## Indicaciones Técnicas
 
-## Development server
+### ¿Dónde poner las credenciales de supabase?
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+En la ruta src/environments/environment.ts se encuentra la siguiente definición:
 
-## Code scaffolding
+export const environment = {
+  supabaseConfig: {
+    url: 'your_project_url',
+    apikey:
+      'your_supabase_api_key',
+  },
+};
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Por favor, crear en la carpeta src/environments un archivo llamado: environment.development.ts con la misma estructura dada, pero con las credenciales entregadas en el .txt entregado de Uvirtual.
 
-## Build
+### Tailwind y librerías de componentes
+Usamos tailwind para los estilos y una librería de componentes llamada PrimeNG (https://primeng.org/). 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Toda etiqueta en *html* que inicie con *<p-* hace parte de ésta librería. Específicamente, los usamos para los / sliders / calendario / dropdown /
 
-## Running unit tests
+### Propiedades quemadas
+En app.component.ts hay un proceso que sube unas propiedades quemadas a su localStorage, por lo que recomendamos verificar que en su localStorage no haya una clave 'listings' antes de iniciar la aplicación para que las propiedades se puedan subir correctamente. Como aún carecemos de retroalimentación de usuarios, la calificación a una propiedad se asigna aleatoriamente.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Búsqueda usando API
+En el apartado de búsqueda se está usando un API, que nos indica la longitud y latitud de una ciudad ingresada. Acá un ejemplo (https://nominatim.openstreetmap.org/search?q=boston_united_kingdom&format=json&limit=1&accept-language=en-US).
 
-## Running end-to-end tests
+Con la longitud y latitud de la ciudad, podemos filtrar todas las propiedades en un radio cercano.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Indicaciones Prácticas
 
-## Further help
+### Recomendaciones para buscar
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Para la búsqueda, hay propiedades ubicadas en: Medellín, Cali y Bogotá.
+
+### Búsqueda no toma en cuenta la fecha
+La fecha de llegada y salida se puede ingresar como filtro de búsqueda, sin embargo, no está funcional el filtrado por fecha porque aún no existen propiedades reservadas, entonces todas las propiedades pasan a estar disponibles en cualquier fecha.
+
+
+

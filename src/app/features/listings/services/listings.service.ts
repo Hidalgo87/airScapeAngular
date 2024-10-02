@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { ImageService } from '../../images/services/image.service';
 import { Listing } from '../interfaces/listing.interface';
 import { ListingParams } from '../interfaces/listingParams.interface';
@@ -9,19 +9,20 @@ import { User } from '../../profile/interfaces/user.interface';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import { ListingBrief } from '../interfaces/listingBrief.interface';
+import { UserService } from '../../../auth/services/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
-/*
-CHECKED: metodo crear propiedad createListing(listingParams:ListingParams)
-CHECKED: metodo eliminar propiedad deleteListing(listingId:string)
-CHECKED: metodo detalles propiedad getListingDetails(listingId:string)
-CHECKED: metodo busqueda searchListings(cityName: string, guestsNumber: number, startDate: string = '', endDate: string = '')
-CHECKED: metodo editar propiedad editListing(newListing:Listing, newImages:File[])
-*/
 export class ListingsService {
-  constructor(private imageService: ImageService, private http: HttpClient) {}
+  user;
+  constructor(
+    private imageService: ImageService,
+    private http: HttpClient,
+    private userService: UserService
+  ) {
+    this.user = userService.getUser();
+  }
 
   deleteListing(listingId: string) {
     const allListings = this.getListings().filter(
@@ -82,6 +83,7 @@ export class ListingsService {
           photo: listing.photos[0],
           calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2)),
           maxGuests: listing.maxGuests,
+          createdAt: listing.createdAt!,
         };
       });
     }
@@ -102,6 +104,7 @@ export class ListingsService {
           photo: listing.photos[0],
           calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2)),
           maxGuests: listing.maxGuests,
+          createdAt: listing.createdAt!,
         };
       });
     }
@@ -166,7 +169,7 @@ export class ListingsService {
 
     let listing: Listing = {
       listingId: listingId,
-      userName: listingParams.userName,
+      userName: this.user().userName,
       title: listingParams.title,
       photos: listingImages,
       description: listingParams.description,
@@ -184,6 +187,34 @@ export class ListingsService {
     currentListings = [...currentListings, listing];
     localStorage.setItem('listings', JSON.stringify(currentListings));
     return listing;
+  }
+
+  getPopularListings(amountListings: number = 8): Listing[] {
+    let listingSrt = localStorage.getItem('listings');
+    if (listingSrt) {
+      const listings: Listing[] = JSON.parse(listingSrt);
+      const shuffledListings = listings.sort(() => 0.5 - Math.random());
+      if (amountListings >= listings.length) {
+        return shuffledListings;
+      } else {
+        return shuffledListings.slice(0, amountListings);
+      }
+    }
+    return [];
+  }
+
+  getListingById(listingId: string): Listing | null {
+    let listingSrt = localStorage.getItem('listings');
+    if (listingSrt) {
+      const listings: Listing[] = JSON.parse(listingSrt);
+      const listingFound = listings.find((element) => {
+        return element.listingId === listingId;
+      });
+      if (!!listingFound) {
+        return listingFound;
+      }
+    }
+    return null;
   }
 
   private async getListingsNearby(cityName: string) {
@@ -251,19 +282,5 @@ export class ListingsService {
       return JSON.parse(listingSrt);
     }
     return [];
-  }
-
-  getListingById(listingId: string): Listing | null {
-    let listingSrt = localStorage.getItem('listings');
-    if (listingSrt) {
-      const listings: Listing[] = JSON.parse(listingSrt);
-      const listingFound = listings.find((element) => {
-        return element.listingId === listingId;
-      });
-      if (!!listingFound) {
-        return listingFound;
-      }
-    }
-    return null;
   }
 }

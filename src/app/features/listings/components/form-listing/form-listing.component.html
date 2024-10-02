@@ -2,6 +2,7 @@
   <div class="mt-10">
     <p-floatLabel>
       <input
+        #newTitle
         pInputText
         class="w-full h-12 input"
         id="title"
@@ -13,6 +14,7 @@
   <div class="mt-10">
     <p-floatLabel>
       <input
+        #newAdress
         pInputText
         class="w-full h-12 input"
         id="address"
@@ -24,6 +26,7 @@
   <div class="flex justify-center gap-8 mt-10">
     <p-floatLabel>
       <p-inputNumber
+        #newPricePerNight
         [(ngModel)]="price"
         inputId="currency"
         mode="currency"
@@ -35,6 +38,7 @@
     </p-floatLabel>
     <p-floatLabel>
       <p-inputNumber
+        #newMaxGuests
         [(ngModel)]="guests"
         inputId="guests"
         mode="decimal"
@@ -48,6 +52,7 @@
   <div class="flex justify-center gap-8 mt-10">
     <p-floatLabel>
       <p-inputNumber
+        #newNumBedrooms
         [(ngModel)]="bedrooms"
         inputId="bedrooms"
         mode="decimal"
@@ -59,6 +64,7 @@
     </p-floatLabel>
     <p-floatLabel>
       <p-inputNumber
+        #newNumBathrooms
         [(ngModel)]="bathrooms"
         inputId="bathrooms"
         mode="decimal"
@@ -72,6 +78,7 @@
   <div class="flex justify-center gap-8 mt-10">
     <p-floatLabel>
       <p-inputNumber
+        #newLatitude
         [(ngModel)]="latitude"
         inputId="latitude"
         mode="decimal"
@@ -83,6 +90,7 @@
     </p-floatLabel>
     <p-floatLabel>
       <p-inputNumber
+        #newLongitude
         [(ngModel)]="longitude"
         inputId="longitude"
         mode="decimal"
@@ -96,6 +104,7 @@
   <div class="mt-10">
     <p-floatLabel>
       <textarea
+        #newDescription
         id="description"
         rows="5"
         pInputTextarea
@@ -108,11 +117,16 @@
     </p-floatLabel>
   </div>
   <div class="mt-10">
-    <app-upload-file />
+    <app-upload-file (newItemEvent)="newFiles($event)"/>
+  </div>
+
+  <div class="my-4 h-fit">
+    <p class="text-color-5 body-2">{{error}}</p>
   </div>
 
   <div class="mt-12 ml-auto w-fit">
-    <button class="px-12 py-2 rounded-lg hover:opacity-80 bg-color-1 text-n-1">
+    <button class="px-12 py-2 rounded-lg hover:opacity-80 bg-color-1 text-n-1"
+    (click)="newListing()">
       Save
     </button>
   </div>

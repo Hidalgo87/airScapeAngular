@@ -9,13 +9,14 @@ import { ListingDetailsComponent } from './features/listings/pages/listing-detai
 import { CreateListingComponent } from './features/listings/pages/create-listing/create-listing.component';
 import { UserListingsComponent } from './features/listings/pages/user-listings/user-listings.component';
 import { SearchComponent } from './features/search/pages/search/search.component';
+import { EditListingComponent } from './features/listings/pages/edit-listing/edit-listing.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
-  { path: 'a', component: ListingsComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'listing/details/:id', component: ListingDetailsComponent },
   { path: 'listing/create', component: CreateListingComponent },
+  { path: 'listing/edit/:id', component: EditListingComponent },
   { path: 'my-listings', component: UserListingsComponent },
   { path: 'search', component: SearchComponent },
   {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ButtonModule } from 'primeng/button';
@@ -9,6 +9,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { ToastModule } from 'primeng/toast';
 import { heroArrowDownTray, heroTrash } from '@ng-icons/heroicons/outline';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { ListingParams } from '../../interfaces/listingParams.interface';
 
 @Component({
   selector: 'app-upload-file',
@@ -28,6 +29,7 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 })
 export class UploadFileComponent {
   files: File[] = [];
+  @Output() newItemEvent = new EventEmitter<File[]>();
 
   constructor(
     private config: PrimeNGConfig,
@@ -69,8 +71,9 @@ export class UploadFileComponent {
   //   });
   // }
 
-  onSelectedFiles(event: { currentFiles: any[] }) {
+  onSelectedFiles(event: { currentFiles: File[] }) {
     this.files = event.currentFiles;
+    this.newItemEvent.emit(this.files);
     // this.files.forEach((file) => {
     //   this.totalSize += parseInt(this.formatSize(file.size));
     // });
