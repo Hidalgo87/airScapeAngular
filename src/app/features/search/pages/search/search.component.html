@@ -62,6 +62,13 @@
           *ngFor="let listing of displayedListings"
         />
       </div>
+      <div
+        *ngIf="displayedListings.length === 0"
+        class="flex flex-col items-center justify-center w-full h-full gap-4"
+      >
+        <ng-icon name="heroMagnifyingGlass" class="text-9xl" />
+        <p class="body-1">No search results found</p>
+      </div>
     </div>
   </div>
 </div>
