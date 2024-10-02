@@ -8,4 +8,5 @@ export interface ListingBrief {
   pricePerNight: number;
   calification:number;
   maxGuests: number;
+  createdAt: Date;  
 }
