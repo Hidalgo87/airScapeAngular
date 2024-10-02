@@ -1,5 +1,5 @@
 <div
-  class="border border-stroke-1 h-[26rem] rounded-xl p-4 w-[300px] mx-auto cursor-pointer"
+  class="border border-stroke-1 h-[26.5rem] rounded-xl p-4 w-[300px] mx-auto cursor-pointer"
   [routerLink]="['/listing/details/', listing.listingId]"
 >
   <div class="h-[16rem] overflow-hidden rounded-md">
@@ -16,8 +16,11 @@
     <p>
       <b>${{ listing.pricePerNight }}</b> COP night
     </p>
-    <div class="flex justify-between">
-      <div class=""></div>
+    <div class="flex justify-between mt-2">
+      <div class="flex items-center w-fit text-n-2">
+        <ng-icon name="octPerson" />
+        <p class="ml-1 body-2">{{ listing.maxGuests }}</p>
+      </div>
       <div class="text-color-4 w-fit">
         <i class="fa-solid fa-star"></i>
         <p class="inline ml-1">{{ listing.calification }}</p>
