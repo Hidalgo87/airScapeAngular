@@ -40,12 +40,17 @@ export class SearchComponent implements OnInit {
   filterPrice: number | undefined;
   sortOption: string | undefined;
 
-  sortOptions: Option[] = [{ name: 'Price' }, { name: 'Most recent' }];
+  sortOptions: Option[] = [
+    { name: 'Price' },
+    { name: 'Latest' },
+    { name: 'Oldest' },
+  ];
 
   city: string | undefined;
   guests: number | undefined;
 
   listingResults: ListingBrief[];
+  displayedListings: ListingBrief[];
 
   constructor(
     private route: ActivatedRoute,
@@ -53,6 +58,7 @@ export class SearchComponent implements OnInit {
     private listingService: ListingsService
   ) {
     this.listingResults = [];
+    this.displayedListings = [];
   }
 
   ngOnInit() {
@@ -62,10 +68,13 @@ export class SearchComponent implements OnInit {
       this.city = params['city'] || null;
       this.guests = params['guests'] || null;
 
-      this.callResults();
-
-      this.applyFiltersAndSort();
+      this.displayResults();
     });
+  }
+
+  displayResults() {
+    this.callResults();
+    this.applyFiltersAndSort();
   }
 
   async callResults() {
@@ -73,11 +82,35 @@ export class SearchComponent implements OnInit {
       this.city ?? '',
       this.guests ?? 0
     );
-    console.log(this.listingResults);
   }
 
   applyFiltersAndSort(): void {
-    console.log(`Filter: ${this.filterPrice}, Sort: ${this.sortOption}`);
+    this.displayedListings = this.listingResults;
+
+    // Filtering
+    if (this.price) {
+      this.displayedListings = this.displayedListings.filter(
+        (listing) => listing.pricePerNight > this.price!
+      );
+    }
+
+    // Sorting
+    if (this.sortOption === 'Price') {
+      this.displayedListings = this.displayedListings.sort(
+        (listing1, listing2) => listing1.pricePerNight - listing2.pricePerNight
+      );
+    }
+    // else if (this.sortOption === 'Latest') {
+    //   this.displayedListings = this.displayedListings.sort(
+    //     (listing1, listing2) =>
+    //       listing1.createdAt.getTime() > listing2.createdAt.getTime() ? 1 : -1
+    //   );
+    // } else if (this.sortOption === 'Latest') {
+    //   this.displayedListings = this.displayedListings.sort(
+    //     (listing1, listing2) =>
+    //       listing1.createdAt.getTime() > listing2.createdAt.getTime() ? 1 : -1
+    //   );
+    // }
   }
 
   onFilterChange(): void {
