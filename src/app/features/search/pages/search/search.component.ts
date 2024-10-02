@@ -9,6 +9,8 @@ import { octCheck, octFilter, octSortDesc } from '@ng-icons/octicons';
 import { ListingCardComponent } from '../../../listings/components/listing-card/listing-card.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListingsService } from '../../../listings/services/listings.service';
+import { ListingBrief } from '../../../listings/interfaces/listingBrief.interface';
+import { CommonModule } from '@angular/common';
 
 interface Option {
   name: string;
@@ -25,6 +27,7 @@ interface Option {
     DropdownModule,
     NgIconComponent,
     ListingCardComponent,
+    CommonModule,
   ],
   providers: [provideIcons({ octFilter, octSortDesc, octCheck })],
   templateUrl: './search.component.html',
@@ -39,18 +42,38 @@ export class SearchComponent implements OnInit {
 
   sortOptions: Option[] = [{ name: 'Price' }, { name: 'Most recent' }];
 
+  city: string | undefined;
+  guests: number | undefined;
+
+  listingResults: ListingBrief[];
+
   constructor(
     private route: ActivatedRoute,
-    private router: Router // private listingService: ListingsService
-  ) {}
+    private router: Router,
+    private listingService: ListingsService
+  ) {
+    this.listingResults = [];
+  }
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
       this.filterPrice = params['price'] || null;
       this.sortOption = params['sort'] || null;
+      this.city = params['city'] || null;
+      this.guests = params['guests'] || null;
+
+      this.callResults();
 
       this.applyFiltersAndSort();
     });
+  }
+
+  async callResults() {
+    this.listingResults = await this.listingService.searchListings(
+      this.city ?? '',
+      this.guests ?? 0
+    );
+    console.log(this.listingResults);
   }
 
   applyFiltersAndSort(): void {
@@ -68,7 +91,7 @@ export class SearchComponent implements OnInit {
   onSortChange(): void {
     this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: { sort: this.sort?.name || '' },
+      queryParams: { sort: this.sort?.name || undefined },
       queryParamsHandling: 'merge',
     });
   }

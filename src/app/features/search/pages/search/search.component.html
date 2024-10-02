@@ -20,7 +20,7 @@
               mode="currency"
               currency="COL"
               [(ngModel)]="price"
-              styleClass="w-full h-11  border-stroke-1"
+              styleClass="w-full h-11 border-stroke-1"
             />
             <button
               class="absolute right-0 flex w-6 h-6 transition translate-x-1/2 -translate-y-1/2 rounded-full hover:bg-color-2 text-n-7 bg-n-3 top-1/2"
@@ -57,10 +57,10 @@
     </div>
     <div class="flex-grow">
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-8">
-        <app-listing-card />
-        <app-listing-card />
-        <app-listing-card />
-        <app-listing-card />
+        <app-listing-card
+          [listing]="listing"
+          *ngFor="let listing of listingResults"
+        />
       </div>
     </div>
   </div>

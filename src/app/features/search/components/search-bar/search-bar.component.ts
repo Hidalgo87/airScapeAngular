@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroMapPin, heroUser } from '@ng-icons/heroicons/outline';
 import { octSearch } from '@ng-icons/octicons';
@@ -8,6 +8,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-bar',
@@ -26,10 +27,31 @@ import { InputNumberModule } from 'primeng/inputnumber';
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.css',
 })
-export class SearchBarComponent {
+export class SearchBarComponent implements OnInit {
   city: string | undefined;
   date: Date | Date[] | undefined;
   guests: number | undefined;
 
   // blockChars: RegExp = /^[^<>*!+$]+$/;
+
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      this.city = params['city'] || null;
+      // this.date = params['date'] || null;
+      this.guests = params['guests'] || null;
+    });
+  }
+
+  onSearch(): void {
+    this.router.navigate(['search'], {
+      queryParams: {
+        city: this.city,
+        // date: this.date,
+        guests: this.guests,
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
 }

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ListingBrief } from '../../interfaces/listingBrief.interface';
 
 @Component({
   selector: 'app-listing-card',
@@ -9,9 +10,10 @@ import { RouterLink } from '@angular/router';
   styleUrl: './listing-card.component.css',
 })
 export class ListingCardComponent {
-  @Input() id = 0;
-  @Input() title = '';
-  @Input() price = 0;
-  @Input() image_url = '';
+  @Input() listing!: ListingBrief;
+  // @Input() id = 0;
+  // @Input() title = '';
+  // @Input() price = 0;
+  // @Input() image_url = '';
   // @Input() address = '';
 }
