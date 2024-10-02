@@ -63,15 +63,19 @@ export class ListingsService {
   }
 
   async searchListings(
-    cityName: string,
-    guestsNumber: number,
+    cityName: string | undefined,
+    guestsNumber: number | undefined,
     startDate: string = '',
     endDate: string = ''
   ): Promise<ListingBrief[]> {
     let nearbyListings: Listing[] = [];
     let nearbyBriefListings: ListingBrief[] = [];
 
-    if (cityName.length > 0) {
+    if (!cityName && !guestsNumber) {
+      return this.getPopularListings();
+    }
+
+    if (cityName) {
       nearbyListings = await this.getListingsNearby(cityName);
 
       nearbyBriefListings = nearbyListings.map((listing) => {
@@ -91,7 +95,7 @@ export class ListingsService {
     let guestsNumberListings: Listing[] = [];
     let guestsNumberBriefListings: ListingBrief[] = [];
 
-    if (guestsNumber > 0) {
+    if (guestsNumber) {
       guestsNumberListings = this.getListings().filter(
         (listing) => listing.maxGuests >= guestsNumber
       );
@@ -109,10 +113,10 @@ export class ListingsService {
       });
     }
 
-    if (guestsNumber === 0) {
+    if (guestsNumber) {
       return nearbyBriefListings;
     }
-    if (cityName.length === 0) {
+    if (cityName) {
       return guestsNumberBriefListings;
     }
 
