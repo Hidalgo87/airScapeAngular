@@ -14,7 +14,7 @@ export const environment = {
   },
 };
 
-Por favor, crear en la carpeta src/environments un archivo llamado: environment.development.ts con la misma estructura dada, pero con las credenciales entregadas en el .txt entregado de Uvirtual.
+Por favor, crear en la carpeta src/environments un archivo llamado: environment.development.ts con la misma estructura y credenciales dada en el .txt entregado de Uvirtual.
 
 ### Tailwind y librerías de componentes
 Usamos tailwind para los estilos y una librería de componentes llamada PrimeNG (https://primeng.org/). 
@@ -25,7 +25,7 @@ Toda etiqueta en *html* que inicie con *<p-* hace parte de ésta librería. Espe
 En app.component.ts hay un proceso que sube unas propiedades quemadas a su localStorage, por lo que recomendamos verificar que en su localStorage no haya una clave 'listings' antes de iniciar la aplicación para que las propiedades se puedan subir correctamente. Como aún carecemos de retroalimentación de usuarios, la calificación a una propiedad se asigna aleatoriamente.
 
 ### Búsqueda usando API
-En el apartado de búsqueda se está usando un API, que nos indica la longitud y latitud de una ciudad ingresada. Acá un ejemplo (https://nominatim.openstreetmap.org/search?q=boston_united_kingdom&format=json&limit=1&accept-language=en-US).
+En el apartado de búsqueda se está usando un API, que nos indica la longitud y latitud de una ciudad ingresada. Acá un ejemplo (https://nominatim.openstreetmap.org/search?q=bogota&format=json&limit=1&accept-language=en-US).
 
 Con la longitud y latitud de la ciudad, podemos filtrar todas las propiedades en un radio cercano.
 
@@ -33,7 +33,7 @@ Con la longitud y latitud de la ciudad, podemos filtrar todas las propiedades en
 
 ### Recomendaciones para buscar
 
-Para la búsqueda, hay propiedades ubicadas en: Medellín, Cali y Bogotá.
+Para la búsqueda, hay propiedades ubicadas en: Medellín, Cali y Cartagena.
 
 ### Búsqueda no toma en cuenta la fecha
 La fecha de llegada y salida se puede ingresar como filtro de búsqueda, sin embargo, no está funcional el filtrado por fecha porque aún no existen propiedades reservadas, entonces todas las propiedades pasan a estar disponibles en cualquier fecha.
