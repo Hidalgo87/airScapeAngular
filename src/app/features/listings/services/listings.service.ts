@@ -24,6 +24,12 @@ export class ListingsService {
     this.user = userService.getUser();
   }
 
+  getListingsOfCurrentUser() {
+    const userName = this.user().userName;
+    const listings: Listing[] = this.getListings();
+    return listings.filter((listing) => listing.userName == userName);
+  }
+
   deleteListing(listingId: string) {
     const allListings = this.getListings().filter(
       (listing) => listing.listingId != listingId
