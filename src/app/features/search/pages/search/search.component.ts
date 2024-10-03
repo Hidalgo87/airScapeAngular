@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ListingsService } from '../../../listings/services/listings.service';
 import { ListingBrief } from '../../../listings/interfaces/listingBrief.interface';
 import { CommonModule } from '@angular/common';
+import { heroMagnifyingGlass } from '@ng-icons/heroicons/outline';
 
 interface Option {
   name: string;
@@ -29,7 +30,14 @@ interface Option {
     ListingCardComponent,
     CommonModule,
   ],
-  providers: [provideIcons({ octFilter, octSortDesc, octCheck })],
+  providers: [
+    provideIcons({
+      octFilter,
+      octSortDesc,
+      octCheck,
+      heroMagnifyingGlass,
+    }),
+  ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
 })
@@ -86,7 +94,7 @@ export class SearchComponent implements OnInit {
     // Filtering
     if (this.price) {
       this.displayedListings = this.displayedListings.filter(
-        (listing) => listing.pricePerNight > this.price!
+        (listing) => listing.pricePerNight < this.price!
       );
     }
 
@@ -100,7 +108,7 @@ export class SearchComponent implements OnInit {
         (listing1, listing2) =>
           listing1.createdAt.getTime() > listing2.createdAt.getTime() ? 1 : -1
       );
-    } else if (this.sortOption === 'Latest') {
+    } else if (this.sortOption === 'Oldest') {
       this.displayedListings = this.displayedListings.sort(
         (listing1, listing2) =>
           listing2.createdAt.getTime() > listing1.createdAt.getTime() ? 1 : -1
