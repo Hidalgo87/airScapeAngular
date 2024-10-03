@@ -195,11 +195,11 @@ export class ListingsService {
 
   getPopularListings(amountListings: number = 8): ListingBrief[] {
     let listingSrt = localStorage.getItem('listings');
-    let listingsBriefs:ListingBrief[]= [];
+    let listingsBriefs: ListingBrief[] = [];
     if (listingSrt) {
       const listings: Listing[] = JSON.parse(listingSrt);
-      for (let listing of listings){
-        let listingBrief:ListingBrief = {
+      for (let listing of listings) {
+        let listingBrief: ListingBrief = {
           listingId: listing.listingId,
           userName: listing.userName,
           title: listing.title,
@@ -207,11 +207,10 @@ export class ListingsService {
           pricePerNight: listing.pricePerNight,
           calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2)),
           maxGuests: listing.maxGuests,
-          createdAt: listing.createdAt!
-        }
+          createdAt: listing.createdAt!,
+        };
         listingsBriefs.push(listingBrief);
       }
-
 
       const shuffledListings = listingsBriefs.sort(() => 0.5 - Math.random());
       if (amountListings >= listings.length) {
