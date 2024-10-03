@@ -54,4 +54,8 @@ export class ProfileService {
     }
     return null;
   }
+
+  private setErrorMessage(message: string){
+    
+  }
 }
