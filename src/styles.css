@@ -30,11 +30,21 @@
   .p-datepicker-icon {
     @apply right-auto left-4 text-n-3;
   }
+
+  .p-progress-spinner-circle {
+    @apply stroke-n-1 animate-circle-spinner;
+  }
 }
 
 @layer tailwind-utilities {
   @tailwind components;
   @tailwind utilities;
+
+  @layer utilities {
+    .animate-circle-spinner {
+      animation: p-progress-spinner-dash 1.5s ease-in-out infinite;
+    }
+  }
 }
 
 :root {

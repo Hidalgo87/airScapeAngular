@@ -7,6 +7,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { UploadFileComponent } from '../upload-file/upload-file.component';
 import { Output, Input, EventEmitter } from '@angular/core';
 import { ListingParams } from '../../interfaces/listingParams.interface';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-form-listing',
@@ -18,6 +20,8 @@ import { ListingParams } from '../../interfaces/listingParams.interface';
     InputNumberModule,
     InputTextareaModule,
     UploadFileComponent,
+    ProgressSpinnerModule,
+    CommonModule,
   ],
   templateUrl: './form-listing.component.html',
   styleUrl: './form-listing.component.css',
@@ -34,6 +38,7 @@ export class FormListingComponent implements OnInit {
   longitude: number | undefined;
   files: File[] | undefined;
   error: string = '';
+  isLoading: boolean = false;
 
   ngOnInit(): void {
     this.title = this.oldListingParams.title;
@@ -101,6 +106,7 @@ export class FormListingComponent implements OnInit {
       return;
     }
     await this.setErrorMessage('');
+    this.isLoading = true;
     const listingParams: ListingParams = {
       title: this.title!,
       filePhotos: this.files!,
@@ -114,6 +120,10 @@ export class FormListingComponent implements OnInit {
       maxGuests: this.guests!,
     };
     this.newItemEvent.emit(listingParams);
+  }
+  // ! ELIMINAR Y CAMBIAR EN BOTÓN
+  test() {
+    this.isLoading = true;
   }
 
   newFiles(files: File[]) {

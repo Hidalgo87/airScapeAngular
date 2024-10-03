@@ -82,8 +82,8 @@ export class SearchComponent implements OnInit {
 
   async callResults() {
     this.listingResults = await this.listingService.searchListings(
-      this.city ?? '',
-      this.guests ?? 0
+      this.city,
+      this.guests
     );
     this.applyFiltersAndSort();
   }

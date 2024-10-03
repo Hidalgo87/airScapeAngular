@@ -113,10 +113,10 @@ export class ListingsService {
       });
     }
 
-    if (guestsNumber) {
+    if (!guestsNumber) {
       return nearbyBriefListings;
     }
-    if (cityName) {
+    if (!cityName) {
       return guestsNumberBriefListings;
     }
 

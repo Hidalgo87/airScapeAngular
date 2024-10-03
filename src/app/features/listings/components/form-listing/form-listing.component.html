@@ -117,17 +117,27 @@
     </p-floatLabel>
   </div>
   <div class="mt-10">
-    <app-upload-file (newItemEvent)="newFiles($event)"/>
+    <app-upload-file (newItemEvent)="newFiles($event)" />
   </div>
 
   <div class="my-4 h-fit">
-    <p class="text-color-5 body-2">{{error}}</p>
+    <p class="text-color-5 body-2">{{ error }}</p>
   </div>
 
   <div class="mt-12 ml-auto w-fit">
-    <button class="px-12 py-2 rounded-lg hover:opacity-80 bg-color-1 text-n-1"
-    (click)="newListing()">
-      Save
+    <button
+      class="flex items-center justify-center w-32 h-12 py-2 rounded-lg bg-color-1 text-n-1"
+      [ngClass]="isLoading ? 'bg-color-1/50' : 'hover:opacity-80'"
+      [disabled]="isLoading"
+      (click)="test()"
+    >
+      <p-progressSpinner
+        *ngIf="isLoading; else elseBlock"
+        styleClass="h-full mx-auto"
+        strokeWidth="4"
+        class="h-full"
+      />
+      <ng-template #elseBlock> <p class="text-center">Save</p> </ng-template>
     </button>
   </div>
 </div>
