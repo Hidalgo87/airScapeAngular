@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
   user: any;
   error: string = '';
   updateProfileForm = this.fb.group({
-    email: ['', Validators.required],
+    email: ['', Validators.required, Validators.email],
     bio: ['', Validators.required],
     password: ['', Validators.required],
   });

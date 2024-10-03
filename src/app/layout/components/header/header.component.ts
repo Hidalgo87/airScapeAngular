@@ -9,6 +9,7 @@ import {
 import { NgClass } from '@angular/common';
 import { UserService } from '../../../auth/services/user.service';
 import { octSearch } from '@ng-icons/octicons';
+import { User } from '../../../features/profile/interfaces/user.interface';
 
 @Component({
   selector: 'app-header',

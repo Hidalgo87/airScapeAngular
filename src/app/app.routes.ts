@@ -9,18 +9,27 @@ import { CreateListingComponent } from './features/listings/pages/create-listing
 import { UserListingsComponent } from './features/listings/pages/user-listings/user-listings.component';
 import { SearchComponent } from './features/search/pages/search/search.component';
 import { EditListingComponent } from './features/listings/pages/edit-listing/edit-listing.component';
+import { authGuard } from './auth/guards/auth.guard';
+import { noAuthGuard } from './auth/guards/no-auth.guard';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full' },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'listing/details/:id', component: ListingDetailsComponent },
-  { path: 'listing/create', component: CreateListingComponent },
-  { path: 'listing/edit/:id', component: EditListingComponent },
-  { path: 'my-listings', component: UserListingsComponent },
-  { path: 'search', component: SearchComponent },
+  {
+    path: '',
+    canActivate: [authGuard],
+    children: [
+      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'listing/details/:id', component: ListingDetailsComponent },
+      { path: 'listing/create', component: CreateListingComponent },
+      { path: 'listing/edit/:id', component: EditListingComponent },
+      { path: 'my-listings', component: UserListingsComponent },
+      { path: 'search', component: SearchComponent },
+    ],
+  },
   {
     path: '',
     component: AuthLayoutComponent,
+    canActivate: [noAuthGuard],
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignUpComponent },

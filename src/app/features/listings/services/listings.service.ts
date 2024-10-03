@@ -21,13 +21,25 @@ export class ListingsService {
     private http: HttpClient,
     private userService: UserService
   ) {
-    this.user = userService.getUser();
+    this.user = this.userService.getUser();
   }
 
-  getListingsOfCurrentUser() {
+  getListingsOfCurrentUser(): ListingBrief[] {
     const userName = this.user().userName;
-    const listings: Listing[] = this.getListings();
-    return listings.filter((listing) => listing.userName == userName);
+    let listings: Listing[] = this.getListings();
+    listings = listings.filter((listing) => listing.userName === userName);
+    return listings.map((listing) => {
+      return {
+        listingId: listing.listingId,
+        userName: listing.userName,
+        title: listing.title,
+        photo: listing.photos[0],
+        pricePerNight: listing.pricePerNight,
+        calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2)),
+        maxGuests: listing.maxGuests,
+        createdAt: listing.createdAt!,
+      };
+    });
   }
 
   deleteListing(listingId: string) {

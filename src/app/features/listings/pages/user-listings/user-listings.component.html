@@ -18,7 +18,10 @@
     <div
       class="grid mx-auto mt-10 grid-col md:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-6"
     >
-      <div class="relative mx-auto w-fit group">
+      <div
+        class="relative mx-auto w-fit group"
+        *ngFor="let listing of listings"
+      >
         <div
           class="absolute flex w-10 h-10 transition -translate-x-full rounded-full opacity-0 group-hover:opacity-100 top-4 right-6 bg-color-2 text-n-7"
         >
@@ -29,7 +32,7 @@
         >
           <ng-icon name="octTrash" class="m-auto" />
         </div>
-        <app-listing-card />
+        <!-- <app-listing-card [listing]="listing" /> -->
       </div>
     </div>
   </div>
