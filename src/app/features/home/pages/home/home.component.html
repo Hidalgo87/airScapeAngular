@@ -25,13 +25,13 @@
   </div>
 
   <div class="px-4 py-8 mt-20 border border-stroke-1 rounded-2xl">
-    <div class="flex items-center justify-center gap-4">
+    <div class="flex items-center justify-center gap-4 mb-16">
       <ng-icon name="octNorthStar" class="text-color-4" />
       <h4 class="font-semibold text-center h4">Popular stays</h4>
       <ng-icon name="octNorthStar" class="text-color-4" />
     </div>
     <div class="grid grid-cols-4 mt-4 gap-x-12 gap-y-6">
-      <app-listing-card />
+      <app-listing-card [listing]="listing" *ngFor="let listing of listings" />
     </div>
   </div>
 </div>
