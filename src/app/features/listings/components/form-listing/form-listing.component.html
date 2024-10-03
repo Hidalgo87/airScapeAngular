@@ -129,7 +129,7 @@
       class="flex items-center justify-center w-32 h-12 py-2 rounded-lg bg-color-1 text-n-1"
       [ngClass]="isLoading ? 'bg-color-1/50' : 'hover:opacity-80'"
       [disabled]="isLoading"
-      (click)="test()"
+      (click)="newListing()"
     >
       <p-progressSpinner
         *ngIf="isLoading; else elseBlock"

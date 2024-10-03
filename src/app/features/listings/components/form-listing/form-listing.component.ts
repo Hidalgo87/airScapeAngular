@@ -121,10 +121,6 @@ export class FormListingComponent implements OnInit {
     };
     this.newItemEvent.emit(listingParams);
   }
-  // ! ELIMINAR Y CAMBIAR EN BOTÓN
-  test() {
-    this.isLoading = true;
-  }
 
   newFiles(files: File[]) {
     this.files = files;
