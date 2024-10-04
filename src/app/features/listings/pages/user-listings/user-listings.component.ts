@@ -6,12 +6,15 @@ import { RouterLink } from '@angular/router';
 import { ListingsService } from '../../services/listings.service';
 import { CommonModule } from '@angular/common';
 import { ListingBrief } from '../../interfaces/listingBrief.interface';
+import { heroMagnifyingGlass } from '@ng-icons/heroicons/outline';
 
 @Component({
   selector: 'app-user-listings',
   standalone: true,
   imports: [NgIconComponent, ListingCardComponent, RouterLink, CommonModule],
-  providers: [provideIcons({ octPlus, octPencil, octTrash })],
+  providers: [
+    provideIcons({ octPlus, octPencil, octTrash, heroMagnifyingGlass }),
+  ],
   templateUrl: './user-listings.component.html',
   styleUrl: './user-listings.component.css',
 })
@@ -22,5 +25,6 @@ export class UserListingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.listings = this.listingsService.getListingsOfCurrentUser();
+    console.log(this.listings);
   }
 }

@@ -7,27 +7,40 @@
     >
       <div class="flex flex-col items-center shrink-0">
         <div class="relative w-fit h-fit">
-          <div class="w-[16rem] h-[16rem] overflow-hidden rounded-full">
+          <div
+            class="w-[16rem] h-[16rem] relative overflow-hidden rounded-full"
+          >
             <img
               [src]="user().profilePicture"
               alt="profile_photo"
               class="object-cover w-full h-full"
             />
+            <div
+              class="absolute inset-0 flex items-center justify-center bg-n-6/70"
+              *ngIf="isPictureLoading"
+            >
+              <p-progressSpinner
+                styleClass="h-full mx-auto"
+                strokeWidth="2"
+                class="h-full"
+              />
+            </div>
           </div>
           <div
-          class="absolute flex w-12 h-12 transition rounded-full cursor-pointer bottom-2 left-2 bg-n-2 hover:opacity-90"
-          (click)="fileInput.click()"
-        >
-          <ng-icon name="octPencil" class="m-auto text-xl text-n-8" />
+            class="absolute flex w-12 h-12 transition rounded-full cursor-pointer bottom-2 left-2 bg-n-2 hover:opacity-90"
+            (click)="fileInput.click()"
+          >
+            <ng-icon name="octPencil" class="m-auto text-xl text-n-8" />
+          </div>
+          <!-- Input de tipo file escondido -->
+          <input
+            #fileInput
+            type="file"
+            (change)="onFileSelected($event)"
+            style="display: none"
+          />
         </div>
-        <!-- Input de tipo file escondido -->
-        <input
-          #fileInput
-          type="file"
-          (change)="onFileSelected($event)"
-          style="display: none;"/>        
-        </div>
-        <h4 class="mt-4 text-center h4 text-n-3">{{user().userName}}</h4>
+        <h4 class="mt-4 text-center h4 text-n-3">{{ user().userName }}</h4>
       </div>
       <div class="flex-grow md:ml-12">
         <form [formGroup]="updateProfileForm" class="divide-y divide-stroke-1">
@@ -36,7 +49,8 @@
             <textarea
               class="flex-grow h-40 py-2 pl-4 overflow-auto text-sm bg-transparent border rounded-md resize-none border-n-4 text-n-3"
               formControlName="bio"
-              >{{user().bio}}</textarea>
+              >{{ user().bio }}</textarea
+            >
           </div>
           <div class="flex items-center py-8">
             <label class="block w-24 h-fit body-2">Email</label>
@@ -45,13 +59,12 @@
               class="flex-grow pl-4 text-lg bg-transparent border rounded-md border-n-4 text-n-3 h-11"
               [value]="user().email"
               formControlName="email"
-
             />
           </div>
           <div class="flex items-center py-8">
             <label class="block w-24 h-fit body-2">Password</label>
             <input
-              type="text"
+              type="password"
               class="flex-grow pl-4 text-lg bg-transparent border rounded-md border-n-4 text-n-3 h-11"
               [value]="user().password"
               formControlName="password"
@@ -59,9 +72,9 @@
           </div>
         </form>
         <div class="my-4 h-fit">
-          <p class="text-color-5 body-2">{{error}}</p>
+          <p class="text-color-5 body-2">{{ error }}</p>
         </div>
-        
+
         <button
           class="block px-4 py-2 mx-auto my-6 transition rounded-md hover:opacity-80 md:mx-0 md:ml-auto text-n-1 bg-color-1"
           (click)="onSaveChanges()"

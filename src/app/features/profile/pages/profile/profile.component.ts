@@ -4,31 +4,42 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { ProfileService } from '../../services/profile.service';
 import { ProfileEditParams } from '../../interfaces/profileEditParams.interface';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [NgIconComponent, ReactiveFormsModule],
+  imports: [
+    NgIconComponent,
+    ReactiveFormsModule,
+    ProgressSpinnerModule,
+    CommonModule,
+  ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
   providers: [provideIcons({ octPencil })],
 })
 /*
-En NgOnInit me traigo la informacion del usuario actual.
+En NgOnInit me traigo la información del usuario actual.
 Cuando le de al botón save changes, me traigo los valores del form y llamo al servicio.
 */
 export class ProfileComponent implements OnInit {
   user: any;
   error: string = '';
   updateProfileForm = this.fb.group({
-    email: ['', Validators.required, Validators.email],
+    email: ['', [Validators.required, Validators.email]],
     bio: ['', Validators.required],
     password: ['', Validators.required],
   });
 
+  isPictureLoading: boolean = false;
+
   constructor(
     private profileService: ProfileService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +53,7 @@ export class ProfileComponent implements OnInit {
 
   onSaveChanges() {
     if (!this.updateProfileForm.valid) {
-      alert('Porfavor diligencia todos los campos');
+      alert('Por favor diligencia todos los campos');
       //TODO: Poner mensaje de alerta llenar formulario
       return;
     }
@@ -78,13 +89,16 @@ export class ProfileComponent implements OnInit {
     };
     this.setErrorMessage('');
     this.profileService.editProfile(profileEditParams);
+    this.router.navigateByUrl('/');
   }
 
-  onFileSelected(event: Event) {
+  async onFileSelected(event: Event) {
+    this.isPictureLoading = true;
     const input = event.target as HTMLInputElement;
     if (input.files) {
       const file = input.files[0];
-      this.profileService.changeProfilePhoto(file);
+      await this.profileService.changeProfilePhoto(file);
+      this.isPictureLoading = false;
     }
   }
 
