@@ -120,6 +120,35 @@
     <app-upload-file (newItemEvent)="newFiles($event)" />
   </div>
 
+  <!-- Fotografías ya existentes -->
+  <div class="mt-12">
+    <div class="flex flex-wrap gap-5 p-0 sm:p-5">
+      <div
+        *ngFor="let file of oldFiles; let i = index"
+        class="flex gap-3 px-6 m-0 card flex-column border-1 surface-border align-items-center"
+      >
+        <div>
+          <img
+            role="presentation"
+            [alt]="file.imageId"
+            [src]="file.imageUrl"
+            width="100"
+            height="50"
+          />
+        </div>
+        <!-- <span class="font-semibold">{{ file.name }}</span>
+        <div>{{ formatSize(file.size) }}</div> -->
+        <!-- <p-badge value="Pending" severity="warning" /> -->
+        <button
+          styleClass="flex w-8 h-8 rounded-full bg-n-8"
+          (onClick)="onRemoveOldFile($event, i)"
+        >
+          <ng-icon class="m-auto" name="heroTrash" />
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div class="my-4 h-fit">
     <p class="text-color-5 body-2">{{ error }}</p>
   </div>
