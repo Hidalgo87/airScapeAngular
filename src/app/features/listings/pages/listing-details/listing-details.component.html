@@ -1,5 +1,14 @@
 <div class="max-w-[60rem] my-12 mx-auto px-4">
-  <h4 class="mb-6 font-medium h4">{{ listing?.title }}</h4>
+  <div class="mb-6">
+    <h4 class="mb-2 font-medium h4">{{ listing?.title }}</h4>
+    <p class="inline mr-4 font-normal body-2 text-n-4">
+      Created at {{ listing?.createdAt?.toLocaleDateString() }}
+    </p>
+    <p class="inline text-n-4">&mdash;</p>
+    <p class="inline ml-4 font-normal body-2 text-n-4">
+      Updated at {{ listing?.createdAt?.toLocaleDateString() }}
+    </p>
+  </div>
 
   <!-- Galería de imágenes -->
   <div class="lg:mx-8">
@@ -7,10 +16,12 @@
       [value]="listing?.photos"
       [responsiveOptions]="responsiveOptions"
       [numVisible]="5"
-      class="w-auto"
     >
-      <ng-template pTemplate="item" let-item>
-        <img [src]="item.imageUrl" style="width: 100%" />
+      <ng-template pTemplate="item" class="" let-item>
+        <div class="max-h-[30rem] min-h-[30rem] overflow-hidden">
+          <img [src]="item.imageUrl" class="object-scale-down h-[30rem]" />
+          <!-- style="width: 100%" -->
+        </div>
       </ng-template>
       <ng-template pTemplate="thumbnail" let-item>
         <div class="flex items-center gap-6 h-14">

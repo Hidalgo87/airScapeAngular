@@ -46,5 +46,13 @@ export class ListingDetailsComponent {
         numVisible: 1,
       },
     ];
+
+    if (this.listing?.createdAt) {
+      this.listing.createdAt = new Date(this.listing.createdAt);
+    }
+
+    if (this.listing?.updatedAt) {
+      this.listing.updatedAt = new Date(this.listing.updatedAt);
+    }
   }
 }
