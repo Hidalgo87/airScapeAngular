@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, WritableSignal } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { Router, RouterLink } from '@angular/router';
 import {
@@ -26,10 +26,12 @@ import { User } from '../../../features/profile/interfaces/user.interface';
     }),
   ],
 })
-export class HeaderComponent {
-  user;
-  constructor(private userService: UserService, private router: Router) {
-    this.user = userService.getUser();
+export class HeaderComponent implements OnInit {
+  user: WritableSignal<User> | undefined;
+  constructor(private userService: UserService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.user = this.userService.getUser();
   }
 
   isDropdownOpen = false;

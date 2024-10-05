@@ -9,8 +9,8 @@ export const noAuthGuard: CanActivateFn = (route, state) => {
 
   if (userService.isAuthenticated()) {
     router.navigate(['/']);
-    return true;
-  } else {
     return false;
+  } else {
+    return true;
   }
 };

@@ -6,7 +6,7 @@
       <img src="./assets/airScapeLogo3.png" alt="airScape" class="m-auto" />
     </a>
 
-    @if (user().userName.length > 0) {
+    @if (user && user().userName.length > 0) {
     <div
       class="hidden lg:block h-9 cursor-pointer absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 lg:w-[20rem] xl:w-[28rem] hover:opacity-85"
       [routerLink]="['/search']"

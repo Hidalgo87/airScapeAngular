@@ -82,8 +82,8 @@
         [(ngModel)]="latitude"
         inputId="latitude"
         mode="decimal"
-        [min]="1"
-        [max]="100"
+        [min]="-999999"
+        [max]="999999"
         class="h-12"
       />
       <label for="latitude">Latitude</label>
@@ -94,8 +94,8 @@
         [(ngModel)]="longitude"
         inputId="longitude"
         mode="decimal"
-        [min]="1"
-        [max]="100"
+        [min]="-999999"
+        [max]="999999"
         class="h-12"
       />
       <label for="longitude">Longitude</label>
