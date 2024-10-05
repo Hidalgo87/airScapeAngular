@@ -38,6 +38,12 @@ Con la longitud y latitud de la ciudad, podemos filtrar todas las propiedades en
 
 Para la búsqueda, hay propiedades ubicadas en: Medellín, Cali y Cartagena.
 
+### Credenciales de usuario quemado
+Para propósitos de prueba, le dejamos las credenciales del siguiente usuario propietario con propiedades:
+
+User Name: wilsonsantiago
+Password: 123
+
 ### Búsqueda no toma en cuenta la fecha
 
 La fecha de llegada y salida se puede ingresar como filtro de búsqueda, sin embargo, no está funcional el filtrado por fecha porque aún no existen propiedades reservadas, entonces todas las propiedades pasan a estar disponibles en cualquier fecha.
