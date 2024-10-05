@@ -106,12 +106,14 @@ export class SearchComponent implements OnInit {
     } else if (this.sortOption === 'Latest') {
       this.displayedListings = this.displayedListings.sort(
         (listing1, listing2) =>
-          listing1.createdAt.getTime() > listing2.createdAt.getTime() ? 1 : -1
+          new Date(listing2.createdAt).getTime() -
+          new Date(listing1.createdAt).getTime()
       );
     } else if (this.sortOption === 'Oldest') {
       this.displayedListings = this.displayedListings.sort(
         (listing1, listing2) =>
-          listing2.createdAt.getTime() > listing1.createdAt.getTime() ? 1 : -1
+          new Date(listing1.createdAt).getTime() -
+          new Date(listing2.createdAt).getTime()
       );
     }
   }
