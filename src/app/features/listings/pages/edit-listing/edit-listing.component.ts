@@ -62,11 +62,10 @@ export class EditListingComponent implements OnInit {
   async updateListing(listingParams: ListingParams) {
     if (this.oldListing) {
       await this.listingsService.editListing(
-        // ! Hay que cambiar edit Listing para que maneje la dos listas por separado
         {
           listingId: this.oldListing.listingId,
           userName: this.oldListing.userName,
-          photos: this.oldListing.photos,
+          photos: listingParams.photos,
           title: listingParams.title,
           description: listingParams.description,
           address: listingParams.address,
@@ -76,8 +75,8 @@ export class EditListingComponent implements OnInit {
           numBedrooms: listingParams.numBedrooms,
           numBathrooms: listingParams.numBathrooms,
           maxGuests: listingParams.maxGuests,
-        }
-        // listingParams.photos
+        },
+        listingParams.filePhotos
       );
       this.router.navigateByUrl('/my-listings');
     }

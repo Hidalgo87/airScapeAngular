@@ -9,7 +9,7 @@ import { Output, Input, EventEmitter } from '@angular/core';
 import { ListingParams } from '../../interfaces/listingParams.interface';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CommonModule } from '@angular/common';
-import { NgIconsModule, provideIcons } from '@ng-icons/core';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroTrash } from '@ng-icons/heroicons/outline';
 import { Image } from '../../../images/interfaces/image.interface';
 
@@ -25,7 +25,7 @@ import { Image } from '../../../images/interfaces/image.interface';
     UploadFileComponent,
     ProgressSpinnerModule,
     CommonModule,
-    NgIconsModule,
+    NgIconComponent,
   ],
   providers: [provideIcons({ heroTrash })],
   templateUrl: './form-listing.component.html',
@@ -144,5 +144,7 @@ export class FormListingComponent implements OnInit {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  onRemoveOldFile(event: Event, index: number) {}
+  onRemoveOldFile(event: Event, index: number) {
+    this.oldFiles = this.oldFiles?.filter((_, i) => i !== index);
+  }
 }

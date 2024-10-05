@@ -108,7 +108,7 @@
         id="description"
         rows="5"
         pInputTextarea
-        class="w-full"
+        class="w-full py-4"
         [autoResize]="true"
         [(ngModel)]="description"
       >
@@ -121,7 +121,8 @@
   </div>
 
   <!-- Fotografías ya existentes -->
-  <div class="mt-12">
+  <div class="px-4 pt-2 pb-6 mt-12 border rounded-lg border-stroke-1">
+    <h6 class="mb-6 h6">Uploaded images</h6>
     <div class="flex flex-wrap gap-5 p-0 sm:p-5">
       <div
         *ngFor="let file of oldFiles; let i = index"
@@ -136,14 +137,11 @@
             height="50"
           />
         </div>
-        <!-- <span class="font-semibold">{{ file.name }}</span>
-        <div>{{ formatSize(file.size) }}</div> -->
-        <!-- <p-badge value="Pending" severity="warning" /> -->
         <button
-          styleClass="flex w-8 h-8 rounded-full bg-n-8"
-          (onClick)="onRemoveOldFile($event, i)"
+          class="flex w-8 h-8 rounded-full bg-n-2"
+          (click)="onRemoveOldFile($event, i)"
         >
-          <ng-icon class="m-auto" name="heroTrash" />
+          <ng-icon class="m-auto text-n-8" name="heroTrash" />
         </button>
       </div>
     </div>
