@@ -1,4 +1,4 @@
-<div class="relative px-12 mb-20">
+<div class="relative mb-20 lg:px-8 2xl:px-12">
   <div class="absolute inset-x-0 top-0 h-fit -z-10">
     <img
       src="./assets/Back-lights.png"
@@ -30,7 +30,9 @@
       <h4 class="font-semibold text-center h4">Popular stays</h4>
       <ng-icon name="octNorthStar" class="text-color-4" />
     </div>
-    <div class="grid grid-cols-4 mt-4 gap-x-12 gap-y-6">
+    <div
+      class="grid mt-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-x-12 gap-y-6"
+    >
       <app-listing-card [listing]="listing" *ngFor="let listing of listings" />
     </div>
   </div>
