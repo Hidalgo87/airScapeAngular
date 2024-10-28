@@ -1,0 +1,72 @@
+<div class="max-w-full overflow-hidden bg-n-6/70 rounded-xl">
+  <div class="flex px-5 py-3 border-b border-n-3/10">
+    <p class="mr-4 body-2 text-n-4">
+      Booked at {{ booking.bookedAt.toLocaleDateString() }}
+    </p>
+  </div>
+  <div class="flex gap-5 px-6 pt-4 pb-8 mr-12">
+    <div class="h-[10rem] w-[10rem] overflow-hidden rounded-md flex-shrink-0">
+      <img
+        class="object-cover w-full h-full"
+        [src]="booking.propertyImage"
+        alt="house"
+      />
+    </div>
+    <div class="flex flex-1">
+      <div class="flex-1">
+        <h6 class="capitalize h6 text-color-3">{{ booking.status }}</h6>
+        <h6 class="font-normal truncate text-n-3 h6 w-[25rem]">
+          {{ booking.propertyTitle }}
+        </h6>
+        <p class="mr-4 font-normal body-2 text-n-4">Booking date:</p>
+        <div class="flex">
+          <p class="mr-4 font-normal body-2 text-n-4">
+            {{ booking.bookingStart.toLocaleDateString() }}
+          </p>
+          <p class="text-n-4">&mdash;</p>
+          <p class="ml-4 font-normal body-2 text-n-4">
+            {{ booking.bookingEnd.toLocaleDateString() }}
+          </p>
+        </div>
+        <p class="body-2">$ {{ booking.price }} COP</p>
+      </div>
+      <div class="flex flex-col basis-1/4">
+        <div class="">
+          <div class="flex items-center">
+            <div
+              class="w-[3rem] h-[3rem] overflow-hidden rounded-full shrink-0"
+            >
+              <img
+                alt="profile_photo"
+                [src]="booking.hostPicture"
+                class="object-cover w-full h-full"
+              />
+            </div>
+            <div class="ml-4">
+              <p class="body-2 text-n-4">Host</p>
+              <p class="font-medium truncate body-2">{{ booking.hostName }}</p>
+            </div>
+          </div>
+          <!-- <button
+            class="flex items-center gap-2 px-2 py-1 mt-2 rounded-lg hover:bg-color-2/10"
+          >
+            <ng-icon name="octComment" class="text-color-2" />
+            <p class="body-2 text-color-2 text-nowrap">Send message</p>
+          </button> -->
+        </div>
+        <button
+          class="px-4 py-1 mt-auto rounded-lg bg-color-5 text-n-7 hover:bg-opacity-80"
+          *ngIf="booking.status === 'pending'"
+        >
+          Cancel
+        </button>
+        <button
+          class="px-4 py-1 mt-auto rounded-lg bg-color-1 text-n-7 hover:bg-opacity-80"
+          *ngIf="booking.status === 'redeemed'"
+        >
+          Review
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

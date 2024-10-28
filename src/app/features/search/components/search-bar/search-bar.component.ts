@@ -32,6 +32,8 @@ export class SearchBarComponent implements OnInit {
   date: Date | Date[] | undefined;
   guests: number | undefined;
 
+  today = new Date();
+
   // blockChars: RegExp = /^[^<>*!+$]+$/;
 
   constructor(private router: Router, private route: ActivatedRoute) {}

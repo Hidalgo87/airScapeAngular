@@ -6,6 +6,7 @@ import { octNorthStar } from '@ng-icons/octicons';
 import { ListingsService } from '../../../listings/services/listings.service';
 import { ListingBrief } from '../../../listings/interfaces/listingBrief.interface';
 import { CommonModule } from '@angular/common';
+import { ListingCardSkeletonComponent } from '../../../listings/components/listing-card-skeleton/listing-card-skeleton.component';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,7 @@ import { CommonModule } from '@angular/common';
     ListingCardComponent,
     NgIconComponent,
     CommonModule,
+    ListingCardSkeletonComponent,
   ],
   providers: [provideIcons({ octNorthStar })],
   templateUrl: './home.component.html',

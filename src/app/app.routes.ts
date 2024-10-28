@@ -11,6 +11,8 @@ import { SearchComponent } from './features/search/pages/search/search.component
 import { EditListingComponent } from './features/listings/pages/edit-listing/edit-listing.component';
 import { authGuard } from './auth/guards/auth.guard';
 import { noAuthGuard } from './auth/guards/no-auth.guard';
+import { UserBookingsComponent } from './features/booking/pages/user-bookings/user-bookings.component';
+import { NewBookingComponent } from './features/booking/pages/new-booking/new-booking.component';
 
 export const routes: Routes = [
   {
@@ -20,10 +22,12 @@ export const routes: Routes = [
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'profile', component: ProfileComponent },
       { path: 'listing/details/:id', component: ListingDetailsComponent },
+      { path: 'listing/booking/:id', component: NewBookingComponent },
       { path: 'listing/create', component: CreateListingComponent },
       { path: 'listing/edit/:id', component: EditListingComponent },
       { path: 'my-listings', component: UserListingsComponent },
       { path: 'search', component: SearchComponent },
+      { path: 'my-bookings', component: UserBookingsComponent },
     ],
   },
   {
