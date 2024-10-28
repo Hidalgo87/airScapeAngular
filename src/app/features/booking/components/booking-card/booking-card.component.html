@@ -30,7 +30,7 @@
         </div>
         <p class="body-2">$ {{ booking.price }} COP</p>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col basis-1/4">
         <div class="">
           <div class="flex items-center">
             <div
@@ -47,17 +47,24 @@
               <p class="font-medium truncate body-2">{{ booking.hostName }}</p>
             </div>
           </div>
-          <button
+          <!-- <button
             class="flex items-center gap-2 px-2 py-1 mt-2 rounded-lg hover:bg-color-2/10"
           >
             <ng-icon name="octComment" class="text-color-2" />
             <p class="body-2 text-color-2 text-nowrap">Send message</p>
-          </button>
+          </button> -->
         </div>
         <button
           class="px-4 py-1 mt-auto rounded-lg bg-color-5 text-n-7 hover:bg-opacity-80"
+          *ngIf="booking.status === 'pending'"
         >
           Cancel
+        </button>
+        <button
+          class="px-4 py-1 mt-auto rounded-lg bg-color-1 text-n-7 hover:bg-opacity-80"
+          *ngIf="booking.status === 'redeemed'"
+        >
+          Review
         </button>
       </div>
     </div>

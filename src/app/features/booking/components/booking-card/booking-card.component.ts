@@ -2,11 +2,12 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { Component, Input } from '@angular/core';
 import { octComment } from '@ng-icons/octicons';
 import { BookingCard } from '../../interfaces/booking-card';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-booking-card',
   standalone: true,
-  imports: [NgIconComponent],
+  imports: [NgIconComponent, CommonModule],
   providers: [provideIcons({ octComment })],
   templateUrl: './booking-card.component.html',
   styleUrl: './booking-card.component.css',

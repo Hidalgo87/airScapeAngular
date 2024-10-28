@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { GalleriaModule } from 'primeng/galleria';
 import { Image } from '../../../images/interfaces/image.interface';
 import { ListingsService } from '../../services/listings.service';
@@ -7,7 +7,7 @@ import { ListingDetails } from '../../interfaces/listingDetails.interface';
 @Component({
   selector: 'app-listing-details',
   standalone: true,
-  imports: [GalleriaModule],
+  imports: [GalleriaModule, RouterLink],
   templateUrl: './listing-details.component.html',
   styleUrl: './listing-details.component.css',
 })

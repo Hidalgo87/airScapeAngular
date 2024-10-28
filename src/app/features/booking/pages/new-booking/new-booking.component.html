@@ -1,0 +1,67 @@
+<div class="px-4 mx-auto my-20 w-[70rem]">
+  <div class="px-6 py-6 border rounded-lg border-stroke-1">
+    <h5 class="font-medium h5">Request to book</h5>
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-start">
+      <div class="flex-1 px-8 py-8">
+        <p class="mb-8 body-2 text-n-4">Details about your trip</p>
+        <div class="w-2/3 mx-auto">
+          <p-floatLabel class="basis-2/3">
+            <p-calendar
+              [(ngModel)]="date"
+              styleClass="h-14 w-full"
+              [iconDisplay]="'input'"
+              [showIcon]="true"
+              selectionMode="range"
+              inputId="date"
+              [minDate]="today"
+            />
+            <label for="date" class="pl-7">Date of stay</label>
+          </p-floatLabel>
+          <div class="relative flex items-center mt-8">
+            <ng-icon
+              name="heroUser"
+              class="absolute text-xl -translate-y-1/2 text-n-3 left-3 top-1/2"
+            />
+            <p-floatLabel class="w-full">
+              <p-inputNumber
+                inputId="guests"
+                styleClass="h-14 w-full"
+                class="w-full"
+                [(ngModel)]="guests"
+                [min]="0"
+                [max]="100"
+              />
+              <label for="guests" class="pl-7">Guests</label>
+            </p-floatLabel>
+          </div>
+          <button
+            class="px-8 py-4 mt-12 font-medium rounded-lg bg-color-2 text-n-1"
+          >
+            Confirm
+          </button>
+        </div>
+      </div>
+      <div
+        class="w-full px-6 py-6 border rounded-lg lg:basis-2/5 border-stroke-1"
+      >
+        <div class="flex">
+          <div class="h-[6rem] w-[6rem] overflow-hidden rounded-md shrink-0">
+            <img
+              class="object-cover w-full h-full"
+              [src]="(listing?.photos)![0].imageUrl"
+              alt="house"
+            />
+          </div>
+          <div class="ml-3">
+            <p class="font-normal body-2">{{ listing?.title }}</p>
+          </div>
+        </div>
+
+        <div class="flex justify-between pt-8 mt-8 border-t border-stroke-1">
+          <h6 class="font-medium h6">Total price</h6>
+          <p class="mt-2 text-lg font-light body-2">$ NNNN COP</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
