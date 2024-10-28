@@ -21,7 +21,25 @@ export class ListingsService {
     private http: HttpClient,
     private userService: UserService
   ) {
-    this.user = userService.getUser();
+    this.user = this.userService.getUser();
+  }
+
+  getListingsOfCurrentUser(): ListingBrief[] {
+    const userName = this.user().userName;
+    let listings: Listing[] = this.getListings();
+    listings = listings.filter((listing) => listing.userName === userName);
+    return listings.map((listing) => {
+      return {
+        listingId: listing.listingId,
+        userName: listing.userName,
+        title: listing.title,
+        photo: listing.photos[0],
+        pricePerNight: listing.pricePerNight,
+        calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2)),
+        maxGuests: listing.maxGuests,
+        createdAt: listing.createdAt!,
+      };
+    });
   }
 
   deleteListing(listingId: string) {
@@ -63,15 +81,19 @@ export class ListingsService {
   }
 
   async searchListings(
-    cityName: string,
-    guestsNumber: number,
+    cityName: string | undefined,
+    guestsNumber: number | undefined,
     startDate: string = '',
     endDate: string = ''
   ): Promise<ListingBrief[]> {
     let nearbyListings: Listing[] = [];
     let nearbyBriefListings: ListingBrief[] = [];
 
-    if (cityName.length > 0) {
+    if (!cityName && !guestsNumber) {
+      return this.getPopularListings();
+    }
+
+    if (cityName) {
       nearbyListings = await this.getListingsNearby(cityName);
 
       nearbyBriefListings = nearbyListings.map((listing) => {
@@ -91,7 +113,7 @@ export class ListingsService {
     let guestsNumberListings: Listing[] = [];
     let guestsNumberBriefListings: ListingBrief[] = [];
 
-    if (guestsNumber > 0) {
+    if (guestsNumber) {
       guestsNumberListings = this.getListings().filter(
         (listing) => listing.maxGuests >= guestsNumber
       );
@@ -109,10 +131,10 @@ export class ListingsService {
       });
     }
 
-    if (guestsNumber === 0) {
+    if (!guestsNumber) {
       return nearbyBriefListings;
     }
-    if (cityName.length === 0) {
+    if (!cityName) {
       return guestsNumberBriefListings;
     }
 
@@ -127,7 +149,6 @@ export class ListingsService {
   async uploadFile(file: File, folderName: string, fileName: string) {
     return await this.imageService.upload(file, folderName, fileName);
   }
-
   getListingDetails(listingId: string): ListingDetails | null {
     const listing = this.getListingById(listingId);
     if (listing) {
@@ -190,11 +211,26 @@ export class ListingsService {
     return listing;
   }
 
-  getPopularListings(amountListings: number = 8): Listing[] {
+  getPopularListings(amountListings: number = 8): ListingBrief[] {
     let listingSrt = localStorage.getItem('listings');
+    let listingsBriefs: ListingBrief[] = [];
     if (listingSrt) {
       const listings: Listing[] = JSON.parse(listingSrt);
-      const shuffledListings = listings.sort(() => 0.5 - Math.random());
+      for (let listing of listings) {
+        let listingBrief: ListingBrief = {
+          listingId: listing.listingId,
+          userName: listing.userName,
+          title: listing.title,
+          photo: listing.photos[0],
+          pricePerNight: listing.pricePerNight,
+          calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2)),
+          maxGuests: listing.maxGuests,
+          createdAt: listing.createdAt!,
+        };
+        listingsBriefs.push(listingBrief);
+      }
+
+      const shuffledListings = listingsBriefs.sort(() => 0.5 - Math.random());
       if (amountListings >= listings.length) {
         return shuffledListings;
       } else {
@@ -242,7 +278,6 @@ export class ListingsService {
     const latRange = 0.01; // Aproximadamente 0.4505 grados
     const lonRange = 0.01; // Ajusta según la latitud
     return listings.filter((listing) => {
-      // Asegúrate de que la propiedad tenga coordenadas válidas
       if (listing.latitude == null || listing.longitude == null) {
         return false;
       }

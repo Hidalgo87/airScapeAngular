@@ -82,8 +82,8 @@
         [(ngModel)]="latitude"
         inputId="latitude"
         mode="decimal"
-        [min]="1"
-        [max]="100"
+        [min]="-999999"
+        [max]="999999"
         class="h-12"
       />
       <label for="latitude">Latitude</label>
@@ -94,8 +94,8 @@
         [(ngModel)]="longitude"
         inputId="longitude"
         mode="decimal"
-        [min]="1"
-        [max]="100"
+        [min]="-999999"
+        [max]="999999"
         class="h-12"
       />
       <label for="longitude">Longitude</label>
@@ -108,7 +108,7 @@
         id="description"
         rows="5"
         pInputTextarea
-        class="w-full"
+        class="w-full py-4"
         [autoResize]="true"
         [(ngModel)]="description"
       >
@@ -117,17 +117,54 @@
     </p-floatLabel>
   </div>
   <div class="mt-10">
-    <app-upload-file (newItemEvent)="newFiles($event)"/>
+    <app-upload-file (newItemEvent)="newFiles($event)" />
+  </div>
+
+  <!-- Fotografías ya existentes -->
+  <div class="px-4 pt-2 pb-6 mt-12 border rounded-lg border-stroke-1">
+    <h6 class="mb-6 h6">Uploaded images</h6>
+    <div class="flex flex-wrap gap-5 p-0 sm:p-5">
+      <div
+        *ngFor="let file of oldFiles; let i = index"
+        class="flex gap-3 px-6 m-0 card flex-column border-1 surface-border align-items-center"
+      >
+        <div>
+          <img
+            role="presentation"
+            [alt]="file.imageId"
+            [src]="file.imageUrl"
+            width="100"
+            height="50"
+          />
+        </div>
+        <button
+          class="flex w-8 h-8 rounded-full bg-n-2"
+          (click)="onRemoveOldFile($event, i)"
+        >
+          <ng-icon class="m-auto text-n-8" name="heroTrash" />
+        </button>
+      </div>
+    </div>
   </div>
 
   <div class="my-4 h-fit">
-    <p class="text-color-5 body-2">{{error}}</p>
+    <p class="text-color-5 body-2">{{ error }}</p>
   </div>
 
   <div class="mt-12 ml-auto w-fit">
-    <button class="px-12 py-2 rounded-lg hover:opacity-80 bg-color-1 text-n-1"
-    (click)="newListing()">
-      Save
+    <button
+      class="flex items-center justify-center w-32 h-12 py-2 rounded-lg bg-color-1 text-n-1"
+      [ngClass]="isLoading ? 'bg-color-1/50' : 'hover:opacity-80'"
+      [disabled]="isLoading"
+      (click)="newListing()"
+    >
+      <p-progressSpinner
+        *ngIf="isLoading; else elseBlock"
+        styleClass="h-full mx-auto"
+        strokeWidth="4"
+        class="h-full"
+      />
+      <ng-template #elseBlock> <p class="text-center">Save</p> </ng-template>
     </button>
   </div>
 </div>

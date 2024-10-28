@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, WritableSignal } from '@angular/core';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { Router, RouterLink } from '@angular/router';
 import {
@@ -8,6 +8,8 @@ import {
 } from '@ng-icons/heroicons/outline';
 import { NgClass } from '@angular/common';
 import { UserService } from '../../../auth/services/user.service';
+import { octSearch } from '@ng-icons/octicons';
+import { User } from '../../../features/profile/interfaces/user.interface';
 
 @Component({
   selector: 'app-header',
@@ -16,13 +18,20 @@ import { UserService } from '../../../auth/services/user.service';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
   providers: [
-    provideIcons({ heroArrowLeftEndOnRectangle, heroUser, heroHome }),
+    provideIcons({
+      heroArrowLeftEndOnRectangle,
+      heroUser,
+      heroHome,
+      octSearch,
+    }),
   ],
 })
-export class HeaderComponent {
-  user;
-  constructor (private userService:UserService, private router:Router){
-    this.user = userService.getUser();
+export class HeaderComponent implements OnInit {
+  user: WritableSignal<User> | undefined;
+  constructor(private userService: UserService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.user = this.userService.getUser();
   }
 
   isDropdownOpen = false;
@@ -35,9 +44,8 @@ export class HeaderComponent {
     this.isDropdownOpen = false;
   }
 
-  onLogOut(){
+  onLogOut() {
     this.userService.logOut();
     this.router.navigateByUrl('/login');
   }
-
 }

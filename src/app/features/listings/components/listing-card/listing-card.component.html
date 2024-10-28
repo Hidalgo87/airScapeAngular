@@ -1,20 +1,33 @@
 <div
-  class="border border-stroke-1 h-[26rem] rounded-xl p-4 w-[300px] mx-auto cursor-pointer"
-  [routerLink]="['/listing/details/', id]"
+  class="border hover:border-n-4/60 border-stroke-1 h-[27rem] rounded-xl p-4 w-[300px] mx-auto cursor-pointer"
+  [routerLink]="['/listing/details/', listing.listingId]"
 >
   <div class="h-[16rem] overflow-hidden rounded-md">
-    <img class="object-cover w-full h-full" [src]="image_url" alt="house" />
+    <img
+      class="object-cover w-full h-full"
+      [src]="listing.photo.imageUrl"
+      alt="house"
+    />
   </div>
-  <div class="my-4">
+  <div class="mb-4">
+    <p class="my-1 text-sm font-light text-n-4">
+      Published on {{ listing.createdAt.toLocaleDateString() }}
+    </p>
     <h6 class="h-12 mb-4 text-base font-bold line-clamp-2">
-      {{ title }}
+      {{ listing.title }}
     </h6>
     <p>
-      <b>${{ price }}</b> COP night
+      <b>${{ listing.pricePerNight }}</b> COP night
     </p>
-    <div class="mt-auto ml-auto text-color-4 w-fit">
-      <i class="fa-solid fa-star"></i>
-      <p class="inline ml-1">4.95</p>
+    <div class="flex justify-between mt-2">
+      <div class="flex items-center w-fit text-n-2">
+        <ng-icon name="octPerson" />
+        <p class="ml-1 body-2">{{ listing.maxGuests }}</p>
+      </div>
+      <div class="text-color-4 w-fit">
+        <i class="fa-solid fa-star"></i>
+        <p class="inline ml-1">{{ listing.calification }}</p>
+      </div>
     </div>
   </div>
 </div>

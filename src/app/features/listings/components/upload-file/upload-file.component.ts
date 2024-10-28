@@ -52,6 +52,7 @@ export class UploadFileComponent {
     index: number
   ) {
     removeFileCallback(event, index);
+    this.newItemEvent.emit(this.files);
     // this.totalSize -= parseInt(this.formatSize(file.size));
     // this.totalSizePercent = this.totalSize / 10;
   }

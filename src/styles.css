@@ -11,13 +11,13 @@
     @apply pl-10 bg-transparent border rounded-lg border-n-5 text-n-2;
   }
 
+  .p-dropdown > .p-inputtext {
+    @apply pl-4 border-none;
+  }
+
   .p-inputnumber > input {
     @apply w-full;
   }
-
-  /* .p-float-label {
-    @apply static flex w-full;
-  } */
 
   .p-calendar {
     @apply w-full h-full;
@@ -30,11 +30,21 @@
   .p-datepicker-icon {
     @apply right-auto left-4 text-n-3;
   }
+
+  .p-progress-spinner-circle {
+    @apply stroke-n-1 animate-circle-spinner;
+  }
 }
 
 @layer tailwind-utilities {
   @tailwind components;
   @tailwind utilities;
+
+  @layer utilities {
+    .animate-circle-spinner {
+      animation: p-progress-spinner-dash 1.5s ease-in-out infinite;
+    }
+  }
 }
 
 :root {

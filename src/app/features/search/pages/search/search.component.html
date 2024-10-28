@@ -1,1 +1,77 @@
-<p>search works!</p>
+<div class="relative pt-12">
+  <div class="absolute top-0 -translate-x-1/2 left-1/2 w-fit">
+    <img [src]="'assets/background_search.png'" class="w-full h-auto" />
+  </div>
+  <app-search-bar />
+  <div class="flex flex-col gap-4 my-20 ml-8 mr-4 lg:flex-row">
+    <div
+      class="flex flex-col gap-12 px-6 pt-6 pb-10 mx-auto border rounded-lg md:max-lg:flex-row lg:mx-0 w-fit border-stroke-1 h-fit"
+    >
+      <!-- <div class="mb-6">
+        <h5 class="h5">Filtering and Sorting</h5>
+      </div> -->
+      <div class="flex flex-row items-start gap-4 lg:flex-col">
+        <div class="flex items-center text-color-1">
+          <ng-icon name="octFilter" />
+          <h6 class="ml-2 h6">Filter</h6>
+        </div>
+        <div class="mx-auto w-fit">
+          <p class="font-extralight body-2">Price up to</p>
+          <div class="relative mb-4">
+            <p-inputNumber
+              inputId="price"
+              mode="currency"
+              currency="COL"
+              [(ngModel)]="price"
+              styleClass="w-full h-11 border-stroke-1"
+            />
+            <button
+              class="absolute right-0 flex w-6 h-6 transition translate-x-1/2 -translate-y-1/2 rounded-full hover:bg-color-2 text-n-7 bg-n-3 top-1/2"
+              (click)="onFilterChange()"
+            >
+              <ng-icon name="octCheck" class="m-auto" />
+            </button>
+          </div>
+          <p-slider
+            [(ngModel)]="price"
+            class="w-full"
+            [min]="0"
+            [max]="2000000"
+            [step]="10000"
+          />
+        </div>
+      </div>
+      <div class="flex flex-row items-start gap-4 lg:flex-col">
+        <div class="flex items-center mb-1 text-color-1">
+          <ng-icon name="octSortDesc" />
+          <h6 class="ml-2 h6">Sort</h6>
+        </div>
+        <p-dropdown
+          (onChange)="onSortChange()"
+          [showClear]="true"
+          [options]="sortOptions"
+          [(ngModel)]="sort"
+          optionLabel="name"
+          placeholder="Sort by"
+          styleClass="bg-transparent border-stroke-1 border w-[15rem] text-sm"
+          panelStyleClass="border-stroke-1 border bg-n-7"
+        />
+      </div>
+    </div>
+    <div class="flex-grow">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-y-8">
+        <app-listing-card
+          [listing]="listing"
+          *ngFor="let listing of displayedListings"
+        />
+      </div>
+      <div
+        *ngIf="displayedListings.length === 0"
+        class="flex flex-col items-center justify-center w-full h-full gap-4"
+      >
+        <ng-icon name="heroMagnifyingGlass" class="text-9xl" />
+        <p class="body-1">No search results found</p>
+      </div>
+    </div>
+  </div>
+</div>

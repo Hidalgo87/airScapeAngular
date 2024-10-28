@@ -16,6 +16,7 @@ export class EditListingComponent implements OnInit {
   listingId: string = '';
   oldListingParams: ListingParams = {
     title: '',
+    photos: [],
     filePhotos: [],
     description: '',
     address: '',
@@ -43,7 +44,7 @@ export class EditListingComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private listingsService: ListingsService,
-    private router:Router
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +53,7 @@ export class EditListingComponent implements OnInit {
     if (this.oldListing) {
       let oldListingParams: ListingParams = {
         ...this.oldListing,
-        filePhotos: [], // TODO:FILES
+        filePhotos: [],
       };
       this.oldListingParams = oldListingParams;
     }
@@ -64,7 +65,7 @@ export class EditListingComponent implements OnInit {
         {
           listingId: this.oldListing.listingId,
           userName: this.oldListing.userName,
-          photos: this.oldListing.photos,
+          photos: listingParams.photos,
           title: listingParams.title,
           description: listingParams.description,
           address: listingParams.address,
@@ -73,11 +74,11 @@ export class EditListingComponent implements OnInit {
           pricePerNight: listingParams.pricePerNight,
           numBedrooms: listingParams.numBedrooms,
           numBathrooms: listingParams.numBathrooms,
-          maxGuests: listingParams.maxGuests
+          maxGuests: listingParams.maxGuests,
         },
         listingParams.filePhotos
       );
-      this.router.navigateByUrl("/my-listings");
+      this.router.navigateByUrl('/my-listings');
     }
   }
 }

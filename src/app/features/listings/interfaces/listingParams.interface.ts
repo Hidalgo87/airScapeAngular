@@ -1,6 +1,9 @@
+import { Image } from '../../images/interfaces/image.interface';
+
 export interface ListingParams {
   title: string;
-  filePhotos:File[];
+  photos: Image[];
+  filePhotos: File[];
   description: string;
   address: string;
   latitude: number;

@@ -1,62 +1,37 @@
 import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GalleriaModule } from 'primeng/galleria';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { Image } from '../../../images/interfaces/image.interface';
+import { ListingsService } from '../../services/listings.service';
+import { ListingDetails } from '../../interfaces/listingDetails.interface';
 @Component({
   selector: 'app-listing-details',
   standalone: true,
-  imports: [GalleriaModule, NgIconComponent],
-  // providers: [provideIcons({ faSolidToilet })],
+  imports: [GalleriaModule],
   templateUrl: './listing-details.component.html',
   styleUrl: './listing-details.component.css',
 })
 export class ListingDetailsComponent {
-  @Input()
+  // @Input()
   set listingId(listingId: string) {
-    console.log(listingId);
-    // this.listing$ = this.service.getHero(listingId);
+    this.listing = this.listingService.getListingDetails(listingId);
   }
+
+  listing: ListingDetails | null = null;
 
   images: Image[] | undefined;
 
   responsiveOptions: any[] | undefined;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private listingService: ListingsService
+  ) {}
   ngOnInit(): void {
     this.listingId = this.route.snapshot.paramMap.get('id')!;
-    this.images = [
-      {
-        imageUrl: 'https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/home-improvement/wp-content/uploads/2022/07/Paris_Exterior_4-Edit-e1714649473120.png',
-        listingId: '',
-        imageId: ''
-      },
-      {
-        imageUrl: 'https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/home-improvement/wp-content/uploads/2022/07/Paris_Exterior_4-Edit-e1714649473120.png',
-        listingId: '',
-        imageId: ''
-      },
-      {
-        imageUrl: 'https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/home-improvement/wp-content/uploads/2022/07/Paris_Exterior_4-Edit-e1714649473120.png',
-        listingId: '',
-        imageId: ''
-      },
-      {
-        imageUrl: 'https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/home-improvement/wp-content/uploads/2022/07/Paris_Exterior_4-Edit-e1714649473120.png',
-        listingId: '',
-        imageId: ''
-      },
-      {
-        imageUrl: 'https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/home-improvement/wp-content/uploads/2022/07/Paris_Exterior_4-Edit-e1714649473120.png',
-        listingId: '',
-        imageId: ''
-      },
-      {
-        imageUrl: 'https://thumbor.forbes.com/thumbor/fit-in/900x510/https://www.forbes.com/home-improvement/wp-content/uploads/2022/07/Paris_Exterior_4-Edit-e1714649473120.png',
-        listingId: '',
-        imageId: ''
-      },
-    ];
+    this.images = [];
+
+    // Some PrimeNG settings
     this.responsiveOptions = [
       {
         breakpoint: '1024px',
@@ -71,5 +46,13 @@ export class ListingDetailsComponent {
         numVisible: 1,
       },
     ];
+
+    if (this.listing?.createdAt) {
+      this.listing.createdAt = new Date(this.listing.createdAt);
+    }
+
+    if (this.listing?.updatedAt) {
+      this.listing.updatedAt = new Date(this.listing.updatedAt);
+    }
   }
 }

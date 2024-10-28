@@ -12,14 +12,13 @@ import { Router } from '@angular/router';
   styleUrl: './create-listing.component.css',
 })
 export class CreateListingComponent {
+  constructor(
+    private listingService: ListingsService,
+    private router: Router
+  ) {}
 
-  constructor(private listingService:ListingsService, private router:Router){
-
-  }
-
-  async createListing(listingParams:ListingParams){
-      // Ya papi, usted solo cree la listing parchado.
-      let listing = await this.listingService.createListing(listingParams);
-      this.router.navigateByUrl("/my-listings");
+  async createListing(listingParams: ListingParams) {
+    let listing = await this.listingService.createListing(listingParams);
+    this.router.navigateByUrl('/my-listings');
   }
 }
