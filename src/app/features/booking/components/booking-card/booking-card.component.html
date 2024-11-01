@@ -14,7 +14,16 @@
     </div>
     <div class="flex flex-1">
       <div class="flex-1">
-        <h6 class="capitalize h6 text-color-3">{{ booking.status }}</h6>
+        <h6
+          [ngClass]="{
+            'text-color-5': booking.status === 'canceled',
+            'text-color-1': booking.status === 'pending',
+            'text-color-2': booking.status === 'redeemed'
+          }"
+          class="capitalize h6"
+        >
+          {{ booking.status }}
+        </h6>
         <h6 class="font-normal truncate text-n-3 h6 w-[25rem]">
           {{ booking.propertyTitle }}
         </h6>
@@ -60,8 +69,8 @@
         >
           Cancel
         </button>
-        <div class="mt-auto">
-          <app-new-review *ngIf="booking.status === 'redeemed'" />
+        <div class="mt-auto" *ngIf="booking.status === 'redeemed'">
+          <app-new-review />
         </div>
       </div>
     </div>
