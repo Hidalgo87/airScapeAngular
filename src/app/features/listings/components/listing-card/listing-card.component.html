@@ -5,7 +5,7 @@
   <div class="h-[16rem] overflow-hidden rounded-md">
     <img
       class="object-cover w-full h-full"
-      [src]="listing.photo.imageUrl"
+      [src]="listing.photo.imageUrl || 'assets/placeholder.png'"
       alt="house"
     />
   </div>

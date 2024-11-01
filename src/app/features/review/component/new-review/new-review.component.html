@@ -1,0 +1,43 @@
+<button
+  class="w-full px-4 py-1 rounded-lg bg-color-1 text-n-7 hover:bg-opacity-80"
+  (click)="showDialog()"
+>
+  Review
+</button>
+<p-dialog
+  showHeader="false"
+  [modal]="true"
+  [(visible)]="visible"
+  styleClass="w-[30rem]"
+  contentStyleClass="bg-n-6 rounded-xl"
+>
+  <div class="mt-6">
+    <h5 class="h5">Review this property!</h5>
+    <span class="block mt-3 mb-5 text-n-3"
+      >Let the people know about your experience in this stay</span
+    >
+    <div class="flex items-center gap-3 mb-3">
+      <label class="font-semibold w-[6rem]">Rating</label>
+      <p-rating [(ngModel)]="rating" [cancel]="false" />
+    </div>
+    <div class="mb-5">
+      <!-- <label for="email" class="block font-semibold w-[6rem]">Review</label> -->
+      <textarea
+        id="email"
+        class="w-full py-2 mt-2 border-n-4 input h-[8rem]"
+        autocomplete="off"
+        placeholder="Type your opinion here"
+      ></textarea>
+    </div>
+    <div class="flex justify-end gap-2">
+      <button (click)="onSave()" class="px-6 py-2 rounded-lg bg-color-2">
+        Save
+      </button>
+      <button (click)="onCancel()" class="px-6 py-2 rounded-lg bg-color-5">
+        Cancel
+      </button>
+      <!-- <p-button label="Cancel" severity="secondary" (onClick)="visible = false" />
+        <p-button label="Save" (onClick)="visible = false" /> -->
+    </div>
+  </div>
+</p-dialog>

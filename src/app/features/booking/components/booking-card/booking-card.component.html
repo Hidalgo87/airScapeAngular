@@ -60,12 +60,9 @@
         >
           Cancel
         </button>
-        <button
-          class="px-4 py-1 mt-auto rounded-lg bg-color-1 text-n-7 hover:bg-opacity-80"
-          *ngIf="booking.status === 'redeemed'"
-        >
-          Review
-        </button>
+        <div class="mt-auto">
+          <app-new-review *ngIf="booking.status === 'redeemed'" />
+        </div>
       </div>
     </div>
   </div>

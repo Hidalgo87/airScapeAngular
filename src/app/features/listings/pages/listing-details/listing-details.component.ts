@@ -4,10 +4,18 @@ import { GalleriaModule } from 'primeng/galleria';
 import { Image } from '../../../images/interfaces/image.interface';
 import { ListingsService } from '../../services/listings.service';
 import { ListingDetails } from '../../interfaces/listingDetails.interface';
+import { ReviewPostComponent } from '../../../review/component/review-post/review-post.component';
+import { CommonModule, NgFor } from '@angular/common';
 @Component({
   selector: 'app-listing-details',
   standalone: true,
-  imports: [GalleriaModule, RouterLink],
+  imports: [
+    GalleriaModule,
+    RouterLink,
+    ReviewPostComponent,
+    CommonModule,
+    NgFor,
+  ],
   templateUrl: './listing-details.component.html',
   styleUrl: './listing-details.component.css',
 })

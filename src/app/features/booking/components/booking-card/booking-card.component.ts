@@ -3,11 +3,12 @@ import { Component, Input } from '@angular/core';
 import { octComment } from '@ng-icons/octicons';
 import { BookingCard } from '../../interfaces/booking-card';
 import { CommonModule } from '@angular/common';
+import { NewReviewComponent } from '../../../review/component/new-review/new-review.component';
 
 @Component({
   selector: 'app-booking-card',
   standalone: true,
-  imports: [NgIconComponent, CommonModule],
+  imports: [NgIconComponent, CommonModule, NewReviewComponent],
   providers: [provideIcons({ octComment })],
   templateUrl: './booking-card.component.html',
   styleUrl: './booking-card.component.css',
