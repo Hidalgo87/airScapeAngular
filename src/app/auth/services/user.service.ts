@@ -19,10 +19,10 @@ export class UserService {
   private tokenKey = 'jwt_token';
   private userKey = 'user_logged';
 
-  #isLogged = signal(this.isAuthenticated());
+  // #isLogged = signal(this.isAuthenticated());
 
-  // private isLoggedSubject = new Subject<boolean>();
-  // isLogged$ = this.isLoggedSubject.asObservable();
+  private isLoggedSubject = new Subject<boolean>();
+  isLogged$ = this.isLoggedSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -42,7 +42,8 @@ export class UserService {
         tap((response) => {
           localStorage.setItem(this.tokenKey, response.token);
           localStorage.setItem(this.userKey, JSON.stringify(response.user));
-          this.#isLogged.update(() => true);
+          // this.#isLogged.update(() => true);
+          this.isLoggedSubject.next(true);
         })
       );
   }
@@ -59,7 +60,8 @@ export class UserService {
 
   logOut() {
     localStorage.clear();
-    this.#isLogged.update(() => false);
+    // this.#isLogged.update(() => false);
+    this.isLoggedSubject.next(false);
   }
 
   getUser(): User | undefined {

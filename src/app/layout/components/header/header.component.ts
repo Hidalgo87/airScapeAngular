@@ -28,19 +28,17 @@ import { Subscription } from '@supabase/supabase-js';
   ],
 })
 export class HeaderComponent implements OnInit {
-  // private userSubscription: Subscription;
+  private userSubscription;
 
   user: User | undefined;
   constructor(private userService: UserService, private router: Router) {
-    // this.userSubscription = this.userService.isLogged$.subscribe(
-    //   isLogged => {
-    //     if ( isLogged ) {
-    //       this.user = this.userService.getUser();
-    //     } else {
-    //       this.user = undefined;
-    //     }
-    //   }
-    // )
+    this.userSubscription = this.userService.isLogged$.subscribe((isLogged) => {
+      if (isLogged) {
+        this.user = this.userService.getUser();
+      } else {
+        this.user = undefined;
+      }
+    });
   }
 
   ngOnInit(): void {
