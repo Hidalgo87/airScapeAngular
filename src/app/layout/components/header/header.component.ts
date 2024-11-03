@@ -10,6 +10,7 @@ import { NgClass } from '@angular/common';
 import { UserService } from '../../../auth/services/user.service';
 import { octSearch } from '@ng-icons/octicons';
 import { User } from '../../../features/profile/interfaces/user.interface';
+import { Subscription } from '@supabase/supabase-js';
 
 @Component({
   selector: 'app-header',
@@ -27,8 +28,20 @@ import { User } from '../../../features/profile/interfaces/user.interface';
   ],
 })
 export class HeaderComponent implements OnInit {
+  // private userSubscription: Subscription;
+
   user: WritableSignal<User> | undefined;
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router) {
+    // this.userSubscription = this.userService.isLogged$.subscribe(
+    //   isLogged => {
+    //     if ( isLogged ) {
+    //       this.user = this.userService.getUser();
+    //     } else {
+    //       this.user = undefined;
+    //     }
+    //   }
+    // )
+  }
 
   ngOnInit(): void {
     this.user = this.userService.getUser();

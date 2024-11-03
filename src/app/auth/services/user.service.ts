@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, Signal, signal } from '@angular/core';
 import { UserAuth } from '../interfaces/userAuth.interfaces';
 import { User } from '../../features/profile/interfaces/user.interface';
 import {
@@ -6,105 +6,82 @@ import {
   SignUpResponse,
 } from '../interfaces/loginResponse.interfaces';
 import { v4 as uuid } from 'uuid';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Observable, Subject, tap } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  userSignal = signal<User>({
-    userName: '',
-    password: '',
-    email: '',
-    isOwner: false,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    userId: '',
-    profilePicture: '',
-    bio: '',
-  });
+  private apiUrl = environment.apiUrl;
+  private tokenKey = 'jwt_token';
+  private userKey = 'user_logged';
 
-  constructor() {}
+  #isLogged = signal(this.isAuthenticated());
 
-  login(userAuth: UserAuth): LoginResponse {
-    const userSrt = localStorage.getItem(
-      userAuth.userName.toLowerCase().trim()
-    );
-    if (!userSrt) {
-      return {
-        success: false,
-        message: 'User or password incorrects',
-      };
-    }
-    const user: User = JSON.parse(userSrt);
-    if (user.password !== userAuth.password) {
-      return {
-        success: false,
-        message: 'User or password incorrects',
-      };
-    }
-    this.setUser(user);
-    return {
-      success: true,
-    };
+  // private isLoggedSubject = new Subject<boolean>();
+  // isLogged$ = this.isLoggedSubject.asObservable();
+
+  constructor(private http: HttpClient) {}
+
+  getToken() {
+    return localStorage.getItem(this.tokenKey);
   }
 
-  register(user: UserAuth): SignUpResponse {
-    if (localStorage.getItem(user.userName.toLowerCase().trim())) {
-      return {
-        success: false,
-        message: 'Already exists a user with that username',
-      };
-    }
-    const userId = uuid();
-    let completeUser: User = {
-      userId: userId,
-      userName: user.userName,
-      email: user.email!,
+  login(userAuth: UserAuth): Observable<any> {
+    const body = {
+      username: userAuth.userName,
+      password: userAuth.password,
+    };
+
+    return this.http
+      .post<{ user: User; token: string }>(`${this.apiUrl}/auth/login`, body)
+      .pipe(
+        tap((response) => {
+          localStorage.setItem(this.tokenKey, response.token);
+          localStorage.setItem(this.userKey, JSON.stringify(response.user));
+          this.#isLogged.update(() => true);
+        })
+      );
+  }
+
+  register(user: UserAuth): Observable<any> {
+    const body = {
+      email: user.email,
+      username: user.userName,
       password: user.password,
-      profilePicture:
-        'https://img.freepik.com/premium-vector/stylish-default-user-profile-photo-avatar-vector-illustration_664995-352.jpg?semt=ais_hybrid',
-      bio: '',
-      isOwner: user.isOwner!,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      is_owner: user.isOwner,
     };
-    const userSrt = JSON.stringify(completeUser);
-    localStorage.setItem(user.userName.toLowerCase().trim(), userSrt);
-    return {
-      success: true,
-    };
+    return this.http.post<User>(`${this.apiUrl}/auth`, body);
   }
 
   logOut() {
-    this.setUser({
-      userName: '',
-      password: '',
-      email: '',
-      isOwner: false,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      userId: '',
-      profilePicture: '',
-      bio: '',
-    });
-  }
-
-  setUser(user: User) {
-    localStorage.setItem('loggedUser', JSON.stringify(user));
-    this.userSignal.set(user);
+    localStorage.clear();
+    this.#isLogged.update(() => false);
   }
 
   getUser() {
-    const userSrt = localStorage.getItem('loggedUser');
+    const userSrt = localStorage.getItem(this.userKey);
     if (userSrt) {
       const user = JSON.parse(userSrt);
-      this.userSignal.set(user);
+      return user;
+      // this.userSignal.set(user);
     }
-    return this.userSignal;
+    // return this.userSignal;
   }
 
   isAuthenticated(): boolean {
-    const user = this.getUser();
-    return user().userName.length > 0;
+    return !!this.getUser() && !this.isTokenExpired();
+  }
+
+  isTokenExpired(): boolean {
+    const token = this.getToken();
+    if (!token) return true;
+
+    const { exp } = jwtDecode<{ exp: number }>(token);
+    const expiryDate = new Date(exp * 1000);
+    return expiryDate < new Date();
   }
 }

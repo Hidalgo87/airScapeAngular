@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { UserAuth } from '../../interfaces/userAuth.interfaces';
 import { UserService } from '../../services/user.service';
+import { octDatabase } from '@ng-icons/octicons';
 
 @Component({
   selector: 'app-sign-up',
@@ -21,7 +22,7 @@ export class SignUpComponent {
 
   registerForm = this.fb.group({
     userName: ['', Validators.required],
-    email: ['', Validators.required ],
+    email: ['', Validators.required],
     password: ['', Validators.required],
     repassword: ['', Validators.required],
     isOwner: [false, Validators.required],
@@ -44,7 +45,6 @@ export class SignUpComponent {
       this.setRegisterErrorMessage('Diligenciar los campos');
       return;
     }
-    console.log('this.registerForm.valid', this.registerForm.valid);
 
     const userName = this.registerForm.value.userName!;
     const email = this.registerForm.value.email!;
@@ -99,20 +99,20 @@ export class SignUpComponent {
     if (password !== repassword) {
       this.setRegisterErrorMessage('Las contraseñas no coinciden.');
       return;
-    } else {
-      this.setRegisterErrorMessage(' ');
-      const response = this.userService.register({
-        userName: userName,
-        password: password,
-        email: email,
-        isOwner: isOwner,
-      });
-      if (response.success) {
-        this.router.navigateByUrl('/home');
-      } else {
-        this.setRegisterErrorMessage('El usuario ya existe.');
-        return;
-      }
     }
+
+    const data = {
+      userName: userName,
+      password: password,
+      email: email,
+      isOwner: isOwner,
+    };
+
+    this.setRegisterErrorMessage(' ');
+
+    this.userService.register(data).subscribe({
+      next: () => this.router.navigateByUrl('/login'),
+      error: (error) => this.setRegisterErrorMessage(error.message),
+    });
   }
 }
