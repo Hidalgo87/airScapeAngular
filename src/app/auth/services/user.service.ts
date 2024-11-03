@@ -62,13 +62,23 @@ export class UserService {
     this.#isLogged.update(() => false);
   }
 
-  getUser() {
+  getUser(): User | undefined {
     const userSrt = localStorage.getItem(this.userKey);
     if (userSrt) {
       const user = JSON.parse(userSrt);
-      return user;
+      return {
+        userId: user.user_id,
+        email: user.email,
+        userName: user.username,
+        profilePicture: user.profile_picture,
+        bio: user.bio,
+        isOwner: user.is_owner,
+        createdAt: user.created_at,
+        updatedAt: user.updated_at,
+      };
       // this.userSignal.set(user);
     }
+    return;
     // return this.userSignal;
   }
 

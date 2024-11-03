@@ -36,7 +36,7 @@ export class UserListingsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.listings = this.listingsService.getListingsOfCurrentUser();
+    // this.listings = this.listingsService.getListingsOfCurrentUser();
     console.log(this.listings);
   }
 

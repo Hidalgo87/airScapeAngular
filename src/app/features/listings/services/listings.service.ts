@@ -15,31 +15,28 @@ import { UserService } from '../../../auth/services/user.service';
   providedIn: 'root',
 })
 export class ListingsService {
-  user;
   constructor(
     private imageService: ImageService,
     private http: HttpClient,
     private userService: UserService
-  ) {
-    this.user = this.userService.getUser();
-  }
+  ) {}
 
-  getListingsOfCurrentUser(): ListingBrief[] {
-    const userName = this.user().userName;
-    let listings: Listing[] = this.getListings();
-    listings = listings.filter((listing) => listing.userName === userName);
-    return listings.map((listing) => {
-      return {
-        listingId: listing.listingId,
-        userName: listing.userName,
-        title: listing.title,
-        photo: listing.photos[0],
-        pricePerNight: listing.pricePerNight,
-        calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2)),
-        maxGuests: listing.maxGuests,
-        createdAt: listing.createdAt!,
-      };
-    });
+  getListingsOfCurrentUser() {
+    // const userName = this.user().userName;
+    // let listings: Listing[] = this.getListings();
+    // listings = listings.filter((listing) => listing.userName === userName);
+    // return listings.map((listing) => {
+    //   return {
+    //     listingId: listing.listingId,
+    //     userName: listing.userName,
+    //     title: listing.title,
+    //     photo: listing.photos[0],
+    //     pricePerNight: listing.pricePerNight,
+    //     calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2)),
+    //     maxGuests: listing.maxGuests,
+    //     createdAt: listing.createdAt!,
+    //   };
+    // });
   }
 
   deleteListing(listingId: string) {
@@ -200,7 +197,7 @@ export class ListingsService {
 
     let listing: Listing = {
       listingId: listingId,
-      userName: this.user().userName,
+      userName: '', // ! I think this is no longer needed since the token has this information
       title: listingParams.title,
       photos: listingImages,
       description: listingParams.description,

@@ -6,7 +6,7 @@
       <img src="./assets/airScapeLogo3.png" alt="airScape" class="m-auto" />
     </a>
 
-    @if (user && user().userName.length > 0) {
+    @if (user && user.userName.length > 0) {
     <div
       class="hidden lg:block h-9 cursor-pointer absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 lg:w-[20rem] xl:w-[28rem] hover:opacity-85"
       [routerLink]="['/search']"
@@ -33,10 +33,7 @@
           <i class="fa-solid fa-caret-down"></i>
         </div>
         <div class="w-10 h-10 overflow-hidden rounded-full">
-          <img
-            [src]="user().profilePicture"
-            class="object-cover w-full h-full"
-          />
+          <img [src]="user.profilePicture" class="object-cover w-full h-full" />
         </div>
 
         <!-- Dropdown menu -->
@@ -57,7 +54,7 @@
             </li>
 
             <!-- Opción para ver propiedades en caso de propietario -->
-            @if (user().isOwner) {
+            @if (user.isOwner) {
             <li
               class="flex items-center px-4 py-3 cursor-pointer hover:bg-n-5 hover:text-white"
               [routerLink]="['/my-listings']"

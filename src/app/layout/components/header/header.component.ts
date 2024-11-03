@@ -30,7 +30,7 @@ import { Subscription } from '@supabase/supabase-js';
 export class HeaderComponent implements OnInit {
   // private userSubscription: Subscription;
 
-  user: WritableSignal<User> | undefined;
+  user: User | undefined;
   constructor(private userService: UserService, private router: Router) {
     // this.userSubscription = this.userService.isLogged$.subscribe(
     //   isLogged => {
