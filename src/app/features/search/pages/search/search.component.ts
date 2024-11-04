@@ -56,6 +56,8 @@ export class SearchComponent implements OnInit {
 
   city: string | undefined;
   guests: number | undefined;
+  startDate: Date | undefined;
+  endDate: Date | undefined;
 
   listingResults: ListingBrief[];
   displayedListings: ListingBrief[];
@@ -75,17 +77,20 @@ export class SearchComponent implements OnInit {
       this.sortOption = params['sort'] || null;
       this.city = params['city'] || null;
       this.guests = params['guests'] || null;
+      this.startDate = params['start-date'] || null;
+      this.endDate = params['end-date'] || null;
 
       this.callResults();
     });
   }
 
   async callResults() {
-    this.listingResults = await this.listingService.searchListings(
-      this.city,
-      this.guests
-    );
-    this.applyFiltersAndSort();
+    this.listingService.searchListings(this.city, this.guests).subscribe({
+      next: (response) => {
+        this.listingResults = response;
+        this.applyFiltersAndSort();
+      },
+    });
   }
 
   applyFiltersAndSort(): void {

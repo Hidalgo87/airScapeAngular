@@ -28,8 +28,7 @@ export class EditListingComponent implements OnInit {
     maxGuests: 0,
   };
   oldListing: Listing | null = {
-    listingId: '',
-    userName: '',
+    listing_id: '',
     title: '',
     photos: [],
     description: '',
@@ -49,7 +48,7 @@ export class EditListingComponent implements OnInit {
 
   ngOnInit(): void {
     this.listingId = this.route.snapshot.paramMap.get('id')!;
-    this.oldListing = this.listingsService.getListingById(this.listingId);
+    this.listingsService.getListingById(this.listingId); // ! Fix this
     if (this.oldListing) {
       let oldListingParams: ListingParams = {
         ...this.oldListing,
@@ -63,8 +62,7 @@ export class EditListingComponent implements OnInit {
     if (this.oldListing) {
       await this.listingsService.editListing(
         {
-          listingId: this.oldListing.listingId,
-          userName: this.oldListing.userName,
+          listing_id: this.oldListing.listing_id,
           photos: listingParams.photos,
           title: listingParams.title,
           description: listingParams.description,

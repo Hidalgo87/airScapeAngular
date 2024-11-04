@@ -41,7 +41,7 @@ export class SearchBarComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
       this.city = params['city'] || null;
-      // this.date = params['date'] || null;
+      this.date = params['date'] || null;
       this.guests = params['guests'] || null;
     });
   }
@@ -50,7 +50,7 @@ export class SearchBarComponent implements OnInit {
     this.router.navigate(['search'], {
       queryParams: {
         city: this.city,
-        // date: this.date,
+        date: this.date,
         guests: this.guests,
       },
       queryParamsHandling: 'merge',

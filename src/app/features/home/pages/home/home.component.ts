@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
   constructor(private listingService: ListingsService) {}
 
   ngOnInit(): void {
-    this.listings = this.listingService.getPopularListings();
+    // ! Fix this
+    this.listingService.getPopularListings();
   }
 }

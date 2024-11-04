@@ -14,8 +14,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   const token = userService.getToken();
 
-  if (!!token || userService.isTokenExpired()) {
-    userService.logOut();
+  if (!!token || userService.isAuthenticated()) {
     return throwError(
       () => new Error('Request canceled: No authorization token')
     );

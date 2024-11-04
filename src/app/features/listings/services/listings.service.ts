@@ -51,7 +51,7 @@ export class ListingsService {
     return this.http.patch(`${this.apiUrl}/listings`, formData);
   }
 
-  async searchListings(
+  searchListings(
     cityName: string | undefined,
     guestsNumber: number | undefined,
     startDate: string = '',
@@ -98,11 +98,5 @@ export class ListingsService {
 
   getPopularListings(amountListings: number = 8) {}
 
-  private getListings(): Listing[] {
-    let listingSrt = localStorage.getItem('listings');
-    if (listingSrt) {
-      return JSON.parse(listingSrt);
-    }
-    return [];
-  }
+  getListingById(listingId: string) {}
 }

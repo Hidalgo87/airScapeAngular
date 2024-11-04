@@ -25,7 +25,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
 })
 export class NewBookingComponent implements OnInit {
   set listingId(listingId: string) {
-    this.listing = this.listingService.getListingDetails(listingId);
+    // ! Fix this
+    this.listingService.getListingDetails(listingId);
   }
 
   // TODO No need to have all the details, just the data from the card

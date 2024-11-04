@@ -85,7 +85,14 @@ export class UserService {
   }
 
   isAuthenticated(): boolean {
-    return !!this.getUser() && !this.isTokenExpired();
+    if (!!this.getUser() && !this.isTokenExpired()) {
+      return true;
+    } else {
+      if (this.isLogged$) {
+        this.logOut();
+      }
+      return false;
+    }
   }
 
   isTokenExpired(): boolean {

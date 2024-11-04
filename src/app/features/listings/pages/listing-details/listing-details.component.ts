@@ -22,7 +22,7 @@ import { CommonModule, NgFor } from '@angular/common';
 export class ListingDetailsComponent {
   // @Input()
   set listingId(listingId: string) {
-    this.listing = this.listingService.getListingDetails(listingId);
+    this.listingService.getListingDetails(listingId); // ! Fix this
   }
 
   listing: ListingDetails | null = null;
