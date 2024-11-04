@@ -18,11 +18,7 @@ import { environment } from '../../../../environments/environment';
 export class ListingsService {
   private apiUrl = environment.apiUrl;
 
-  constructor(
-    private imageService: ImageService,
-    private http: HttpClient,
-    private userService: UserService
-  ) {}
+  constructor(private imageService: ImageService, private http: HttpClient) {}
 
   getListingsOfCurrentUser() {
     return this.http.get<Listing[]>(`${this.apiUrl}/listings/user`);
