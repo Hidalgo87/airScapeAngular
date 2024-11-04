@@ -17,8 +17,11 @@ export class CreateListingComponent {
     private router: Router
   ) {}
 
-  async createListing(listingParams: ListingParams) {
-    let listing = await this.listingService.createListing(listingParams);
-    this.router.navigateByUrl('/my-listings');
+  createListing(listingParams: ListingParams) {
+    this.listingService.createListing(listingParams).subscribe({
+      next: () => {
+        this.router.navigateByUrl('/my-listings');
+      },
+    });
   }
 }

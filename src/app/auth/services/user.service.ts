@@ -1,15 +1,11 @@
-import { Injectable, Signal, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { UserAuth } from '../interfaces/userAuth.interfaces';
 import { User } from '../../features/profile/interfaces/user.interface';
-import {
-  LoginResponse,
-  SignUpResponse,
-} from '../interfaces/loginResponse.interfaces';
-import { v4 as uuid } from 'uuid';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +20,7 @@ export class UserService {
   private isLoggedSubject = new Subject<boolean>();
   isLogged$ = this.isLoggedSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getToken() {
     return localStorage.getItem(this.tokenKey);
@@ -62,6 +58,7 @@ export class UserService {
     localStorage.clear();
     // this.#isLogged.update(() => false);
     this.isLoggedSubject.next(false);
+    // this.router.navigate(['/login']);
   }
 
   getUser(): User | undefined {
@@ -85,14 +82,13 @@ export class UserService {
   }
 
   isAuthenticated(): boolean {
-    if (!!this.getUser() && !this.isTokenExpired()) {
-      return true;
-    } else {
-      if (this.isLogged$) {
-        this.logOut();
+    if (this.getToken()) {
+      if (!this.isTokenExpired()) {
+        return true;
       }
-      return false;
+      this.logOut();
     }
+    return false;
   }
 
   isTokenExpired(): boolean {

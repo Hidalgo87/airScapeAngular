@@ -22,7 +22,11 @@ import { CommonModule, NgFor } from '@angular/common';
 export class ListingDetailsComponent {
   // @Input()
   set listingId(listingId: string) {
-    this.listingService.getListingDetails(listingId); // ! Fix this
+    this.listingService.getListingDetails(listingId).subscribe({
+      next: (response) => {
+        this.listing = response;
+      },
+    });
   }
 
   listing: ListingDetails | null = null;

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './layout/components/header/header.component';
-import { BurnedListingService } from './features/listings/services/burnedListing.service';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +9,6 @@ import { BurnedListingService } from './features/listings/services/burnedListing
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'airScapeAngular';
-
-  constructor(private burnedListing: BurnedListingService) {}
-
-  ngOnInit(): void {
-    this.burnedListing.setBurnedListings();
-  }
 }

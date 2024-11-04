@@ -1,16 +1,11 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ImageService } from '../../images/services/image.service';
 import { Listing } from '../interfaces/listing.interface';
 import { ListingParams } from '../interfaces/listingParams.interface';
-import { v4 as uuid } from 'uuid';
-import { Image } from '../../images/interfaces/image.interface';
 import { ListingDetails } from '../interfaces/listingDetails.interface';
-import { User } from '../../profile/interfaces/user.interface';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom, map, Observable } from 'rxjs';
-import { ListingBrief } from '../interfaces/listingBrief.interface';
-import { UserService } from '../../../auth/services/user.service';
 import { environment } from '../../../../environments/environment';
+import { ListingBrief } from './../interfaces/listingBrief.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -21,14 +16,14 @@ export class ListingsService {
   constructor(private imageService: ImageService, private http: HttpClient) {}
 
   getListingsOfCurrentUser() {
-    return this.http.get<Listing[]>(`${this.apiUrl}/listings/user`);
+    return this.http.get<ListingBrief[]>(`${this.apiUrl}/listings/user`);
   }
 
   deleteListing(listingId: string) {
     return this.http.delete(`${this.apiUrl}/listings/${listingId}`);
   }
 
-  async editListing(newListing: Listing, newImages: File[] = []) {
+  editListing(newListing: Listing, newImages: File[] = []) {
     const formData = new FormData();
     formData.append('title', newListing.title);
     formData.append('description', newListing.description);
@@ -53,13 +48,13 @@ export class ListingsService {
 
   searchListings(
     cityName: string | undefined,
-    guestsNumber: number | undefined,
+    guestsNumber: string | undefined,
     startDate: string = '',
     endDate: string = ''
   ) {
     const body = {
       cityName,
-      guestsNumber,
+      guestsNumber: guestsNumber ? +guestsNumber : undefined,
       startDate,
       endDate,
     };
@@ -77,7 +72,7 @@ export class ListingsService {
     );
   }
 
-  async createListing(listingParams: ListingParams) {
+  createListing(listingParams: ListingParams) {
     const formData = new FormData();
     formData.append('title', listingParams.title);
     formData.append('description', listingParams.description);
@@ -96,7 +91,9 @@ export class ListingsService {
     return this.http.post(`${this.apiUrl}/listings`, formData);
   }
 
-  getPopularListings(amountListings: number = 8) {}
+  getPopularListings() {
+    return this.http.get<ListingBrief[]>(`${this.apiUrl}/listings`);
+  }
 
   getListingById(listingId: string) {}
 }

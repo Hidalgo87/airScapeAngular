@@ -1,5 +1,5 @@
 export interface Image {
-    listingId:string;
-    imageId:string;
-    imageUrl:string;
+  listing_id: string;
+  image_id: string;
+  image_url: string;
 }

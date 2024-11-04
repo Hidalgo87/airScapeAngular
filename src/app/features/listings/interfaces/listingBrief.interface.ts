@@ -1,12 +1,11 @@
-import { Image } from "../../images/interfaces/image.interface";
+import { Image } from '../../images/interfaces/image.interface';
 
 export interface ListingBrief {
   listingId: string;
-  userName: string;
   title: string;
-  photo:Image;
+  photo: Image;
   pricePerNight: number;
-  calification:number;
+  calification: number;
   maxGuests: number;
-  createdAt: Date;  
+  createdAt: Date;
 }

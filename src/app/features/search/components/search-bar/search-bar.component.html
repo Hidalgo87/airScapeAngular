@@ -29,8 +29,10 @@
           selectionMode="range"
           inputId="date"
           [minDate]="today"
+          (onClose)="validateDates()"
+          dateFormat="yy/mm/dd"
         />
-        <label for="date" class="pl-7">Date of stay</label>
+        <label for="date" class="pl-7">Start date - End date</label>
       </p-floatLabel>
       <div class="relative flex items-center basis-1/3">
         <ng-icon

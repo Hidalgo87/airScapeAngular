@@ -9,6 +9,7 @@ import { ListingBrief } from '../../interfaces/listingBrief.interface';
 import { heroMagnifyingGlass } from '@ng-icons/heroicons/outline';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { response } from 'express';
 
 @Component({
   selector: 'app-user-listings',
@@ -36,8 +37,21 @@ export class UserListingsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.listings = this.listingsService.getListingsOfCurrentUser();
-    console.log(this.listings);
+    this.listingsService.getListingsOfCurrentUser().subscribe({
+      next: (response) => {
+        this.listings = response;
+      },
+    });
+  }
+
+  delete(listingId: string) {
+    this.listingsService.deleteListing(listingId).subscribe({
+      next: () => {
+        this.listings = this.listings.filter(
+          (item) => item.listingId !== listingId
+        );
+      },
+    });
   }
 
   confirm(event: Event, listingId: string) {
@@ -50,10 +64,7 @@ export class UserListingsComponent implements OnInit {
       rejectIcon: 'none',
       rejectButtonStyleClass: 'p-button-text',
       accept: () => {
-        this.listingsService.deleteListing(listingId);
-        this.listings = this.listings.filter(
-          (item) => item.listingId !== listingId
-        );
+        this.delete(listingId);
         // this.messageService.add({
         //   severity: 'info',
         //   summary: 'Confirmed',

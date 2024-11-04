@@ -14,14 +14,14 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   const token = userService.getToken();
 
-  if (!!token || userService.isAuthenticated()) {
+  if (!token || !userService.isAuthenticated()) {
     return throwError(
       () => new Error('Request canceled: No authorization token')
     );
   }
 
   const reqAuthorized = req.clone({
-    headers: req.headers.set('Authorization', `Bearer ${token}`),
+    headers: req.headers.set('token', token),
   });
 
   return next(reqAuthorized).pipe(catchError(handleError));

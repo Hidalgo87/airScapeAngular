@@ -58,25 +58,30 @@ export class EditListingComponent implements OnInit {
     }
   }
 
-  async updateListing(listingParams: ListingParams) {
+  updateListing(listingParams: ListingParams) {
     if (this.oldListing) {
-      await this.listingsService.editListing(
-        {
-          listing_id: this.oldListing.listing_id,
-          photos: listingParams.photos,
-          title: listingParams.title,
-          description: listingParams.description,
-          address: listingParams.address,
-          latitude: listingParams.latitude,
-          longitude: listingParams.longitude,
-          pricePerNight: listingParams.pricePerNight,
-          numBedrooms: listingParams.numBedrooms,
-          numBathrooms: listingParams.numBathrooms,
-          maxGuests: listingParams.maxGuests,
-        },
-        listingParams.filePhotos
-      );
-      this.router.navigateByUrl('/my-listings');
+      this.listingsService
+        .editListing(
+          {
+            listing_id: this.oldListing.listing_id,
+            photos: listingParams.photos,
+            title: listingParams.title,
+            description: listingParams.description,
+            address: listingParams.address,
+            latitude: listingParams.latitude,
+            longitude: listingParams.longitude,
+            pricePerNight: listingParams.pricePerNight,
+            numBedrooms: listingParams.numBedrooms,
+            numBathrooms: listingParams.numBathrooms,
+            maxGuests: listingParams.maxGuests,
+          },
+          listingParams.filePhotos
+        )
+        .subscribe({
+          next: () => {
+            this.router.navigateByUrl('/my-listings');
+          },
+        });
     }
   }
 }

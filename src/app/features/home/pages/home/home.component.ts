@@ -28,7 +28,11 @@ export class HomeComponent implements OnInit {
   constructor(private listingService: ListingsService) {}
 
   ngOnInit(): void {
-    // ! Fix this
-    this.listingService.getPopularListings();
+    this.listingService.getPopularListings().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.listings = response;
+      },
+    });
   }
 }

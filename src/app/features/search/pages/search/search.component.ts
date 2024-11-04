@@ -55,9 +55,9 @@ export class SearchComponent implements OnInit {
   ];
 
   city: string | undefined;
-  guests: number | undefined;
-  startDate: Date | undefined;
-  endDate: Date | undefined;
+  guests: string | undefined;
+  startDate: string | undefined;
+  endDate: string | undefined;
 
   listingResults: ListingBrief[];
   displayedListings: ListingBrief[];
@@ -85,12 +85,14 @@ export class SearchComponent implements OnInit {
   }
 
   async callResults() {
-    this.listingService.searchListings(this.city, this.guests).subscribe({
-      next: (response) => {
-        this.listingResults = response;
-        this.applyFiltersAndSort();
-      },
-    });
+    this.listingService
+      .searchListings(this.city, this.guests, this.startDate, this.endDate)
+      .subscribe({
+        next: (response) => {
+          this.listingResults = response;
+          this.applyFiltersAndSort();
+        },
+      });
   }
 
   applyFiltersAndSort(): void {
