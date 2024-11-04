@@ -4,7 +4,7 @@
   >
     <h4 class="font-semibold h4">Bookings</h4>
     <div class="flex flex-col gap-6 mt-8">
-      <app-booking-card [booking]="booking" />
+      <app-booking-card [booking]="booking" *ngFor="let booking of bookings" />
     </div>
   </div>
 </div>

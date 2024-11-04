@@ -14,6 +14,7 @@
               selectionMode="range"
               inputId="date"
               [minDate]="today"
+              (onClose)="validateDates()"
             />
             <label for="date" class="pl-7">Date of stay</label>
           </p-floatLabel>
@@ -34,8 +35,10 @@
               <label for="guests" class="pl-7">Guests</label>
             </p-floatLabel>
           </div>
+          <p class="body-2 text-color-5">{{ error }}</p>
           <button
             class="px-8 py-4 mt-12 font-medium rounded-lg bg-color-2 text-n-1"
+            (click)="onConfirm()"
           >
             Confirm
           </button>
