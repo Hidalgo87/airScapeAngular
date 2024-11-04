@@ -82,13 +82,13 @@ export class ProfileComponent implements OnInit {
       );
       return;
     }
+    this.setErrorMessage('');
     const profileEditParams: ProfileEditParams = {
       email: this.updateProfileForm.value.email!,
       password: this.updateProfileForm.value.password!,
       bio: this.updateProfileForm.value.bio!,
     };
-    this.setErrorMessage('');
-    this.profileService.editProfile(profileEditParams);
+    // this.profileService.editProfile(profileEditParams);
     this.router.navigateByUrl('/');
   }
 
@@ -97,7 +97,7 @@ export class ProfileComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files) {
       const file = input.files[0];
-      await this.profileService.changeProfilePhoto(file);
+      // await this.profileService.changeProfilePhoto(file);
       this.isPictureLoading = false;
     }
   }

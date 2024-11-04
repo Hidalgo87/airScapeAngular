@@ -10,11 +10,14 @@ import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import { ListingBrief } from '../interfaces/listingBrief.interface';
 import { UserService } from '../../../auth/services/user.service';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ListingsService {
+  private apiUrl = environment.apiUrl;
+
   constructor(
     private imageService: ImageService,
     private http: HttpClient,
@@ -22,59 +25,34 @@ export class ListingsService {
   ) {}
 
   getListingsOfCurrentUser() {
-    // const userName = this.user().userName;
-    // let listings: Listing[] = this.getListings();
-    // listings = listings.filter((listing) => listing.userName === userName);
-    // return listings.map((listing) => {
-    //   return {
-    //     listingId: listing.listingId,
-    //     userName: listing.userName,
-    //     title: listing.title,
-    //     photo: listing.photos[0],
-    //     pricePerNight: listing.pricePerNight,
-    //     calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2)),
-    //     maxGuests: listing.maxGuests,
-    //     createdAt: listing.createdAt!,
-    //   };
-    // });
+    return this.http.get<Listing[]>(`${this.apiUrl}/listings/user`);
   }
 
   deleteListing(listingId: string) {
-    const allListings = this.getListings().filter(
-      (listing) => listing.listingId != listingId
-    );
-    const listingSrt = JSON.stringify(allListings);
-    localStorage.setItem('listings', listingSrt);
+    return this.http.delete(`${this.apiUrl}/listings/${listingId}`);
   }
 
   async editListing(newListing: Listing, newImages: File[] = []) {
-    const allListings = this.getListings().filter(
-      (listing) => listing.listingId != newListing.listingId
-    );
-    const oldListing = this.getListingById(newListing.listingId);
-    newListing.createdAt = oldListing?.createdAt;
-    newListing.updatedAt = new Date();
-    for (let file of newImages) {
-      const imageId = uuid();
-      const imageUrl = await this.uploadFile(
-        file,
-        `listings/${newListing.listingId}`,
-        imageId
-      );
-      if (imageUrl) {
-        const image: Image = {
-          listingId: newListing.listingId,
-          imageId: imageId,
-          imageUrl: imageUrl,
-        };
-        newListing?.photos.push(image);
-      } else {
-        console.error('No se pudo subir la imagen');
-      }
+    const formData = new FormData();
+    formData.append('title', newListing.title);
+    formData.append('description', newListing.description);
+    formData.append('address', newListing.address);
+    formData.append('latitude', newListing.latitude.toString());
+    formData.append('longitude', newListing.longitude.toString());
+    formData.append('pricePerNight', newListing.pricePerNight.toString());
+    formData.append('numBedrooms', newListing.numBedrooms.toString());
+    formData.append('numBathrooms', newListing.numBathrooms.toString());
+    formData.append('maxGuests', newListing.maxGuests.toString());
+
+    for (let i = 0; i < newListing.photos.length; i++) {
+      formData.append('photos', JSON.stringify(newListing.photos[i]));
     }
-    allListings.push(newListing);
-    const listingSrt = JSON.stringify(allListings);
-    localStorage.setItem('listings', listingSrt);
+
+    for (let i = 0; i < newImages.length; i++) {
+      formData.append('photos', newImages[i]);
+    }
+
+    return this.http.patch(`${this.apiUrl}/listings`, formData);
   }
 
   async searchListings(
@@ -82,241 +60,47 @@ export class ListingsService {
     guestsNumber: number | undefined,
     startDate: string = '',
     endDate: string = ''
-  ): Promise<ListingBrief[]> {
-    let nearbyListings: Listing[] = [];
-    let nearbyBriefListings: ListingBrief[] = [];
+  ) {
+    const body = {
+      cityName,
+      guestsNumber,
+      startDate,
+      endDate,
+    };
 
-    if (!cityName && !guestsNumber) {
-      return this.getPopularListings();
-    }
-
-    if (cityName) {
-      nearbyListings = await this.getListingsNearby(cityName);
-
-      nearbyBriefListings = nearbyListings.map((listing) => {
-        return {
-          listingId: listing.listingId,
-          userName: listing.userName,
-          title: listing.title,
-          pricePerNight: listing.pricePerNight,
-          photo: listing.photos[0],
-          calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2)),
-          maxGuests: listing.maxGuests,
-          createdAt: listing.createdAt!,
-        };
-      });
-    }
-
-    let guestsNumberListings: Listing[] = [];
-    let guestsNumberBriefListings: ListingBrief[] = [];
-
-    if (guestsNumber) {
-      guestsNumberListings = this.getListings().filter(
-        (listing) => listing.maxGuests >= guestsNumber
-      );
-      guestsNumberBriefListings = guestsNumberListings.map((listing) => {
-        return {
-          listingId: listing.listingId,
-          userName: listing.userName,
-          title: listing.title,
-          pricePerNight: listing.pricePerNight,
-          photo: listing.photos[0],
-          calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2)),
-          maxGuests: listing.maxGuests,
-          createdAt: listing.createdAt!,
-        };
-      });
-    }
-
-    if (!guestsNumber) {
-      return nearbyBriefListings;
-    }
-    if (!cityName) {
-      return guestsNumberBriefListings;
-    }
-
-    return nearbyBriefListings.filter((nearbyListing) =>
-      guestsNumberBriefListings.some(
-        (guestsNumberListing) =>
-          guestsNumberListing.listingId === nearbyListing.listingId
-      )
-    );
+    return this.http.post<ListingBrief[]>(`${this.apiUrl}/search`, body);
   }
 
   async uploadFile(file: File, folderName: string, fileName: string) {
     return await this.imageService.upload(file, folderName, fileName);
   }
-  getListingDetails(listingId: string): ListingDetails | null {
-    const listing = this.getListingById(listingId);
-    if (listing) {
-      const userSrt = localStorage.getItem(listing.userName);
-      if (userSrt) {
-        let user: User = JSON.parse(userSrt);
-        let listingDetails: ListingDetails = {
-          ...listing,
-          ownerName: user.userName,
-          ownerPicture: user.profilePicture,
-          reviews: [
-            {
-              userPicture:
-                'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-              username: 'ewtis',
-              review: 'this was great!',
-              rating: 5,
-            },
-          ],
-        };
-        return listingDetails;
-      }
-    }
-    return null;
-  }
 
-  async createListing(listingParams: ListingParams): Promise<Listing> {
-    const listingId = uuid();
-    let listingImages: Image[] = [];
-    for (let file of listingParams.filePhotos) {
-      let imageId = uuid();
-      let imageUrl = await this.uploadFile(
-        file,
-        'listings',
-        `${listingId}/${imageId}`
-      );
-      console.log('imageUrl', imageUrl);
-      if (imageUrl) {
-        let image: Image = {
-          listingId: listingId,
-          imageId: imageId,
-          imageUrl: imageUrl,
-        };
-        listingImages.push(image);
-      } else {
-        console.log('Error subiendo el archivo a la base de datos', file.name);
-      }
-    }
-
-    let listing: Listing = {
-      listingId: listingId,
-      userName: '', // ! I think this is no longer needed since the token has this information
-      title: listingParams.title,
-      photos: listingImages,
-      description: listingParams.description,
-      address: listingParams.address,
-      latitude: listingParams.latitude,
-      longitude: listingParams.longitude,
-      pricePerNight: listingParams.pricePerNight,
-      numBedrooms: listingParams.numBedrooms,
-      numBathrooms: listingParams.numBathrooms,
-      maxGuests: listingParams.maxGuests,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    let currentListings = this.getListings();
-    currentListings = [...currentListings, listing];
-    localStorage.setItem('listings', JSON.stringify(currentListings));
-    return listing;
-  }
-
-  getPopularListings(amountListings: number = 8): ListingBrief[] {
-    let listingSrt = localStorage.getItem('listings');
-    let listingsBriefs: ListingBrief[] = [];
-    if (listingSrt) {
-      const listings: Listing[] = JSON.parse(listingSrt);
-      for (let listing of listings) {
-        let listingBrief: ListingBrief = {
-          listingId: listing.listingId,
-          userName: listing.userName,
-          title: listing.title,
-          photo: listing.photos[0],
-          pricePerNight: listing.pricePerNight,
-          calification: parseFloat((Math.random() * (5 - 3) + 3).toFixed(2)),
-          maxGuests: listing.maxGuests,
-          createdAt: listing.createdAt!,
-        };
-        listingsBriefs.push(listingBrief);
-      }
-
-      const shuffledListings = listingsBriefs.sort(() => 0.5 - Math.random());
-      if (amountListings >= listings.length) {
-        return shuffledListings;
-      } else {
-        return shuffledListings.slice(0, amountListings);
-      }
-    }
-    return [];
-  }
-
-  getListingById(listingId: string): Listing | null {
-    let listingSrt = localStorage.getItem('listings');
-    if (listingSrt) {
-      const listings: Listing[] = JSON.parse(listingSrt);
-      const listingFound = listings.find((element) => {
-        return element.listingId === listingId;
-      });
-      if (!!listingFound) {
-        return listingFound;
-      }
-    }
-    return null;
-  }
-
-  private async getListingsNearby(cityName: string) {
-    const data = await firstValueFrom(this.getLatitudeLongitude(cityName));
-    let latitude = 0;
-    let longitude = 0;
-    data.forEach((coordinate) => {
-      latitude = Number.parseFloat(coordinate.lat);
-      longitude = Number.parseFloat(coordinate.lon);
-    });
-    const response = this.findNearbyListings(
-      this.getListings(),
-      latitude,
-      longitude
-    );
-    return response;
-  }
-
-  private findNearbyListings(
-    listings: Listing[],
-    targetLat: number,
-    targetLon: number
-  ): Listing[] {
-    const latRange = 0.01; // Aproximadamente 0.4505 grados
-    const lonRange = 0.01; // Ajusta según la latitud
-    return listings.filter((listing) => {
-      if (listing.latitude == null || listing.longitude == null) {
-        return false;
-      }
-      return (
-        listing.latitude >= targetLat - latRange &&
-        listing.latitude <= targetLat + latRange &&
-        listing.longitude >= targetLon - lonRange &&
-        listing.longitude <= targetLon + lonRange
-      );
-    });
-  }
-
-  private getLatitudeLongitude(
-    cityName: string
-  ): Observable<{ lat: string; lon: string }[]> {
-    const apiUrl = 'https://nominatim.openstreetmap.org/search';
-    const params = {
-      q: cityName,
-      format: 'json',
-      limit: '1',
-      'accept-language': 'en-US',
-    };
-
-    return this.http.get<any[]>(apiUrl, { params }).pipe(
-      // Mapear la respuesta para extraer solo latitud y longitud
-      map((response) =>
-        response.map((item) => ({
-          lat: item.lat,
-          lon: item.lon,
-        }))
-      )
+  getListingDetails(listingId: string) {
+    return this.http.get<ListingDetails>(
+      `${this.apiUrl}/listings/details/${listingId}`
     );
   }
+
+  async createListing(listingParams: ListingParams) {
+    const formData = new FormData();
+    formData.append('title', listingParams.title);
+    formData.append('description', listingParams.description);
+    formData.append('address', listingParams.address);
+    formData.append('latitude', listingParams.latitude.toString());
+    formData.append('longitude', listingParams.longitude.toString());
+    formData.append('pricePerNight', listingParams.pricePerNight.toString());
+    formData.append('numBedrooms', listingParams.numBedrooms.toString());
+    formData.append('numBathrooms', listingParams.numBathrooms.toString());
+    formData.append('maxGuests', listingParams.maxGuests.toString());
+
+    for (let i = 0; i < listingParams.filePhotos.length; i++) {
+      formData.append('photos', listingParams.filePhotos[i]);
+    }
+
+    return this.http.post(`${this.apiUrl}/listings`, formData);
+  }
+
+  getPopularListings(amountListings: number = 8) {}
 
   private getListings(): Listing[] {
     let listingSrt = localStorage.getItem('listings');

@@ -1,18 +1,17 @@
-import { Image } from "../../images/interfaces/image.interface";
+import { Image } from '../../images/interfaces/image.interface';
 
 export interface Listing {
-  listingId: string;
-  userName: string;
+  listing_id: string;
   title: string;
-  photos:Image[];
+  photos: Image[];
   description: string;
   address: string;
   latitude: number;
-  longitude: number;                            
+  longitude: number;
   pricePerNight: number;
   numBedrooms: number;
   numBathrooms: number;
   maxGuests: number;
-  createdAt?: Date;  
+  createdAt?: Date;
   updatedAt?: Date;
 }
