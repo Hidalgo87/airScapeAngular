@@ -3,56 +3,24 @@ import { UserService } from '../../../auth/services/user.service';
 import { ProfileEditParams } from '../interfaces/profileEditParams.interface';
 import { User } from '../interfaces/user.interface';
 import { ImageService } from '../../images/services/image.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileService {
-  constructor(
-    private userService: UserService,
-    private imageService: ImageService
-  ) {}
+  private apiUrl = environment.apiUrl;
 
-  editProfile(profileEditParams: ProfileEditParams) {
-    // const userName = this.user().userName;
-    // const userSrt = localStorage.getItem(userName.toLowerCase().trim());
-    // if (userSrt) {
-    //   const user: User = JSON.parse(userSrt);
-    //   user.bio = profileEditParams.bio;
-    //   user.email = profileEditParams.email;
-    //   user.password = profileEditParams.password;
-    //   user.updatedAt = new Date();
-    //   const newUserStr = JSON.stringify(user);
-    //   localStorage.setItem(userName.toLowerCase().trim(), newUserStr);
-    //   // this.userService.setUser(user);
-    // } else {
-    //   console.error('No se encontró un usuario en la sesión actual');
-    // }
+  constructor(private http: HttpClient) {}
+
+  editProfile(profileEditParams: ProfileEditParams, newPicture: File) {
+    const formData = new FormData();
+    formData.append('file', newPicture);
+    formData.append('bio', profileEditParams.bio);
+    formData.append('email', profileEditParams.email);
+    formData.append('password', profileEditParams.password);
+
+    return this.http.patch<void>(`${this.apiUrl}/profile`, formData);
   }
-
-  async changeProfilePhoto(fileNewPhoto: File) {
-    // const userName = this.user().userName;
-    // const userSrt = localStorage.getItem(userName.toLowerCase().trim());
-    // if (userSrt) {
-    //   const user: User = JSON.parse(userSrt);
-    //   const imageUrl = await this.imageService.updateProfilePhoto(
-    //     fileNewPhoto,
-    //     user.userId
-    //   );
-    //   if (imageUrl) {
-    //     user.profilePicture = imageUrl;
-    //     const newUserStr = JSON.stringify(user);
-    // localStorage.setItem(userName.toLowerCase().trim(), newUserStr);
-    // this.userService.setUser(user);
-    //     return imageUrl;
-    //   } else {
-    //     console.error('No se pudo subir la foto de perfil');
-    //   }
-    // } else {
-    //   console.error('No se encontró un usuario en la sesión actual');
-    // }
-    // return null;
-  }
-
-  private setErrorMessage(message: string) {}
 }

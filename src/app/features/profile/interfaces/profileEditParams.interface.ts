@@ -1,6 +1,5 @@
 export interface ProfileEditParams {
-    email: string;
-    password: string;
-    bio: string;
-  }
-  
+  email: string;
+  password: string;
+  bio: string;
+}
