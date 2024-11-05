@@ -17,7 +17,7 @@
       {{ listing.title }}
     </h6>
     <p>
-      <b>${{ listing.pricePerNight }}</b> COP night
+      <b>${{ listing.pricePerNight | number : "1.0-0" }}</b> COP night
     </p>
     <div class="flex justify-between mt-2">
       <div class="flex items-center w-fit text-n-2">

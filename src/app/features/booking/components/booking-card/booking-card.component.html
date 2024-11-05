@@ -37,7 +37,7 @@
             {{ booking.bookingEnd.toLocaleDateString() }}
           </p>
         </div>
-        <p class="body-2">$ {{ booking.price }} COP</p>
+        <p class="body-2">$ {{ booking.price | number : "1.0-0" }} COP</p>
       </div>
       <div class="flex flex-col basis-1/4">
         <div class="">

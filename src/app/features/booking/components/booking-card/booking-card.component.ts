@@ -7,6 +7,7 @@ import { NewReviewComponent } from '../../../review/component/new-review/new-rev
 import { BookingService } from '../../services/booking.service';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-booking-card',
@@ -26,7 +27,8 @@ export class BookingCardComponent {
 
   constructor(
     private bookingService: BookingService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -47,7 +49,11 @@ export class BookingCardComponent {
 
   cancel() {
     this.bookingService.cancelBooking(this.booking.bookingId).subscribe({
-      next: () => {},
+      next: () => {
+        this.router.navigate([this.router.url]).then(() => {
+          window.location.reload();
+        });
+      },
     });
   }
 

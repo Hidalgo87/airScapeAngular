@@ -65,7 +65,9 @@
           *ngIf="total"
         >
           <h6 class="font-medium h6">Total price</h6>
-          <p class="mt-2 text-lg font-light body-2">$ {{ total }} COP</p>
+          <p class="mt-2 text-lg font-light body-2">
+            $ {{ total | number : "1.0-0" }} COP
+          </p>
         </div>
       </div>
     </div>
