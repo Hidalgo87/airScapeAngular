@@ -34,10 +34,14 @@ export class BookingCardComponent {
       this.booking.bookedAt = new Date(this.booking?.bookedAt);
     }
     if (this.booking?.bookingStart) {
-      this.booking.bookingStart = new Date(this.booking?.bookingStart);
+      this.booking.bookingStart = new Date(
+        `${this.booking?.bookingStart}T00:00:00`
+      );
     }
     if (this.booking?.bookingEnd) {
-      this.booking.bookingEnd = new Date(this.booking?.bookingEnd);
+      this.booking.bookingEnd = new Date(
+        `${this.booking?.bookingEnd}T00:00:00`
+      );
     }
   }
 

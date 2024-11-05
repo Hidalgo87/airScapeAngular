@@ -10,7 +10,7 @@ import { heroUser } from '@ng-icons/heroicons/outline';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { BookingService } from '../../services/booking.service';
 import { BookingParams } from '../../interfaces/booking-params';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-new-booking',
@@ -21,6 +21,7 @@ import { DatePipe } from '@angular/common';
     FormsModule,
     NgIconComponent,
     InputNumberModule,
+    CommonModule,
   ],
   providers: [provideIcons({ heroUser }), DatePipe],
   templateUrl: './new-booking.component.html',
@@ -35,7 +36,6 @@ export class NewBookingComponent implements OnInit {
     });
   }
 
-  // TODO No need to have all the details, just the data from the card. Maybe no time to fix this
   listing: ListingDetails | null = null;
 
   today = new Date();
@@ -44,6 +44,8 @@ export class NewBookingComponent implements OnInit {
   guests: number | null = null;
 
   error = '';
+
+  total: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -81,10 +83,25 @@ export class NewBookingComponent implements OnInit {
     });
   }
 
-  validateDates() {
-    console.log(this.date);
+  onClose() {
     if (this.date && this.date[1] === null) {
       this.date = null;
+      return;
     }
+    this.calculatePrice();
+  }
+
+  calculatePrice() {
+    const days = this.daysBetween(this.date![0], this.date![1]);
+    this.total = days * this.listing!.pricePerNight;
+  }
+
+  daysBetween(date1: string | Date, date2: string | Date): number {
+    const start = new Date(date1);
+    const end = new Date(date2);
+
+    const diffInMs = Math.abs(end.getTime() - start.getTime());
+
+    return Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
   }
 }
