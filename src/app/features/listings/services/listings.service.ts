@@ -23,8 +23,9 @@ export class ListingsService {
     return this.http.delete(`${this.apiUrl}/listings/${listingId}`);
   }
 
-  editListing(newListing: Listing, newImages: File[] = []) {
+  editListing(newListing: Listing, newImages: File[] = [], listingId: string) {
     const formData = new FormData();
+    formData.append('listingId', listingId);
     formData.append('title', newListing.title);
     formData.append('description', newListing.description);
     formData.append('address', newListing.address);
@@ -34,10 +35,7 @@ export class ListingsService {
     formData.append('numBedrooms', newListing.numBedrooms.toString());
     formData.append('numBathrooms', newListing.numBathrooms.toString());
     formData.append('maxGuests', newListing.maxGuests.toString());
-
-    for (let i = 0; i < newListing.photos.length; i++) {
-      formData.append('oldPhotos', JSON.stringify(newListing.photos[i]));
-    }
+    formData.append('oldPhotos', JSON.stringify(newListing.photos));
 
     for (let i = 0; i < newImages.length; i++) {
       formData.append('files', newImages[i]);
@@ -96,6 +94,6 @@ export class ListingsService {
   }
 
   getListingById(listingId: string) {
-    return this.http.get<Listing>(`${this.apiUrl}/listings/${listingId}`);
+    return this.http.get<Listing>(`${this.apiUrl}/listings/raw/${listingId}`);
   }
 }

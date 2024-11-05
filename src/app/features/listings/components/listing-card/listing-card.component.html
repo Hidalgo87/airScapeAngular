@@ -4,10 +4,10 @@
 >
   <div class="h-[16rem] overflow-hidden rounded-md">
     <img
-      class="object-cover w-full h-full"
-      [src]="listing.photo.image_url || 'assets/placeholder.png'"
-      alt="house"
+      class="object-cover w-full h-full bg-n-6"
+      [src]="listing.photo?.image_url || 'assets/placeholder.png'"
     />
+    <!-- <div class="absolute inset-0 -z-10 bg-n-6"></div> -->
   </div>
   <div class="mb-4">
     <p class="my-1 text-sm font-light text-n-4">
@@ -24,9 +24,13 @@
         <ng-icon name="octPerson" />
         <p class="ml-1 body-2">{{ listing.maxGuests }}</p>
       </div>
-      <div class="text-color-4 w-fit">
+      <div class="text-color-4 w-fit" *ngIf="listing.calification">
         <i class="fa-solid fa-star"></i>
         <p class="inline ml-1">{{ listing.calification }}</p>
+      </div>
+      <div class="text-n-4 w-fit" *ngIf="!listing.calification">
+        <i class="fa-solid fa-star"></i>
+        <p class="inline ml-1 font-bold">&dash;</p>
       </div>
     </div>
   </div>

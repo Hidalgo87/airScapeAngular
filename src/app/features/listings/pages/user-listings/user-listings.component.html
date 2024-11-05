@@ -25,13 +25,13 @@
         *ngFor="let listing of listings"
       >
         <div
-          class="absolute flex w-10 h-10 transition -translate-x-full rounded-full opacity-0 cursor-pointer group-hover:opacity-100 top-4 right-6 hover:group-hover:bg-color-2 text-n-7 bg-n-1"
+          class="absolute z-40 flex w-10 h-10 transition -translate-x-full rounded-full opacity-0 cursor-pointer group-hover:opacity-100 top-4 right-6 hover:group-hover:bg-color-2 text-n-7 bg-n-1"
           [routerLink]="['/listing/edit', listing.listingId]"
         >
           <ng-icon name="octPencil" class="m-auto" />
         </div>
         <div
-          class="absolute flex w-10 h-10 transition rounded-full opacity-0 cursor-pointer group-hover:opacity-100 top-4 right-4 hover:group-hover:bg-color-5 text-n-7 bg-n-1"
+          class="absolute z-40 flex w-10 h-10 transition rounded-full opacity-0 cursor-pointer group-hover:opacity-100 top-4 right-4 hover:group-hover:bg-color-5 text-n-7 bg-n-1"
           (click)="confirm($event, listing.listingId)"
         >
           <ng-icon name="octTrash" class="m-auto" />

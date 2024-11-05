@@ -4,11 +4,12 @@ import { FormListingComponent } from '../../components/form-listing/form-listing
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListingsService } from '../../services/listings.service';
 import { Listing } from '../../interfaces/listing.interface';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-edit-listing',
   standalone: true,
-  imports: [FormListingComponent],
+  imports: [FormListingComponent, CommonModule],
   templateUrl: './edit-listing.component.html',
   styleUrl: './edit-listing.component.css',
 })
@@ -80,7 +81,8 @@ export class EditListingComponent implements OnInit {
             numBathrooms: listingParams.numBathrooms,
             maxGuests: listingParams.maxGuests,
           },
-          listingParams.filePhotos
+          listingParams.filePhotos,
+          this.listingId
         )
         .subscribe({
           next: () => {
