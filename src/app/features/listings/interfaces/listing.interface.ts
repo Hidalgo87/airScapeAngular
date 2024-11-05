@@ -14,4 +14,5 @@ export interface Listing {
   maxGuests: number;
   createdAt?: Date;
   updatedAt?: Date;
+  rating?: number;
 }

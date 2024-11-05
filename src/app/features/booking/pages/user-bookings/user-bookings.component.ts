@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { BookingCardComponent } from '../../components/booking-card/booking-card.component';
 import { BookingCard } from '../../interfaces/booking-card';
 import { BookingService } from '../../services/booking.service';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { heroMagnifyingGlass } from '@ng-icons/heroicons/outline';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-bookings',
   standalone: true,
-  imports: [BookingCardComponent],
+  imports: [BookingCardComponent, NgIconComponent, CommonModule],
+  providers: [provideIcons({ heroMagnifyingGlass })],
   templateUrl: './user-bookings.component.html',
   styleUrl: './user-bookings.component.css',
 })

@@ -48,14 +48,19 @@ export class EditListingComponent implements OnInit {
 
   ngOnInit(): void {
     this.listingId = this.route.snapshot.paramMap.get('id')!;
-    this.listingsService.getListingById(this.listingId); // ! Fix this
-    if (this.oldListing) {
-      let oldListingParams: ListingParams = {
-        ...this.oldListing,
-        filePhotos: [],
-      };
-      this.oldListingParams = oldListingParams;
-    }
+    this.listingsService.getListingById(this.listingId).subscribe({
+      next: (response) => {
+        const { createdAt, updatedAt, rating, ...listing } = response;
+        this.oldListing = listing;
+        if (this.oldListing) {
+          let oldListingParams: ListingParams = {
+            ...this.oldListing,
+            filePhotos: [],
+          };
+          this.oldListingParams = oldListingParams;
+        }
+      },
+    });
   }
 
   updateListing(listingParams: ListingParams) {

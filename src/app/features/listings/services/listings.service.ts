@@ -36,11 +36,11 @@ export class ListingsService {
     formData.append('maxGuests', newListing.maxGuests.toString());
 
     for (let i = 0; i < newListing.photos.length; i++) {
-      formData.append('photos', JSON.stringify(newListing.photos[i]));
+      formData.append('oldPhotos', JSON.stringify(newListing.photos[i]));
     }
 
     for (let i = 0; i < newImages.length; i++) {
-      formData.append('photos', newImages[i]);
+      formData.append('files', newImages[i]);
     }
 
     return this.http.patch(`${this.apiUrl}/listings`, formData);
@@ -85,7 +85,7 @@ export class ListingsService {
     formData.append('maxGuests', listingParams.maxGuests.toString());
 
     for (let i = 0; i < listingParams.filePhotos.length; i++) {
-      formData.append('photos', listingParams.filePhotos[i]);
+      formData.append('files', listingParams.filePhotos[i]);
     }
 
     return this.http.post(`${this.apiUrl}/listings`, formData);
@@ -95,5 +95,7 @@ export class ListingsService {
     return this.http.get<ListingBrief[]>(`${this.apiUrl}/listings`);
   }
 
-  getListingById(listingId: string) {}
+  getListingById(listingId: string) {
+    return this.http.get<Listing>(`${this.apiUrl}/listings/${listingId}`);
+  }
 }
