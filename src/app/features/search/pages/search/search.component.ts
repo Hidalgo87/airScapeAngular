@@ -12,6 +12,7 @@ import { ListingsService } from '../../../listings/services/listings.service';
 import { ListingBrief } from '../../../listings/interfaces/listingBrief.interface';
 import { CommonModule } from '@angular/common';
 import { heroMagnifyingGlass } from '@ng-icons/heroicons/outline';
+import { ListingCardSkeletonComponent } from '../../../listings/components/listing-card-skeleton/listing-card-skeleton.component';
 
 interface Option {
   name: string;
@@ -29,6 +30,7 @@ interface Option {
     NgIconComponent,
     ListingCardComponent,
     CommonModule,
+    ListingCardSkeletonComponent,
   ],
   providers: [
     provideIcons({
@@ -47,6 +49,8 @@ export class SearchComponent implements OnInit {
 
   filterPrice: number | undefined;
   sortOption: string | undefined;
+
+  isLoading: boolean = false;
 
   sortOptions: Option[] = [
     { name: 'Price' },
@@ -73,6 +77,9 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
+      this.isLoading = true;
+      this.displayedListings = [];
+
       this.filterPrice = params['price'] || null;
       this.sortOption = params['sort'] || null;
       this.city = params['city'] || null;
@@ -91,6 +98,7 @@ export class SearchComponent implements OnInit {
         next: (response) => {
           this.listingResults = response;
           this.applyFiltersAndSort();
+          this.isLoading = false;
         },
       });
   }
