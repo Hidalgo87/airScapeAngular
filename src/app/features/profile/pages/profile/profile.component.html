@@ -11,7 +11,7 @@
             class="w-[16rem] h-[16rem] relative overflow-hidden rounded-full"
           >
             <img
-              [src]="user().profilePicture"
+              [src]="user.profilePicture"
               alt="profile_photo"
               class="object-cover w-full h-full"
             />
@@ -40,7 +40,7 @@
             style="display: none"
           />
         </div>
-        <h4 class="mt-4 text-center h4 text-n-3">{{ user().userName }}</h4>
+        <h4 class="mt-4 text-center h4 text-n-3">{{ user.userName }}</h4>
       </div>
       <div class="flex-grow md:ml-12">
         <form [formGroup]="updateProfileForm" class="divide-y divide-stroke-1">
@@ -49,7 +49,7 @@
             <textarea
               class="flex-grow h-40 py-2 pl-4 overflow-auto text-sm bg-transparent border rounded-md resize-none border-n-4 text-n-3"
               formControlName="bio"
-              >{{ user().bio }}</textarea
+              >{{ user.bio }}</textarea
             >
           </div>
           <div class="flex items-center py-8">
@@ -57,18 +57,18 @@
             <input
               type="text"
               class="flex-grow pl-4 text-lg bg-transparent border rounded-md border-n-4 text-n-3 h-11"
-              [value]="user().email"
+              [value]="user.email"
               formControlName="email"
             />
           </div>
           <div class="flex items-center py-8">
-            <label class="block w-24 h-fit body-2">Password</label>
+            <label class="block w-24 h-fit body-2">Change password</label>
             <input
               type="password"
               class="flex-grow pl-4 text-lg bg-transparent border rounded-md border-n-4 text-n-3 h-11"
-              [value]="user().password"
               formControlName="password"
             />
+            <!-- [value]="user.password" -->
           </div>
         </form>
         <div class="my-4 h-fit">

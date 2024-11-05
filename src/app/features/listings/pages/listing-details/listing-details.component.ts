@@ -5,7 +5,9 @@ import { Image } from '../../../images/interfaces/image.interface';
 import { ListingsService } from '../../services/listings.service';
 import { ListingDetails } from '../../interfaces/listingDetails.interface';
 import { ReviewPostComponent } from '../../../review/component/review-post/review-post.component';
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule, DatePipe, NgFor } from '@angular/common';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { heroChatBubbleLeftRight } from '@ng-icons/heroicons/outline';
 @Component({
   selector: 'app-listing-details',
   standalone: true,
@@ -15,7 +17,9 @@ import { CommonModule, NgFor } from '@angular/common';
     ReviewPostComponent,
     CommonModule,
     NgFor,
+    NgIconComponent,
   ],
+  providers: [DatePipe, provideIcons({ heroChatBubbleLeftRight })],
   templateUrl: './listing-details.component.html',
   styleUrl: './listing-details.component.css',
 })
@@ -25,6 +29,7 @@ export class ListingDetailsComponent {
     this.listingService.getListingDetails(listingId).subscribe({
       next: (response) => {
         this.listing = response;
+        this.formatDates();
       },
     });
   }
@@ -35,9 +40,13 @@ export class ListingDetailsComponent {
 
   responsiveOptions: any[] | undefined;
 
+  createdDate: string | undefined | null;
+  updatedDate: string | undefined | null;
+
   constructor(
     private route: ActivatedRoute,
-    private listingService: ListingsService
+    private listingService: ListingsService,
+    private datePipe: DatePipe
   ) {}
   ngOnInit(): void {
     this.listingId = this.route.snapshot.paramMap.get('id')!;
@@ -58,13 +67,21 @@ export class ListingDetailsComponent {
         numVisible: 1,
       },
     ];
+  }
 
+  formatDates() {
     if (this.listing?.createdAt) {
-      this.listing.createdAt = new Date(this.listing.createdAt);
+      this.createdDate = this.datePipe.transform(
+        new Date(this.listing.createdAt),
+        'yyyy-MM-dd'
+      );
     }
 
     if (this.listing?.updatedAt) {
-      this.listing.updatedAt = new Date(this.listing.updatedAt);
+      this.updatedDate = this.datePipe.transform(
+        new Date(this.listing.updatedAt),
+        'yyyy-MM-dd'
+      );
     }
   }
 }

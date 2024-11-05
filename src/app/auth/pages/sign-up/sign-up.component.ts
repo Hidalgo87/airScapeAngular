@@ -42,7 +42,7 @@ export class SignUpComponent {
 
   onSignUp() {
     if (!this.registerForm.valid) {
-      this.setRegisterErrorMessage('Diligenciar los campos');
+      this.setRegisterErrorMessage('Please fill all the fields.');
       return;
     }
 
@@ -52,52 +52,16 @@ export class SignUpComponent {
     const repassword = this.registerForm.value.repassword;
     const isOwner = this.registerForm.value.isOwner!;
 
-    if (userName.length < 8 || userName.length > 15) {
-      this.setRegisterErrorMessage(
-        'El nombre de usuario debe tener entre 8 y 15 caracteres.'
-      );
-      return;
-    } else if (/\s/.test(userName)) {
-      this.setRegisterErrorMessage(
-        'El nombre de usuario no puede contener espacios.'
-      );
-      return;
-    } else if (!/^[A-Za-z]/.test(userName)) {
-      this.setRegisterErrorMessage(
-        'El nombre de usuario debe comenzar con una letra.'
-      );
+    if (!this.isValidUsername(userName)) {
       return;
     }
 
-    if (password.length < 12 || password.length > 20) {
-      this.setRegisterErrorMessage(
-        'La contraseña debe tener entre 12 y 20 caracteres.'
-      );
-      return;
-    } else if (!/[A-Z]/.test(password)) {
-      this.setRegisterErrorMessage(
-        'La contraseña debe incluir al menos una letra en mayúsculas.'
-      );
-      return;
-    } else if (!/[a-z]/.test(password)) {
-      this.setRegisterErrorMessage(
-        'La contraseña debe incluir al menos una letra en minúsculas.'
-      );
-      return;
-    } else if (!/\d/.test(password)) {
-      this.setRegisterErrorMessage(
-        'La contraseña debe incluir al menos un número.'
-      );
-      return;
-    } else if (!/[-!@#$%^&*(),.?":{}|<>]/.test(password)) {
-      this.setRegisterErrorMessage(
-        'La contraseña debe incluir al menos un carácter especial.'
-      );
+    if (!this.isValidPassword(password)) {
       return;
     }
 
     if (password !== repassword) {
-      this.setRegisterErrorMessage('Las contraseñas no coinciden.');
+      this.setRegisterErrorMessage('The passwords do not match.');
       return;
     }
 
@@ -114,5 +78,47 @@ export class SignUpComponent {
       next: () => this.router.navigateByUrl('/login'),
       error: (error) => this.setRegisterErrorMessage(error.message),
     });
+  }
+
+  private isValidUsername(userName: string): boolean {
+    if (userName.length < 8 || userName.length > 15) {
+      this.setRegisterErrorMessage(
+        'The username must be between 8 and 15 characters.'
+      );
+    } else if (/\s/.test(userName)) {
+      this.setRegisterErrorMessage('The username cannot contain spaces.');
+    } else if (!/^[A-Za-z]/.test(userName)) {
+      this.setRegisterErrorMessage('The username must start with a letter.');
+    } else {
+      return true;
+    }
+    return false;
+  }
+
+  private isValidPassword(password: string): boolean {
+    if (password.length < 12 || password.length > 20) {
+      this.setRegisterErrorMessage(
+        'The password must be between 12 and 20 characters.'
+      );
+    } else if (!/[A-Z]/.test(password)) {
+      this.setRegisterErrorMessage(
+        'The password must include at least one uppercase letter.'
+      );
+    } else if (!/[a-z]/.test(password)) {
+      this.setRegisterErrorMessage(
+        'The password must include at least one lowercase letter.'
+      );
+    } else if (!/\d/.test(password)) {
+      this.setRegisterErrorMessage(
+        'The password must include at least one number.'
+      );
+    } else if (!/[-!@#$%^&*(),.?":{}|<>]/.test(password)) {
+      this.setRegisterErrorMessage(
+        'The password must include at least one special character.'
+      );
+    } else {
+      return true;
+    }
+    return false;
   }
 }

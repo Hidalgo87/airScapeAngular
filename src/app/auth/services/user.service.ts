@@ -26,6 +26,10 @@ export class UserService {
     return localStorage.getItem(this.tokenKey);
   }
 
+  setUser(user: User) {
+    localStorage.setItem(this.userKey, JSON.stringify(user));
+  }
+
   login(userAuth: UserAuth): Observable<any> {
     const body = {
       username: userAuth.userName,

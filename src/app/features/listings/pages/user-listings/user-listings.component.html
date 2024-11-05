@@ -1,11 +1,11 @@
-<div class="mx-4 mt-12 lg:mx-auto lg:w-fit">
+<div class="mx-4 mt-12 xl:mx-auto xl:w-fit">
   <div
-    class="lg:max-w-[70rem] w-full border border-stroke-1 rounded-xl py-4 px-4 xl:px-8"
+    class="xl:w-[70rem] w-full border border-stroke-1 rounded-xl py-4 px-4 xl:px-8"
   >
     <div
       class="flex flex-col items-center justify-between gap-3 my-4 sm:flex-row"
     >
-      <h3 class="h3">Managing my stays</h3>
+      <h4 class="h4">Managing my stays</h4>
       <div class="self-center h-fit shrink-0">
         <button
           class="flex items-center justify-center gap-2 px-8 py-2 rounded-lg bg-color-1 text-n-1"
@@ -41,7 +41,7 @@
     </div>
     <div
       *ngIf="listings.length === 0"
-      class="flex flex-col items-center justify-center w-full h-full gap-4"
+      class="flex flex-col items-center justify-center w-full h-full gap-4 my-8"
     >
       <ng-icon name="heroMagnifyingGlass" class="text-9xl" />
       <p class="body-1">You have not published any stay yet</p>

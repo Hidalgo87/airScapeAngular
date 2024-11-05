@@ -5,6 +5,7 @@ import { User } from '../interfaces/user.interface';
 import { ImageService } from '../../images/services/image.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,15 +13,29 @@ import { environment } from '../../../../environments/environment';
 export class ProfileService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {}
 
-  editProfile(profileEditParams: ProfileEditParams, newPicture: File) {
+  editProfile(profileEditParams: ProfileEditParams) {
     const formData = new FormData();
-    formData.append('file', newPicture);
     formData.append('bio', profileEditParams.bio);
     formData.append('email', profileEditParams.email);
     formData.append('password', profileEditParams.password);
 
-    return this.http.patch<void>(`${this.apiUrl}/profile`, formData);
+    return this.http.patch<User>(`${this.apiUrl}/profile`, formData).pipe(
+      tap((response) => {
+        this.userService.setUser(response);
+      })
+    );
+  }
+
+  editPicture(newPicture: File) {
+    const formData = new FormData();
+    formData.append('file', newPicture);
+
+    return this.http.patch<User>(`${this.apiUrl}/profile`, formData).pipe(
+      tap((response) => {
+        this.userService.setUser(response);
+      })
+    );
   }
 }
