@@ -1,9 +1,10 @@
 export interface BookingCard {
-  bookingId: number;
+  bookingId: string;
   status: string;
   hostName: string;
   bookedAt: Date;
   propertyTitle: string;
+  listingId: string;
   hostPicture: string;
   price: number;
   propertyImage: string;

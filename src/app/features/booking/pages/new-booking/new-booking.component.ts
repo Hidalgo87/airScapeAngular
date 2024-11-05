@@ -65,7 +65,7 @@ export class NewBookingComponent implements OnInit {
     }
 
     const booking: BookingParams = {
-      listingId: this.listingId,
+      listingId: this.listing?.listing_id!,
       startDate: this.datePipe.transform(this.date![0], 'yyyy-MM-dd')!,
       endDate: this.datePipe.transform(this.date![1], 'yyyy-MM-dd')!,
     };

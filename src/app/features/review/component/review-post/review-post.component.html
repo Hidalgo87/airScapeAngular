@@ -1,14 +1,14 @@
 <div class="flex items-start gap-4">
-  <div class="overflow-hidden h-[4rem] w-[4rem] rounded-full">
+  <div class="overflow-hidden h-[3rem] w-[3rem] rounded-full">
     <img
-      [src]="review.userPicture"
+      [src]="review.profilePicture"
       alt="profile_photo"
       class="object-cover w-full h-full"
     />
   </div>
   <div class="flex-1">
     <div class="flex justify-between">
-      <p class="font-normal body-2">{{ review.username }}</p>
+      <p class="font-normal body-2">{{ review.userName }}</p>
       <div class="text-color-4 w-fit">
         <i class="fa-solid fa-star"></i>
         <p class="inline ml-1">{{ review.rating }}</p>

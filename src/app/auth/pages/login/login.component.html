@@ -28,10 +28,10 @@
   </div>
 </form>
 
+<p class="mt-2 mb-4 text-color-5" id="login-error">{{ loginErrorMessage }}</p>
 <button
-  class="w-full px-8 text-lg font-semibold rounded-md cursor-pointer h-11 bg-color-1 text-n-1"
+  class="w-full px-8 mb-4 text-lg font-semibold rounded-md cursor-pointer h-11 bg-color-1 text-n-1"
   (click)="onLogin()"
 >
   Log In
 </button>
-<p class="mt-4 text-color-5" id="login-error">{{ loginErrorMessage }}</p>

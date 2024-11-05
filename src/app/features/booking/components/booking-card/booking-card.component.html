@@ -66,13 +66,15 @@
         <button
           class="px-4 py-1 mt-auto rounded-lg bg-color-5 text-n-7 hover:bg-opacity-80"
           *ngIf="booking.status === 'pending'"
+          (click)="onCancel($event)"
         >
           Cancel
         </button>
         <div class="mt-auto" *ngIf="booking.status === 'redeemed'">
-          <app-new-review />
+          <app-new-review [listingId]="booking.listingId" />
         </div>
       </div>
     </div>
   </div>
+  <p-confirmDialog acceptButtonStyleClass="ml-8" />
 </div>

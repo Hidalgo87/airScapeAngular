@@ -30,7 +30,7 @@ export class LoginComponent {
 
   onLogin() {
     if (!this.loginForm.valid) {
-      this.setLoginErrorMessage('Diligenciar los campos');
+      this.setLoginErrorMessage('Incorrect username or password');
       return;
     }
     let userName = this.loginForm.value.userName!;
@@ -43,7 +43,7 @@ export class LoginComponent {
           this.router.navigateByUrl('/');
         },
         error: (error) => {
-          this.setLoginErrorMessage(error.message);
+          this.setLoginErrorMessage('Incorrect username or password');
         },
       });
   }

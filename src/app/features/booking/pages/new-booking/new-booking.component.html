@@ -30,12 +30,12 @@
                 class="w-full"
                 [(ngModel)]="guests"
                 [min]="0"
-                [max]="100"
+                [max]="listing?.maxGuests"
               />
               <label for="guests" class="pl-7">Guests</label>
             </p-floatLabel>
           </div>
-          <p class="body-2 text-color-5">{{ error }}</p>
+          <p class="mt-3 body-2 text-color-5">{{ error }}</p>
           <button
             class="px-8 py-4 mt-12 font-medium rounded-lg bg-color-2 text-n-1"
             (click)="onConfirm()"

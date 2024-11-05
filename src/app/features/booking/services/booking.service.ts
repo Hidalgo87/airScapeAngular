@@ -19,4 +19,8 @@ export class BookingService {
   getUserBookings() {
     return this.http.get<BookingCard[]>(`${this.apiUrl}/bookings`);
   }
+
+  cancelBooking(bookingId: string) {
+    return this.http.patch(`${this.apiUrl}/bookings`, { bookingId });
+  }
 }

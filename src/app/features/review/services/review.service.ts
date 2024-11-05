@@ -11,10 +11,10 @@ export class ReviewService {
 
   constructor(private http: HttpClient) {}
 
-  createReview(review: Review, listingId: number) {
+  createReview(review: Review, listingId: string) {
     const body = {
       rating: review.rating,
-      comment: review.review,
+      comment: review.comment,
       listingId,
     };
 
