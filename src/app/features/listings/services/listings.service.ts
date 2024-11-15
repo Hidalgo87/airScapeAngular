@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ImageService } from '../../images/services/image.service';
 import { Listing } from '../interfaces/listing.interface';
 import { ListingParams } from '../interfaces/listingParams.interface';
 import { ListingDetails } from '../interfaces/listingDetails.interface';
@@ -13,7 +12,7 @@ import { ListingBrief } from './../interfaces/listingBrief.interface';
 export class ListingsService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private imageService: ImageService, private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   getListingsOfCurrentUser() {
     return this.http.get<ListingBrief[]>(`${this.apiUrl}/listings/user`);
@@ -58,10 +57,6 @@ export class ListingsService {
     };
 
     return this.http.post<ListingBrief[]>(`${this.apiUrl}/search`, body);
-  }
-
-  async uploadFile(file: File, folderName: string, fileName: string) {
-    return await this.imageService.upload(file, folderName, fileName);
   }
 
   getListingDetails(listingId: string) {

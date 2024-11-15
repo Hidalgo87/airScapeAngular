@@ -2,7 +2,6 @@ import { Injectable, WritableSignal } from '@angular/core';
 import { UserService } from '../../../auth/services/user.service';
 import { ProfileEditParams } from '../interfaces/profileEditParams.interface';
 import { User } from '../interfaces/user.interface';
-import { ImageService } from '../../images/services/image.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { tap } from 'rxjs';
